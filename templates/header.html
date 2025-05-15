@@ -1,0 +1,47 @@
+{% load static %}
+<header class="header sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #000523;">
+        <div class="container">
+            <!-- Logo on the left -->
+            <a class="navbar-brand" href="{% url 'home:home' %}">
+                <img src="{% static 'img/sfs-short-logo.png' %}" alt="SEVEN FOUR SEVEN" height="40">
+            </a>
+
+            <!-- Mobile menu toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navigation menu -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="drops.html">Drops</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'designers:designers' %}">Designers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+
+                <!-- Cart and Profile buttons on the right -->
+                <div class="d-flex">
+                    <a href="cart.html" class="btn btn-link position-relative me-2">
+                        <i class="fas fa-shopping-bag fa-lg"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+                    <a href="profile.html" class="btn btn-link">
+                        <i class="fas fa-user fa-lg"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

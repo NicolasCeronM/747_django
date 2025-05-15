@@ -1,0 +1,272 @@
+{% load static %}
+<style>
+    /* SEVEN FOUR SEVEN Footer Styles */
+    .sf-footer {
+        background-color: #000;
+        color: #fff;
+        padding: 60px 0 30px;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    .sf-footer-content {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .sf-footer-brand {
+        max-width: 300px;
+    }
+
+    .sf-footer-title {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+    }
+
+    .sf-footer-description {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #ccc;
+    }
+
+    .sf-footer-columns {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+    }
+
+    .sf-footer-column-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .sf-footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .sf-footer-links a {
+        color: #ccc;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s ease;
+    }
+
+    .sf-footer-links a:hover {
+        color: #fff;
+    }
+
+    .sf-footer-newsletter-desc {
+        font-size: 14px;
+        color: #ccc;
+        margin-bottom: 20px;
+        line-height: 1.6;
+    }
+
+    .sf-newsletter-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .sf-form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .sf-form-label {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #999;
+    }
+
+    .sf-form-input {
+        background: transparent;
+        border: 1px solid #333;
+        padding: 12px 15px;
+        color: #fff;
+        font-size: 14px;
+        border-radius: 0;
+        transition: border-color 0.3s ease;
+    }
+
+    .sf-form-input:focus {
+        outline: none;
+        border-color: #fff;
+    }
+
+    .sf-form-checkbox {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+    }
+
+    .sf-form-checkbox input {
+        margin-top: 3px;
+    }
+
+    .sf-form-checkbox label {
+        font-size: 12px;
+        color: #999;
+        line-height: 1.4;
+    }
+
+    .sf-subscribe-btn {
+        background: #fff;
+        color: #000;
+        border: none;
+        padding: 12px 25px;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        align-self: flex-start;
+    }
+
+    .sf-subscribe-btn:hover {
+        background: #ddd;
+    }
+
+    .sf-footer-bottom {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding-top: 30px;
+        border-top: 1px solid #333;
+        margin-top: 40px;
+    }
+
+    .sf-copyright {
+        font-size: 12px;
+        color: #999;
+    }
+
+    .sf-legal-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .sf-legal-links a {
+        color: #999;
+        font-size: 12px;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .sf-legal-links a:hover {
+        color: #fff;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .sf-footer-columns {
+            grid-template-columns: 1fr;
+        }
+
+        .sf-footer-brand {
+            max-width: 100%;
+        }
+
+        .sf-footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .sf-legal-links {
+            justify-content: center;
+        }
+
+        .sf-subscribe-btn {
+            align-self: stretch;
+        }
+    }
+</style>
+
+<footer class="sf-footer" style="background-color: #000523;">
+    <div class="container">
+
+        <div class="sf-footer-content">
+            <!-- Brand Info -->
+            <img class="sf-footer-brand" src="{% static 'img/sfs-logo.png' %}" alt="Seven for seven logo" <p
+                class="sf-footer-description">Ropa urbana premium para quienes se atreven a destacar. Artesanía de
+            calidad con un diseño audaz.</p>
+            </img>
+
+            <!-- Footer Columns -->
+            <div class="sf-footer-columns">
+                <!-- Commerce Column -->
+                <div class="sf-footer-column">
+                    <h3 class="sf-footer-column-title">Comercio</h3>
+                    <ul class="sf-footer-links">
+                        <li><a href="#">Hombres</a></li>
+                        <li><a href="#">Mujer</a></li>
+                        <li><a href="#">Niños</a></li>
+                        <li><a href="#">Accesorios</a></li>
+                        <li><a href="#">Recién llegados</a></li>
+                        <li><a href="#">Venta</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company Column -->
+                <div class="sf-footer-column">
+                    <h3 class="sf-footer-column-title">Compañía</h3>
+                    <ul class="sf-footer-links">
+                        <li><a href="#">Sobre nosotros</a></li>
+                        <li><a href="#">Carreras</a></li>
+                        <li><a href="#">Ubicaciones de las tiendas</a></li>
+                        <li><a href="#">Sostenibilidad</a></li>
+                        <li><a href="#">Prensa</a></li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter Column -->
+                <div class="sf-footer-column">
+                    <h3 class="sf-footer-column-title">Manténgase actualizado</h3>
+                    <p class="sf-footer-newsletter-desc">Suscríbete para recibir ofertas especiales, obsequios gratuitos
+                        y acceso anticipado a los drops.</p>
+                    <form class="sf-newsletter-form">
+                        <div class="sf-form-group">
+                            <label for="email" class="sf-form-label">Tu email</label>
+                            <input type="email" id="email" class="sf-form-input" placeholder="tucorreo@example.com">
+                        </div>
+                        <div class="sf-form-checkbox">
+                            <input type="checkbox" id="privacy" required>
+                            <label for="privacy">Al suscribirte, aceptas nuestra Política de privacidad y das tu
+                                consentimiento para recibir actualizaciones.</label>
+                        </div>
+                        <button type="submit" class="sf-subscribe-btn">Suscribirse</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="sf-footer-bottom">
+                <div class="sf-copyright">
+                    © 2025 Seven four seven Clothing. Todos los derechos reservados.
+                </div>
+                <div class="sf-legal-links">
+                    <a href="#">Condiciones de servicio</a>
+                    <a href="#">Política de privacidad</a>
+                    <a href="#">Información de envío</a>
+                    <a href="#">Devoluciones y cambios</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</footer>

@@ -1,0 +1,22 @@
+Estoy desarrollando una tienda online para una marca de vestuario streetwear llamada SEVEN FOUR SEVEN. La propuesta incluye innovación social: cada colección (o “drop”) visibiliza a talentos marginados, cuyas historias se cuentan en el sitio.  
+El sitio está dirigido a un público adulto joven interesado tanto en la moda urbana como en generar impacto social.  
+
+Diseño:
+- Estilo visual basado en chnge.com: limpio, moderno, urbano y fácil de navegar.  
+- Uso de paleta de colores y logo definidos (ver archivo PDF si necesitas consultarlos).  
+- Totalmente responsive.  
+
+Contenido y funcionalidades:
+- Páginas de productos con fotos y descripciones.
+- Videos e historias asociadas a cada drop.
+- Registro de usuarios, carrito de compras, sistema de donaciones, reproductor de video.
+- Buscador de productos y filtro por colección (ej: Drop001, Drop002, etc.).
+- Página de contacto.
+
+Tecnología:
+- Frontend con React + Vite + TypeScript, estilizado con Tailwind CSS.
+- Backend en Django Rest Framework, con base de datos PostgreSQL.
+- Código alojado en GitHub.
+
+Ayúdame con:
+[Aquí reemplazas con lo que necesitas, por ejemplo: "crear la estructura de carpetas del frontend", "construir el componente del carrito", "conectar el backend con el frontend", "diseñar una landing page", etc.]

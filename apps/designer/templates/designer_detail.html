@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="designer-detail-hero"
+    style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url({% static 'appx/images/designers/hero-' %}{{ designer_slug }}.jpg);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-3 text-white">{{ designer.name }}</h1>
+                <p class="lead text-light">{{ designer.tagline }}</p>
+                <span class="badge bg-primary">{{ designer.collection }}</span>
+            </div>
+            <div class="col-lg-6 text-lg-end">
+                <div class="designer-social-links">
+                    {% if designer.instagram %}<a href="{{ designer.instagram }}" target="_blank"
+                        class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>{% endif %}
+                    {% if designer.twitter %}<a href="{{ designer.twitter }}" target="_blank" class="text-white me-3"><i
+                            class="fab fa-twitter fa-lg"></i></a>{% endif %}
+                    {% if designer.website %}<a href="{{ designer.website }}" target="_blank" class="text-white me-3"><i
+                            class="fas fa-globe fa-lg"></i></a>{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="designer-bio py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="designer-portrait mb-4">
+                    <img src="{% static 'appx/images/designers/' %}{{ designer_slug }}.jpg" alt="{{ designer.name }}"
+                        class="img-fluid rounded">
+                </div>
+                <div class="designer-meta p-4 bg-light">
+                    <h4 class="mb-3">About</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><strong>From:</strong> {{ designer.location }}</li>
+                        <li class="mb-2"><strong>Specialty:</strong> {{ designer.specialty }}</li>
+                        <li class="mb-2"><strong>Collection:</strong> {{ designer.collection }}</li>
+                        <li class="mb-2"><strong>Featured In:</strong> {{ designer.featured|join:", " }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="designer-story">
+                    <h2 class="mb-4">Their Story</h2>
+                    {{ designer.bio|linebreaks }}
+
+                    <div class="designer-quote my-5 p-4 bg-light border-start border-4 border-primary">
+                        <blockquote class="mb-0">"{{ designer.quote }}"</blockquote>
+                    </div>
+
+                    <h3 class="mb-3">Design Philosophy</h3>
+                    <p>{{ designer.philosophy }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="designer-gallery py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Featured Works</h2>
+
+        <div class="row g-3">
+            {% for work in designer.works %}
+            <div class="col-md-4">
+                <div class="gallery-item">
+                    <img src="{% static 'appx/images/designs/' %}{{ work.image }}" alt="{{ work.title }}"
+                        class="img-fluid">
+                    <div class="gallery-caption p-3">
+                        <h5 class="mb-1">{{ work.title }}</h5>
+                        <p class="small mb-0">{{ work.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="designer-products py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Available in Store</h2>
+
+        <div class="row g-4">
+            {% for product in designer.products %}
+            <div class="col-lg-3 col-md-6">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="{% static 'appx/images/products/' %}{{ product.image }}" alt="{{ product.name }}"
+                            class="img-fluid">
+                        <div class="product-actions">
+                            <a href="{% url 'product_detail' product.slug %}" class="btn btn-sm btn-dark">View</a>
+                            <button class="btn btn-sm btn-outline-dark">Add to Cart</button>
+                        </div>
+                    </div>
+                    <div class="product-info p-3">
+                        <h5 class="mb-1">{{ product.name }}</h5>
+                        <p class="small text-muted mb-2">{{ product.category }}</p>
+                        <p class="fw-bold mb-0">${{ product.price }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'collection' designer.collection_slug %}" class="btn btn-outline-dark">View Full
+                Collection</a>
+        </div>
+    </div>
+</section>
+
+<section class="designer-cta py-5 bg-dark text-white text-center">
+    <div class="container">
+        <h2 class="mb-4">Support {{ designer.first_name }}'s Work</h2>
+        <p class="lead mb-4">15% of proceeds from this collection go directly to {{ designer.first_name }} and their
+            community initiatives.</p>
+        <a href="{% url 'shop' %}" class="btn btn-light btn-lg me-2">Shop the Collection</a>
+        <a href="{% url 'donate' designer.slug %}" class="btn btn-outline-light btn-lg">Make a Donation</a>
+    </div>
+</section>
+{% endblock %}
