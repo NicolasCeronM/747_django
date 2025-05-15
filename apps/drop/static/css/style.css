@@ -1,0 +1,77 @@
+/* Drops Page Styles */
+.drops-hero {
+    padding: 120px 0;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 60px;
+}
+
+.drop-card {
+    transition: transform 0.3s ease;
+}
+
+.drop-card:hover {
+    transform: translateY(-5px);
+}
+
+.drop-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 1;
+}
+
+.designers-list .badge {
+    font-weight: normal;
+    padding: 4px 8px;
+}
+
+.upcoming-card {
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.upcoming-content {
+    position: relative;
+    z-index: 2;
+}
+
+.notify-btn {
+    transition: all 0.3s ease;
+}
+
+.notify-btn:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+/* Filter buttons */
+.filter-btn {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .drops-hero {
+        padding: 80px 0;
+    }
+    
+    .filter-label {
+        display: none;
+    }
+}

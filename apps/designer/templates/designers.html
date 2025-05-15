@@ -46,19 +46,23 @@ Designers
 
         <div class="row g-4">
             <!-- Designer 1 -->
+
+
+            {% for i in designers %}
+
             <div class="col-lg-4 col-md-6 designer-card" data-category="drop001">
                 <div class="designer-profile">
                     <div class="designer-image">
-                        <img src="{% static 'img/placeholder.png' %}" alt="María Rodríguez" class="img-fluid">
+                        <img src="{{i.cover_image.url}}" alt="María Rodríguez" class="img-fluid">
                         <div class="designer-overlay">
                             <a href="#" class="btn btn-outline-light">View
                                 Profile</a>
                         </div>
                     </div>
                     <div class="designer-info">
-                        <h3>María Rodríguez</h3>
+                        <h3>{{i.user.names}} {{i.user.last_names}}</h3>
                         <span class="designer-drop">Drop 001</span>
-                        <p>Bronx-born graffiti artist transforming street art into wearable designs</p>
+                        <p>{{i.biography}}</p>
                         <div class="designer-social">
                             <a href="#"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fab fa-behance"></i></a>
@@ -67,49 +71,9 @@ Designers
                 </div>
             </div>
 
-            <!-- Designer 2 -->
-            <div class="col-lg-4 col-md-6 designer-card" data-category="drop002">
-                <div class="designer-profile">
-                    <div class="designer-image">
-                        <img src="{% static 'img/placeholder.png' %}" alt="Jamal Washington" class="img-fluid">
-                        <div class="designer-overlay">
-                            <a href="#" class="btn btn-outline-light">View
-                                Profile</a>
-                        </div>
-                    </div>
-                    <div class="designer-info">
-                        <h3>Jamal Washington</h3>
-                        <span class="designer-drop">Drop 002</span>
-                        <p>Self-taught tailor blending African textiles with urban silhouettes</p>
-                        <div class="designer-social">
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
 
-            <!-- Designer 3 -->
-            <div class="col-lg-4 col-md-6 designer-card" data-category="drop003">
-                <div class="designer-profile">
-                    <div class="designer-image">
-                        <img src="{% static 'img/placeholder.png' %}" alt="Elena Chen" class="img-fluid">
-                        <div class="designer-overlay">
-                            <a href="" class="btn btn-outline-light">View
-                                Profile</a>
-                        </div>
-                    </div>
-                    <div class="designer-info">
-                        <h3>Elena Chen</h3>
-                        <span class="designer-drop">Drop 003</span>
-                        <p>Queer activist creating gender-fluid streetwear from upcycled materials</p>
-                        <div class="designer-social">
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-tiktok"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- Add more designers following the same pattern -->
         </div>
