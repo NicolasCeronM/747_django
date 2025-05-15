@@ -1,9 +1,16 @@
 from django.shortcuts import render
+from apps.drop.models import Drop
 
 # Create your views here.
 
 def home(request):
 
-    return render(request,'index.html')
+    latest_drops = Drop.objects.filter(is_active=True).order_by('-created_at')[:3]
+    data = {
+        'latest_drops':latest_drops
+    }
+
+    return render(request,'index.html', data)
+
 
 

@@ -1,0 +1,37 @@
+<section ion class="featured-drops py-5">
+    <div class="container">
+        <div class="section-header text-center mb-5">
+            <h2 class="text-uppercase">Latest Drops</h2>
+            <p class="text-muted">Discover our newest collections and the stories behind them</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Last Drop -->
+
+            {% for i in latest_drops %}
+            <div class="col-md-4">
+                <div class="drop-card">
+                    <div class="drop-image position-relative">
+                        <img src="{{ i.cover_image.url }}" class="img-fluid" alt="Drop 001">
+                        <div class="drop-overlay">
+                            <a href="drop001.html" class="btn btn-outline-light">View Collection</a>
+                        </div>
+                    </div>
+                    <div class="drop-info p-3">
+                        <h3>{{i.name}}</h3>
+                        <p>{{i.description}}</p>
+                        <a href="story001.html" class="text-decoration-none">Read Their Story →</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No hay drops disponibles aún.</p>
+            {% endfor %}
+
+
+
+            <div class="text-center mt-4">
+                <a href="{% url 'drop:drops' %}" class="btn btn-dark btn-lg rounded-pill px-4 mt-4">View All Drops</a>
+            </div>
+        </div>
+</section>

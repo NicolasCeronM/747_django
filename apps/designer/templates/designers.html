@@ -55,7 +55,7 @@ Designers
                     <div class="designer-image">
                         <img src="{{i.cover_image.url}}" alt="María Rodríguez" class="img-fluid">
                         <div class="designer-overlay">
-                            <a href="#" class="btn btn-outline-light">View
+                            <a href="{% url 'designers:detail' i.id %}" class="btn btn-outline-light">View
                                 Profile</a>
                         </div>
                     </div>

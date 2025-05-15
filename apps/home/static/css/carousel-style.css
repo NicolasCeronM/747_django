@@ -33,16 +33,17 @@
 
 /* Drop Cards */
 .drop-card {
-    border: 1px solid #eee;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
     height: 100%;
     display: flex;
     flex-direction: column;
 }
 
 .drop-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transform: scale(1.02);
 }
 
 .drop-image {
@@ -83,10 +84,6 @@
     background: white;
 }
 
-/* Mission Section */
-.mission-statement {
-    background-color: #f8f9fa !important;
-}
 
 /* Carousel Animation */
 .carousel-fade .carousel-item {
