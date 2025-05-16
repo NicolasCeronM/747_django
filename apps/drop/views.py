@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Drop
 from apps.designer.models import DesignerProfile
+from apps.drop.models import Drop
+from apps.product.models import ProductCategory
 
 # Create your views here.
 
@@ -16,3 +18,15 @@ def drops(request):
     }
 
     return render(request,'drops.html', data)
+
+def drop_detail(request,id):
+
+    drop = get_object_or_404(Drop,id=id)
+
+    
+    data = {
+        'drop': drop
+    }
+
+    return render(request,'drop_details.html',data)
+

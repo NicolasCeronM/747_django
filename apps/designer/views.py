@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_list_or_404
+from django.shortcuts import render, get_object_or_404
 from .models import DesignerProfile
 
 # Create your views here.
@@ -15,7 +15,7 @@ def designers(request):
 
 def designer_detail(request,id):
 
-    designer = get_list_or_404(DesignerProfile,id=id)
+    designer = get_object_or_404(DesignerProfile,id=id)
 
     data = {
         'designer':designer

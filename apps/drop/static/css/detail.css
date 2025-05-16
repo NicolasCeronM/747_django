@@ -1,0 +1,60 @@
+/* Drop Detail Page Styles */
+.drop-hero {
+    padding: 150px 0 100px;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 60px;
+}
+
+.drop-badges .badge {
+    font-size: 1rem;
+    padding: 8px 15px;
+}
+
+.social-impact {
+    border-left: 4px solid #000;
+}
+
+.designer-card {
+    padding: 30px 20px;
+    background: white;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.designer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.product-card .card {
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .card {
+    transform: translateY(-5px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .drop-hero {
+        padding: 120px 0 80px;
+        text-align: center;
+    }
+    
+    .drop-hero .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .drop-hero {
+        padding: 100px 0 60px;
+    }
+    
+    .drop-about .col-lg-6 {
+        margin-bottom: 30px;
+    }
+}

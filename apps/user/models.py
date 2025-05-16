@@ -1,28 +1,14 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, AbstractUser
-# Create your models here.
 
-class CustomUser(AbstractBaseUser):
-    username = models.CharField('Nombre de usuario', unique=True, max_length=100)
-    email = models.EmailField('Correo electronico', max_length=254, unique=True)
-    names = models.CharField('Nombres', max_length=200, blank=True, null=True)
-    last_names = models.CharField('Apellidos', max_length=200, blank=True, null=True)
-    image = models.ImageField('Imagenn de perfil',upload_to='perfil/', height_field=None, width_field=None, max_length=200)
+class CustomUser(AbstractUser):
+    image = models.ImageField('Imagen de perfil', upload_to='perfil/', blank=True, null=True)
     active_user = models.BooleanField(default=True)
     admin_user = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = 'email','names','last_names'
+    # ✅ Define is_staff como campo y sincronízalo con admin_user
+    is_staff = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.names}, {self.last_names}'
-    
-    def has_perm(self,perm,obj = None):
-        return True
-    
-    def has_module_perms(self,app_label):
-        return True
-    
-    @property
-    def is_staff(self):
-        return self.admin_user
+        return f'{self.username} ({self.email})'
+
