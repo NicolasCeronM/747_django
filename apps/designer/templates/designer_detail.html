@@ -39,15 +39,15 @@
                 <div class="designer-meta p-4 bg-light">
                     <h4 class="mb-3">Información</h4>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><strong>Ubicación:</strong> {{ designer.location }}</li>
-                        <li class="mb-2"><strong>Especialidad:</strong> {{ designer.specialty }}</li>
-                        <li class="mb-2"><strong>Experiencia:</strong> {{ designer.years_experience }} años</li>
-                        <li class="mb-2"><strong>Destacado en:</strong>
-                            <ul>
-                                {% for pub in designer.featured_in_list %}
-                                <li>{{ pub }}</li>
-                                {% endfor %}
-                            </ul>
+                        <li class="mb-2"><strong>Nombre:</strong> {{ designer.user.first_name }}
+                            {{designer.user.last_name}}</li>
+                        <li class="mb-2"><strong>Redes Sociales:</strong> {{ designer.specialty }}</li>
+                        <li class="mb-2"><strong>Contacto:</strong> {{ designer.years_experience }} años</li>
+                        <ul>
+                            {% for pub in designer.featured_in_list %}
+                            <li>{{ pub }}</li>
+                            {% endfor %}
+                        </ul>
                         </li>
                     </ul>
                 </div>
@@ -58,9 +58,9 @@
                     <p>{{ designer.biography|linebreaks }}</p>
 
                     {% if designer.video_url %}
-                    <div class="mt-4">
-                        <iframe width="560" height="315" src="{{designer.video_url}}" title="YouTube video player"
-                            frameborder="0"
+                    <div class="incrustar-responsivo incrustar-responsivo-16by9">
+                        <iframe class="embed-responsive-item" width="560" height="315" src="{{designer.video_url}}"
+                            title="YouTube video player" frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                     </div>
@@ -73,21 +73,23 @@
 
 <section class="designer-products py-5 bg-light">
     <div class="container">
-        <h2 class="text-center mb-5">Drops del Diseñador</h2>
+        <h2 class="text-center mb-5">MAS HISTORIAS</h2>
         <div class="row g-4">
-            {% if designer.drops.all %}
+            {% if drop%}
             <div class="row mt-5">
                 <div class="col-12">
-                    <h4 class="text-uppercase">Drops asociados:</h4>
+                    <h4 class="text-uppercase">Nuestros ultimos Drops:</h4>
                     <div class="row g-4">
-                        {% for drop in designer.drops.all %}
+                        {% for drop in drop%}
                         <div class="col-md-4">
                             <div class="card bg-dark text-white h-100">
                                 <img src="{{ drop.cover_image.url }}" class="card-img-top" alt="{{ drop.name }}">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ drop.name }}</h5>
                                     <p class="card-text">{{ drop.theme }}</p>
-                                    <a href="#" class="btn btn-outline-warning btn-sm">Ver Drop</a>
+                                    <a href="{% url 'drop:drop_detail' drop.id %}"
+                                        class="btn btn-outline-warning btn-sm">Ver
+                                        Drop</a>
                                 </div>
                             </div>
                         </div>
@@ -95,6 +97,8 @@
                     </div>
                 </div>
             </div>
+            {% else %}
+            <p>No hai mas drops</p>
             {% endif %}
         </div>
     </div>

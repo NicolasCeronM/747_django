@@ -58,3 +58,20 @@
         margin-bottom: 30px;
     }
 }
+
+/* Auto play */
+.drop-about {
+  background-color: #FAF8F3;
+}
+
+.drop-description {
+  color: #333;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.video-wrapper video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

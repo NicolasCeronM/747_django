@@ -1,0 +1,19 @@
+<section class="drop-hero"
+    style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url({{ drop.cover_image.url }});">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-3 text-white">{{ drop.name }}</h1>
+                <p class="lead text-light">Drop{{drop.drop_number }}</p>
+                <div class="drop-badges mb-4">
+                    {% if drop.is_active %}
+                    <span class="badge bg-success me-2">Available Now</span>
+                    {% else %}
+                    <span class="badge bg-secondary me-2">Past Collection</span>
+                    {% endif %}
+                    <span class="badge bg-dark">{{ drop.launch_date|date:"F Y" }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

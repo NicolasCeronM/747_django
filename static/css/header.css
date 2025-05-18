@@ -24,7 +24,7 @@
         height: 2px;
         bottom: 0;
         left: 0;
-        background-color: #f74902;
+        background-color: #CCCCCC ;
         transition: width 0.3s ease;
     }
 
@@ -39,5 +39,5 @@
 
     .btn-link:hover {
         transform: scale(1.1);
-        color: #f74902 !important;
+        color: #CCCCCC  !important;
     }

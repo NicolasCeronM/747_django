@@ -3,12 +3,12 @@ from apps.designer.models import DesignerProfile
 
 class Drop(models.Model):
     name = models.CharField(max_length=100)
+    drop_number = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
     designers = models.ManyToManyField(DesignerProfile, related_name='drops')
     launch_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
     description = models.TextField()
-    theme = models.CharField(max_length=100)
     cover_image = models.ImageField(upload_to='drops/cover/')
     hero_video = models.FileField(upload_to='drops/videos/', blank=True, null=True)
     is_active = models.BooleanField(default=True)

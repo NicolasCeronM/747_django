@@ -2,6 +2,12 @@
 {% load static %}
 
 
+{% block title %}
+{{drop.name}}
+{% endblock title %}
+
+
+
 {% block css %}
 
 <link rel="stylesheet" href="{% static 'css/detail.css' %}">
@@ -10,137 +16,16 @@
 
 
 {% block content %}
-<section class="drop-hero"
-    style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url({{ drop.cover_image.url }});">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-8">
-                <h1 class="display-3 text-white">{{ drop.name }}</h1>
-                <p class="lead text-light">{{ drop.theme }}</p>
-                <div class="drop-badges mb-4">
-                    {% if drop.is_active %}
-                    <span class="badge bg-success me-2">Available Now</span>
-                    {% else %}
-                    <span class="badge bg-secondary me-2">Past Collection</span>
-                    {% endif %}
-                    <span class="badge bg-dark">{{ drop.launch_date|date:"F Y" }}</span>
-                </div>
-                <a href="#products" class="btn btn-light me-2">Shop Collection</a>
-                <a href="#designers" class="btn btn-outline-light">Meet the Designers</a>
-            </div>
-        </div>
-    </div>
-</section>
+<!--Header-->
+{% include 'components/header.html' %}
 
-<section class="drop-about py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                {% if drop.hero_video %}
-                <div class="ratio ratio-16x9">
-                    <video controls poster="{{ drop.cover_image.url }}" class="rounded">
-                        <source src="{{ drop.hero_video.url }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                {% else %}
-                <img src="{{ drop.cover_image.url }}" alt="{{ drop.name }}" class="img-fluid rounded">
-                {% endif %}
-            </div>
-            <div class="col-lg-6">
-                <h2 class="mb-4">About This Drop</h2>
-                {{ drop.description|linebreaks }}
+<!-- Video y Descripcion -->
 
-                <div class="social-impact mt-4 p-4 bg-light">
-                    <h5><i class="fas fa-hands-helping me-2"></i> Social Impact</h5>
-                    <p class="mb-0">{{ drop.social_impact }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+{% include 'components/video_desc.html' %}
 
-<section id="designers" class="drop-designers py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-5">Featured Designers</h2>
+<!--Products-->
 
-        <div class="row g-4">
-            {% for designer in drop.designers.all %}
-            <div class="col-lg-3 col-md-6">
-                <div class="designer-card text-center">
-                    <a href="#">
-                        <img src="{{ designer.profile_image.url }}"
-                            alt="{{ designer.brand_name|default:designer.user.username }}"
-                            class="img-fluid rounded-circle mb-3" width="150" height="150">
-                    </a>
-                    <h4>{{ designer.brand_name|default:designer.user.username }}</h4>
-                    <p class="text-muted">{{ designer.specialty }}</p>
-                    <a href="#" class="btn btn-sm btn-outline-dark">View
-                        Profile</a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section id="products" class="drop-products py-5">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-5">
-            <h2>Collection Pieces</h2>
-            <div class="dropdown">
-                <button class="btn btn-outline-dark dropdown-toggle" type="button" id="filterDropdown"
-                    data-bs-toggle="dropdown">
-                    Filter by Category
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#" data-filter="all">All Items</a></li>
-                    {% for category in categories %}
-                    <li><a class="dropdown-item" href="#" data-filter="category-{{ category.slug }}">{{ category.name
-                            }}</a></li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-
-        <div class="row g-4">
-            {% for product in drop.products.all %}
-            <div class="col-xl-3 col-lg-4 col-md-6 product-card" data-categories="category-{{ product.category.slug }}">
-                <div class="card h-100 border-0 shadow-sm">
-                    {% if product.discounted_price %}
-                    <span class="badge bg-danger position-absolute top-0 end-0 m-2">Sale</span>
-                    {% endif %}
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text text-muted small">{{ product.category }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            {% if product.discounted_price %}
-                            <div>
-                                <span class="text-danger fw-bold">${{ product.discounted_price }}</span>
-                                <span class="text-decoration-line-through text-muted small ms-2">${{ product.price
-                                    }}</span>
-                            </div>
-                            {% else %}
-                            <span class="fw-bold">${{ product.price }}</span>
-                            {% endif %}
-                            <span class="badge bg-light text-dark">{{ product.get_gender_display }}</span>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-white border-0">
-                        <a href="#" class="btn btn-dark w-100">View Details</a>
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-12 text-center py-5">
-                <h3>No products available in this drop</h3>
-                <p>Check back soon for new additions</p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
+{% include 'components/product.html' %}
 
 <section class="drop-cta py-5 bg-dark text-white text-center">
     <div class="container">
@@ -157,3 +42,35 @@
     </div>
 </section>
 {% endblock %}
+
+
+{% block js %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const video = document.getElementById('previewVideo');
+
+        if (video) {
+            video.addEventListener('click', () => {
+                video.pause();                  // detener el loop silenciado
+                video.muted = false;            // activar sonido
+                video.controls = true;          // mostrar controles
+                video.loop = false;             // dejar que termine si quiere
+
+                // abrir en pantalla completa
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.webkitRequestFullscreen) {
+                    video.webkitRequestFullscreen();
+                } else if (video.msRequestFullscreen) {
+                    video.msRequestFullscreen();
+                }
+
+                video.play(); // volver a reproducir con sonido
+            });
+        }
+    });
+</script>
+
+
+{% endblock js %}

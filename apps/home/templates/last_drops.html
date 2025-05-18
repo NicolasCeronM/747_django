@@ -8,19 +8,18 @@
         <div class="row g-4">
             <!-- Last Drop -->
 
-            {% for i in latest_drops %}
+            {% for drop in latest_drops %}
             <div class="col-md-4">
                 <div class="drop-card">
                     <div class="drop-image position-relative">
-                        <img src="{{ i.cover_image.url }}" class="img-fluid" alt="Drop 001">
+                        <img src="{{ drop.cover_image.url }}" class="img-fluid" alt="Drop 001">
                         <div class="drop-overlay">
-                            <a href="drop001.html" class="btn btn-outline-light">View Collection</a>
+                            <a href="{% url 'drop:drop_detail' drop.id %}" class="btn btn-outline-light">View
+                                Collection</a>
                         </div>
                     </div>
                     <div class="drop-info p-3">
-                        <h3>{{i.name}}</h3>
-                        <p>{{i.description}}</p>
-                        <a href="story001.html" class="text-decoration-none">Read Their Story →</a>
+                        <h3>{{drop.name}}</h3>
                     </div>
                 </div>
             </div>
