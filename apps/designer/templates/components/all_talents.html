@@ -1,0 +1,80 @@
+{% load static %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/talents.css' %}">
+{% endblock css %}
+
+
+<section class="designers-grid py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12">
+                <div class="designers-filter">
+                    <span class="filter-label">Filter by:</span>
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="drop001">Drop 001</button>
+                    <button class="filter-btn" data-filter="drop002">Drop 002</button>
+                    <button class="filter-btn" data-filter="drop003">Drop 003</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            {% for talent in designers %}
+
+            <div class="col-md-6 col-lg-4">
+                <a href="{% url 'designers:detail' talent.id %}" class="text-decoration-none text-dark d-block">
+                    <div class="talent-card bg-white border rounded shadow-sm overflow-hidden hover-card">
+                        <div class="cover-wrapper position-relative">
+                            <img src="{{ talent.cover_image.url }}" alt="{{ talent.user.first_name }}"
+                                class="w-100 cover-img">
+                        </div>
+
+                        <div class="text-left position-relative" style="margin-top: -60px; margin-left: 10px;">
+                            <img src="{{ talent.profile_image.url }}" alt="{{ talent.full_name }}"
+                                class="profile-img rounded-circle">
+                        </div>
+
+                        <div class="p-3 pt-2 ">
+                            <!-- <span class="badge bg-dark mb-2">Gota</span> -->
+                            <h5 class="mb-0">{{ talent.user.first_name }} {{ talent.user.last_name }}</h5>
+                            <small class="text-muted d-block mb-2"><strong>{{ talent.specialty }}</strong></small>
+                            <p class="text-muted small mb-3">{{ talent.biography|truncatechars:140 }}</p>
+
+                            <div class="d-flex justify-content-left gap-2 fs-5">
+                                {% if talent.instagram_url %}
+                                <a href="{{ talent.instagram_url }}" target="_blank" class="text-black"><i
+                                        class="fab fa-instagram"></i></a>
+                                {% endif %}
+                                {% if talent.twitter_url %}
+                                <a href="{{ talent.twitter_url }}" target="_blank" class="text-black"><i
+                                        class="fab fa-twitter"></i></a>
+                                {% endif %}
+                                {% if talent.website_url %}
+                                <a href="{{ talent.website_url }}" target="_blank" class="text-black"><i
+                                        class="fas fa-globe"></i></a>
+                                {% endif %}
+                                {% if talent.facebook_url %}
+                                <a href="{{ talent.facebook_url }}" target="_blank" class="text-black"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                {% endif %}
+                                {% if talent.youtube_url %}
+                                <a href="{{ talent.youtube_url }}" class="text-black" target="_blank">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+
+
+            {% endfor %}
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,45 @@
+
+.cover-img {
+    height: 140px; /* puedes ajustar a 120px, 100px, etc. */
+    object-fit: cover;
+    width: 100%;
+    display: block;
+}
+
+
+.hover-card {
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+/* Imagen perfil más compacta */
+.profile-img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Espacio de posición reducido */
+.text-left.position-relative {
+    margin-top: -30px;
+    margin-left: 10px;
+}
+
+/* Íconos de redes sociales negros y planos */
+.social-icons a {
+    color: #000;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.social-icons a:hover {
+    color: #000; /* sin hover */
+}
+

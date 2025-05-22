@@ -1,4 +1,12 @@
-/* Mission Section */
-.mission-statement {
-    background-color: #F8F4ED  !important;
+.mission-statement h2 {
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.mission-statement i {
+    font-size: 1rem;
+}
+
+.mission-statement p {
+    line-height: 1.7;
+    color: #333;
 }

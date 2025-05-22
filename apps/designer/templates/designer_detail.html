@@ -1,115 +1,122 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block caa %}
+{% block title %}{{ talent.user.first_name }} {{ talent.user.last_name }}{% endblock %}
+
+{% block css %}
 <link rel="stylesheet" href="{% static 'css/detail.css' %}">
-{% endblock caa %}
+{% endblock %}
+
 
 {% block content %}
-<section class="designer-detail-hero"
-    style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url({{ designer.cover_image.url }});">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h1 class="display-3 text-white">{{ designer.brand_name|default:designer.user.username }}</h1>
-                <p class="lead text-light">{{ designer.specialty }}</p>
-                <span class="badge bg-primary">Diseñador Verificado</span>
-            </div>
-            <div class="col-lg-6 text-lg-end">
-                <div class="designer-social-links">
-                    {% if designer.instagram %}
-                    <a href="{{ designer.instagram }}" target="_blank" class="text-white me-3">
-                        <i class="fab fa-instagram fa-lg"></i>
-                    </a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+<!-- Hero -->
+<section class="talent-hero position-relative text-white"
+    style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('{{ talent.cover_image.url }}'); background-size: cover; background-position: center; min-height: 400px;">
+    <div class="container text-center py-5">
+        <img src="{{ talent.profile_image.url }}" alt="{{ talent.user.first_name }}"
+            class="rounded-circle border border-white shadow mb-3"
+            style="width: 120px; height: 120px; object-fit: cover;">
+        <h2 class="fw-bold">
+            {{ talent.user.first_name }} {{ talent.user.last_name }}
+            {% if talent.is_verified %}
+            <span class="badge bg-primary ms-2"><i class="fas fa-check-circle"></i> Verificado</span>
+            {% endif %}
+        </h2>
+        <p class="lead">{{ talent.specialty }}{% if talent.brand_name %} • {{ talent.brand_name }}{% endif %}</p>
+        <p class="text-white-50">{{ talent.location }}</p>
     </div>
 </section>
 
-<section class="designer-bio py-5">
+<!-- Detalle -->
+<section class="py-5">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4">
-                <div class="designer-portrait mb-4">
-                    <img src="{{ designer.profile_image.url }}" alt="{{ designer.brand_name }}"
-                        class="img-fluid rounded">
-                </div>
-                <div class="designer-meta p-4 bg-light">
-                    <h4 class="mb-3">Información</h4>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><strong>Nombre:</strong> {{ designer.user.first_name }}
-                            {{designer.user.last_name}}</li>
-                        <li class="mb-2"><strong>Redes Sociales:</strong> {{ designer.specialty }}</li>
-                        <li class="mb-2"><strong>Contacto:</strong> {{ designer.years_experience }} años</li>
-                        <ul>
-                            {% for pub in designer.featured_in_list %}
-                            <li>{{ pub }}</li>
-                            {% endfor %}
-                        </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <!-- Biografía y video -->
             <div class="col-lg-8">
-                <div class="designer-story">
-                    <h2 class="mb-4">Su Historia</h2>
-                    <p>{{ designer.biography|linebreaks }}</p>
+                <h4 class="mb-3">Biografía</h4>
+                <p>{{ talent.biography|linebreaksbr }}</p>
 
-                    {% if designer.video_url %}
-                    <div class="incrustar-responsivo incrustar-responsivo-16by9">
-                        <iframe class="embed-responsive-item" width="560" height="315" src="{{designer.video_url}}"
-                            title="YouTube video player" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    </div>
-                    {% endif %}
+                {% if talent.video_url %}
+                <h4 class="mt-5 mb-3">Video destacado</h4>
+                <div class="ratio ratio-16x9 mb-4">
+                    <iframe src="{{ talent.video_url }}" title="Video de {{ talent.full_name }}" frameborder="0"
+                        allowfullscreen class="rounded"></iframe>
                 </div>
+                {% endif %}
+
+                {% if talent.featured_in %}
+                <h4 class="mt-5 mb-3">Destacado en</h4>
+                <ul class="list-group list-group-flush mb-4">
+                    {% for medio in talent.featured_in_list %}
+                    <li class="list-group-item">{{ medio }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+
+            <!-- Contacto y redes -->
+            <div class="col-lg-4">
+                <div class="bg-light p-4 rounded shadow-sm">
+                    <h5 class="mb-4">Contacto</h5>
+                    <ul class="list-unstyled fs-6">
+                        {% if talent.contact_email %}
+                        <li class="mb-2">
+                            <i class="fas fa-envelope me-2 text-dark"></i>
+                            <a href="mailto:{{ talent.contact_email }}">{{ talent.contact_email }}</a>
+                        </li>
+                        {% endif %}
+
+                        {% if talent.phone_number %}
+                        <li class="mb-2">
+                            <i class="fas fa-phone me-2 text-dark"></i>
+                            {{ talent.phone_number }}
+                        </li>
+                        <li class="mb-3">
+                            <a href="https://wa.me/{{ talent.phone_number|cut:'+' }}" target="_blank"
+                                class="btn btn-success btn-sm w-100">
+                                <i class="fab fa-whatsapp me-1"></i> WhatsApp
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+
+                    <hr>
+
+                    <h5 class="mb-3">Redes Sociales</h5>
+                    <div class="d-flex flex-wrap gap-2 fs-5">
+                        {% if talent.instagram_url %}
+                        <a href="{{ talent.instagram_url }}" target="_blank" class="social-icon instagram"
+                            aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        {% if talent.linkedin_url %}
+                        <a href="{{ talent.linkedin_url }}" target="_blank" class="social-icon linkedin"
+                            aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        {% endif %}
+                        {% if talent.website_url %}
+                        <a href="{{ talent.website_url }}" target="_blank" class="social-icon website"
+                            aria-label="Sitio web"><i class="fas fa-globe"></i></a>
+                        {% endif %}
+                        {% if talent.facebook_url %}
+                        <a href="{{ talent.facebook_url }}" target="_blank" class="social-icon facebook"
+                            aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        {% endif %}
+                        {% if talent.twitter_url %}
+                        <a href="{{ talent.twitter_url }}" target="_blank" class="social-icon twitter"
+                            aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                        {% if talent.youtube_url %}
+                        <a href="{{ talent.youtube_url }}" class="social-icon youtube" target="_blank">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>
 </section>
 
-<section class="designer-products py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-5">MAS HISTORIAS</h2>
-        <div class="row g-4">
-            {% if drop%}
-            <div class="row mt-5">
-                <div class="col-12">
-                    <h4 class="text-uppercase">Nuestros ultimos Drops:</h4>
-                    <div class="row g-4">
-                        {% for drop in drop%}
-                        <div class="col-md-4">
-                            <div class="card bg-dark text-white h-100">
-                                <img src="{{ drop.cover_image.url }}" class="card-img-top" alt="{{ drop.name }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ drop.name }}</h5>
-                                    <p class="card-text">{{ drop.theme }}</p>
-                                    <a href="{% url 'drop:drop_detail' drop.id %}"
-                                        class="btn btn-outline-warning btn-sm">Ver
-                                        Drop</a>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            {% else %}
-            <p>No hai mas drops</p>
-            {% endif %}
-        </div>
-    </div>
-</section>
 
-<section class="designer-cta py-5 bg-dark text-white text-center">
-    <div class="container">
-        <h2 class="mb-4">Apoya el trabajo de {{ designer.brand_name|default:designer.user.username }}</h2>
-        <p class="lead mb-4">Parte de las ganancias se destinan a sus iniciativas sociales.</p>
-        <a href="{% url 'drop:drops' %}" class="btn btn-light btn-lg me-2">Ver Colecciones</a>
-        <a href="#" class="btn btn-outline-light btn-lg">Donar</a>
-    </div>
-</section>
 {% endblock %}

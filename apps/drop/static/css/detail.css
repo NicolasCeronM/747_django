@@ -75,3 +75,16 @@
   height: auto;
   display: block;
 }
+
+/* Imagen */
+
+.talent-cover-img {
+    width: 50px;               /* Tamaño fijo en ancho */   
+    height: 50px;              /* Tamaño fijo en alto */
+    object-fit: cover;          /* Recorta para que siempre llene el espacio */
+    object-position: center;    /* Centra el contenido de la imagen */
+    border-radius: 50%;         /* Redondea completamente (círculo) */
+    border: 3px solid #fff;     /* Borde blanco visible */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra ligera */
+}
+

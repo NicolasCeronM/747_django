@@ -1,0 +1,12 @@
+<section class="designer-detail-hero"
+    style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url({{ designer.cover_image.url }});">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-3 text-white">{{ designer.brand_name|default:designer.user.username }}</h1>
+                <p class="lead text-light">{{ designer.specialty }}</p>
+                <span class="badge bg-primary">Diseñador Verificado</span>
+            </div>
+        </div>
+    </div>
+</section>

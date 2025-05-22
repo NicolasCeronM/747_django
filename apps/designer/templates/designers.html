@@ -20,8 +20,10 @@ Designers
         <div class="row align-items-center">
             <div class="col-md-6">
                 <h1 class="display-3">The Creators</h1>
-                <p class="lead">Meet the visionary artists behind each SEVEN FOUR SEVEN drop. Every collection amplifies
-                    marginalized voices in streetwear culture.</p>
+                <p class="lead"><strong>SEVEN FOUR SEVEN</strong> nace con el propósito de visibilizar talentos de
+                    sectores marginados. A través de sus plataformas y colecciones
+                    inspiradas en sus historias, la marca busca ser un <strong>impulsor real</strong> para
+                    que esos talentos no se pierdan.</p>
             </div>
             <div class="col-md-6">
                 <img src="{% static 'img/placeholder.png' %}" alt="Designers Collective" class="img-fluid rounded">
@@ -30,62 +32,9 @@ Designers
     </div>
 </section>
 
-<section class="designers-grid py-5">
-    <div class="container">
-        <div class="row mb-5">
-            <div class="col-12">
-                <div class="designers-filter">
-                    <span class="filter-label">Filter by:</span>
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="drop001">Drop 001</button>
-                    <button class="filter-btn" data-filter="drop002">Drop 002</button>
-                    <button class="filter-btn" data-filter="drop003">Drop 003</button>
-                </div>
-            </div>
-        </div>
+<!-- Todos los talentos -->
 
-        <div class="row g-4">
-            <!-- Designer 1 -->
+{% include 'components/all_talents.html' %}
 
 
-            {% for i in designers %}
-
-            <div class="col-lg-4 col-md-6 designer-card" data-category="drop001">
-                <div class="designer-profile">
-                    <div class="designer-image">
-                        <img src="{{i.cover_image.url}}" alt="María Rodríguez" class="img-fluid">
-                        <div class="designer-overlay">
-                            <a href="{% url 'designers:detail' i.id %}" class="btn btn-outline-light">View
-                                Profile</a>
-                        </div>
-                    </div>
-                    <div class="designer-info">
-                        <h3>{{i.user.names}} {{i.user.last_names}}</h3>
-                        <span class="designer-drop">Drop 001</span>
-                        <p>{{i.biography}}</p>
-                        <div class="designer-social">
-                            <a href="#"><i class="fab fa-instagram"></i></a>
-                            <a href="#"><i class="fab fa-behance"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {% endfor %}
-
-
-
-            <!-- Add more designers following the same pattern -->
-        </div>
-    </div>
-</section>
-
-<section class="designers-cta py-5 bg-dark text-white">
-    <div class="container text-center">
-        <h2>Are you a designer?</h2>
-        <p class="lead mb-4">We're always looking to collaborate with emerging talent from underrepresented communities.
-        </p>
-        <a href="#" class="btn btn-light btn-lg">Submit Your Portfolio</a>
-    </div>
-</section>
 {% endblock %}

@@ -1,109 +1,67 @@
-/* Designer Detail Page Styles */
-.designer-detail-hero {
-    padding: 120px 0 80px;
-    background-size: cover;
-    background-position: center;
-    color: white;
-    margin-bottom: 60px;
+/* ================================
+   🔗 LINKS & ICONS
+================================== */
+
+a {
+    text-decoration: none;
 }
 
-.designer-social-links a {
-    transition: opacity 0.3s ease;
-    display: inline-block;
+a i:hover {
+    color: #555;
+    transform: scale(1.1);
+    transition: all 0.2s ease;
 }
 
-.designer-social-links a:hover {
-    opacity: 0.7;
-    transform: translateY(-2px);
-}
+/* ================================
+   🖼️ IMÁGENES
+================================== */
 
-.designer-portrait {
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.designer-meta {
-    border-radius: 5px;
-}
-
-.designer-meta li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.designer-quote {
-    font-size: 1.2rem;
-    font-style: italic;
-}
-
-.gallery-item {
-    background: white;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+img.rounded-circle:hover {
+    transform: scale(1.05);
     transition: transform 0.3s ease;
 }
 
-.gallery-item:hover {
-    transform: translateY(-5px);
+/* ================================
+   🌐 SOCIAL MEDIA ICONS
+================================== */
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.2s ease;
 }
 
-.gallery-caption {
-    background: white;
+.social-icon:hover {
+    transform: scale(1.1);
 }
 
-.product-card {
-    border: 1px solid #eee;
-    transition: all 0.3s ease;
+/* Estilos por red social */
+.instagram {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
 }
 
-.product-card:hover {
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+.linkedin {
+    background-color: #0077b5;
 }
 
-.product-image {
-    position: relative;
-    overflow: hidden;
+.facebook {
+    background-color: #3b5998;
 }
 
-.product-image img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
+.twitter {
+    background-color: #1da1f2;
 }
 
-.product-actions {
-    position: absolute;
-    bottom: -50px;
-    left: 0;
-    right: 0;
-    padding: 15px;
-    background: rgba(255,255,255,0.9);
-    display: flex;
-    justify-content: space-between;
-    transition: bottom 0.3s ease;
+.website {
+    background-color: #343a40;
 }
 
-.product-card:hover .product-actions {
-    bottom: 0;
-}
-
-/* Responsive adjustments */
-@media (max-width: 992px) {
-    .designer-detail-hero {
-        padding: 80px 0 60px;
-        text-align: center;
-    }
-    
-    .designer-social-links {
-        justify-content: center;
-        margin-top: 20px;
-    }
-}
-
-@media (max-width: 768px) {
-    .designer-bio .col-lg-4 {
-        margin-bottom: 30px;
-    }
-    
-    .product-image img {
-        height: 250px;
-    }
+.youtube {
+    background-color: #ff0000;
 }

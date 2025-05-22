@@ -1,7 +1,15 @@
+{% load static %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/product.css' %}">
+{% endblock css %}
+
+
 <section id="products" class="drop-products py-5">
     <div class="container">
         <div class="d-flex justify-content-between align-items-center mb-5">
-            <h2>Collection Pieces</h2>
+            <h2 class="fw-bold">Collection Pieces</h2>
             <div class="dropdown">
                 <button class="btn btn-outline-dark dropdown-toggle" type="button" id="filterDropdown"
                     data-bs-toggle="dropdown">
@@ -20,32 +28,26 @@
         <div class="row g-4">
             {% for product in drop.products.all %}
             <div class="col-xl-3 col-lg-4 col-md-6 product-card" data-categories="category-{{ product.category.slug }}">
-                <div class="card h-100 border-0 shadow-sm">
-                    {% if product.discounted_price %}
-                    <span class="badge bg-danger position-absolute top-0 end-0 m-2">Sale</span>
-                    {% endif %}
-                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text text-muted small">{{ product.category }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            {% if product.discounted_price %}
-                            <div>
-                                <span class="text-danger fw-bold">${{ product.discounted_price }}</span>
-                                <span class="text-decoration-line-through text-muted small ms-2">${{ product.price
-                                    }}</span>
-                            </div>
-                            {% else %}
-                            <span class="fw-bold">${{ product.price }}</span>
-                            {% endif %}
-                            <span class="badge bg-light text-dark">{{ product.get_gender_display }}</span>
-                        </div>
+                <div class="product-card-custom">
+                    <div class="product-image-wrapper">
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img-custom">
                     </div>
-                    <div class="card-footer bg-white border-0">
-                        <a href="#" class="btn btn-dark w-100">View Details</a>
+                    <div class="product-info">
+                        <h5 class="product-title">{{ product.name }}</h5>
+                        <p class="product-description text-muted">{{ product.description|truncatechars:60 }}</p>
+                        <div class="product-price-cart d-flex justify-content-between align-items-center">
+                            <strong class="price">${{ product.discounted_price|default:product.price }}</strong>
+                            <form method="POST" action="#">
+                                {% csrf_token %}
+                                <button type="submit" class="btn cart-btn" title="Add to cart">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
+
             {% empty %}
             <div class="col-12 text-center py-5">
                 <h3>No products available in this drop</h3>

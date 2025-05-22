@@ -20,7 +20,7 @@ def designer_detail(request,id):
     drop = Drop.objects.filter(is_active=True).order_by('-created_at')[:5]
 
     data = {
-        'designer':designer,
+        'talent':designer,
         'drop':drop
     }
 
