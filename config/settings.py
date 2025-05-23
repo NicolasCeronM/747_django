@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-n-8x1$yp=_szs$ex0$0)yun+^t1zzjend7%#p4^562e2-n=d%_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False # En true no se ve la page 404
+DEBUG = True # En true no se ve la page 404
 
 ALLOWED_HOSTS = ['sevnforseven.onrender.com', 'localhost', '127.0.0.1']
 
