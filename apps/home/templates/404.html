@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Página en construcción – 404{% endblock %}
+
+{% block content %}
+<section class="d-flex align-items-center justify-content-center text-center"
+    style="min-height: 100vh; background: #f8f9fa;">
+    <div class="p-4">
+        <img src="https://cdn-icons-png.flaticon.com/512/564/564445.png" alt="Página en construcción"
+            class="img-fluid mb-4" style="max-width: 200px;">
+
+        <h1 class="display-5 fw-bold">¡Oops! Esta sección está en construcción 🛠️</h1>
+        <p class="lead text-muted mb-4">Estamos trabajando para traerte algo increíble. Vuelve pronto o explora otras
+            secciones.</p>
+
+        <a href="{% url 'home:home' %}" class="btn btn-dark rounded-pill px-4 py-2">Volver al inicio</a>
+    </div>
+</section>
+{% endblock %}

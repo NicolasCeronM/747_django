@@ -26,6 +26,9 @@ urlpatterns = [
     path('drops/', include('apps.drop.urls'), name='drops'),
 ]
 
+handler404 = 'apps.home.views.custom_404'
+
+
 urlpatterns += [
     re_path(r'^media/(?P<path>.*)$',serve,{
         'document_root':settings.MEDIA_ROOT,
