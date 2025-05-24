@@ -1,4 +1,4 @@
-/* Hero Carousel Styles */
+/* =================== Hero Carousel Styles  ========================== */
 .hero-carousel {
     margin-bottom: 3rem;
 }
@@ -31,7 +31,7 @@
     font-weight: 600;
 }
 
-/* Drop Cards */
+/* ================ Drop Cards ======================*/
 .drop-card {
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -113,4 +113,18 @@
     .hero-carousel .carousel-caption p {
         font-size: 1rem;
     }
+}
+
+/* ============ Mission ==================*/
+.mission-statement h2 {
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.mission-statement i {
+    font-size: 1rem;
+}
+
+.mission-statement p {
+    line-height: 1.7;
+    color: #333;
 }

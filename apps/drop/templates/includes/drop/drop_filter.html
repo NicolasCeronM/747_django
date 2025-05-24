@@ -1,0 +1,27 @@
+<section class="drops-filter py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex flex-wrap align-items-center justify-content-center gap-3">
+                    <span class="filter-label">Filter by:</span>
+                    <button class="filter-btn active" data-filter="all">All Drops</button>
+                    <button class="filter-btn" data-filter="active">Available Now</button>
+                    <button class="filter-btn" data-filter="upcoming">Coming Soon</button>
+                    <button class="filter-btn" data-filter="past">Past Drops</button>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="designerDropdown"
+                            data-bs-toggle="dropdown">
+                            Designers
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% for designer in designers %}
+                            <li><a class="dropdown-item" href="#" data-filter="designer-{{ designer.slug }}">
+                                    {{designer.user.names}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

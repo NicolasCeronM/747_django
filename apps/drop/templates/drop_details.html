@@ -10,67 +10,26 @@
 
 {% block css %}
 
-<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+<link rel="stylesheet" href="{% static 'drop/css/detail.css' %}">
 
 {% endblock css %}
 
 
 {% block content %}
 <!--Header-->
-{% include 'components/header.html' %}
+{% include 'includes/detail/detail_header.html' %}
 
 <!-- Video y Descripcion -->
 
-{% include 'components/video_desc.html' %}
+{% include 'includes/detail/detail_video_desc.html' %}
 
 <!--Products-->
 
-{% include 'components/product.html' %}
+{% include 'includes/detail/detail_product.html' %}
 
-<section class="drop-cta py-5 bg-dark text-white text-center">
-    <div class="container">
-        <h2 class="mb-4">Want updates on future drops?</h2>
-        <p class="lead mb-4">Subscribe to get early access and exclusive content</p>
-        <form class="row g-2 justify-content-center">
-            <div class="col-md-6">
-                <input type="email" class="form-control" placeholder="Your email address">
-            </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-light w-100">Subscribe</button>
-            </div>
-        </form>
-    </div>
-</section>
 {% endblock %}
 
 
 {% block js %}
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const video = document.getElementById('previewVideo');
-
-        if (video) {
-            video.addEventListener('click', () => {
-                video.pause();                  // detener el loop silenciado
-                video.muted = false;            // activar sonido
-                video.controls = true;          // mostrar controles
-                video.loop = false;             // dejar que termine si quiere
-
-                // abrir en pantalla completa
-                if (video.requestFullscreen) {
-                    video.requestFullscreen();
-                } else if (video.webkitRequestFullscreen) {
-                    video.webkitRequestFullscreen();
-                } else if (video.msRequestFullscreen) {
-                    video.msRequestFullscreen();
-                }
-
-                video.play(); // volver a reproducir con sonido
-            });
-        }
-    });
-</script>
-
-
+<script src="{% static 'drop/js/auto_play.js' %}"> </script>
 {% endblock js %}

@@ -10,7 +10,7 @@ class Drop(models.Model):
     end_date = models.DateField(blank=True, null=True)
     description = models.TextField()
     cover_image = models.ImageField(upload_to='drops/cover/')
-    hero_video = models.FileField(upload_to='drops/videos/', blank=True, null=True)
+    hero_video = models.URLField(blank=True,null=True, help_text="URL del video documental o presentación")
     is_active = models.BooleanField(default=True)
     is_featured = models.BooleanField(default=False)
     social_impact = models.TextField(help_text="Cómo este drop apoya a la comunidad")

@@ -10,124 +10,27 @@ Drops
 
 {% block css %}
 
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'drop/css/main.css' %}">
 
 {% endblock css %}
 
 
 {% block content %}
-<section class="drops-hero"
-    style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url({% static 'appx/images/drops-hero.jpg' %});">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-3 text-white">Nuestros Drops</h1>
-                <p class="lead text-light">Prendas exclusivas que muestran el potencial de talentos invisibilizados</p>
-            </div>
-        </div>
-    </div>
-</section>
 
-<section class="drops-filter py-5 bg-light">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="d-flex flex-wrap align-items-center justify-content-center gap-3">
-                    <span class="filter-label">Filter by:</span>
-                    <button class="filter-btn active" data-filter="all">All Drops</button>
-                    <button class="filter-btn" data-filter="active">Available Now</button>
-                    <button class="filter-btn" data-filter="upcoming">Coming Soon</button>
-                    <button class="filter-btn" data-filter="past">Past Drops</button>
-                    <div class="dropdown">
-                        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="designerDropdown"
-                            data-bs-toggle="dropdown">
-                            Designers
-                        </button>
-                        <ul class="dropdown-menu">
-                            {% for designer in designers %}
-                            <li><a class="dropdown-item" href="#" data-filter="designer-{{ designer.slug }}">
-                                    {{designer.user.names}}</a></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+<!-- Titulo de pagina Drops -->
 
-<section class="drops-grid py-5">
-    <div class="container">
-        <div class="row g-4">
-            {% for drop in drops %}
-            <div class="col-lg-4 col-md-6 drop-card"
-                data-status="{% if drop.is_active %}active{% else %}past{% endif %}"
-                data-designers="{% for designer in drop.designers.all %}designer-{{ designer.slug }} {% endfor %}">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="drop-badge">
-                        {% if drop.is_active %}
-                        <span class="badge bg-success">Available</span>
-                        {% else %}
-                        <span class="badge bg-secondary">Past Drop</span>
-                        {% endif %}
-                    </div>
-                    <img src="{{ drop.cover_image.url }}" class="card-img-top" alt="{{ drop.name }}">
-                    <div class="card-body">
-                        <h3 class="h5">{{ drop.name }}</h3>
-                        <p class="text-muted small mb-2">
-                            <i class="far fa-calendar-alt me-1"></i>
-                            {{ drop.launch_date|date:"F Y" }}
-                        </p>
-                        <p class="card-text">{{ drop.description|truncatewords:20 }}</p>
+{% include 'includes/drop/drop_title.html' %}
 
-                        <div class="designers-list mb-3">
-                            <p class="small mb-1">Featured Designers:</p>
-                            <div class="d-flex flex-wrap gap-2">
-                                {% for designer in drop.designers.all %}
-                                <a href="#" class="badge bg-light text-dark">
-                                    {{ designer.brand_name|default:designer.user.username }}
-                                </a>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer bg-white border-0">
-                        <a href="{% url 'drop:drop_detail' drop.id %}" class="btn btn-dark w-100">View Collection</a>
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-12 text-center py-5">
-                <h3>No drops available yet</h3>
-                <p>Check back soon for our upcoming collections</p>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
 
-{% if upcoming_drops %}
-<section class="upcoming-drops py-5 bg-dark text-white">
-    <div class="container">
-        <h2 class="text-center mb-5">Coming Soon</h2>
-        <div class="row g-4">
-            {% for drop in upcoming_drops %}
-            <div class="col-md-6">
-                <div class="upcoming-card p-4 position-relative"
-                    style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url({{ drop.cover_image.url }});">
-                    <div class="upcoming-content">
-                        <span class="badge bg-warning text-dark mb-2">Coming {{ drop.launch_date|timeuntil }}</span>
-                        <h3>{{ drop.name }}</h3>
-                        <p>{{ drop.description|truncatewords:15 }}</p>
-                        <button class="btn btn-outline-light notify-btn" data-drop-id="{{ drop.id }}">
-                            Notify Me
-                        </button>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-{% endif %}
+<!-- Filtro de Drops -->
+
+{% include 'includes/drop/drop_filter.html' %}
+
+
+<!-- Todos los drops -->
+
+{% include 'includes/drop/drop_drops.html' %}
+
+
+
 {% endblock %}

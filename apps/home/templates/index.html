@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% load static %}
 
 
@@ -7,41 +6,26 @@
 Home
 {% endblock title %}
 
-
+<!-- Estilos de la pagina -->
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/carousel-style.css' %}">
+<link rel="stylesheet" href="{% static 'home/css/styles.css' %}">
 {% endblock css %}
 
-
-
-
-
+<!-- todo| CONTENIDO PRICIPAL | -->
 {% block content %}
+
 <!-- Hero Carousel Section -->
-{% include 'carousel.html' %}
+{% include 'includes/home_carousel.html' %}
 
 <!-- Featured Drops Section -->
-{% include 'last_drops.html' %}
+{% include 'includes/home_last_drops.html' %}
 
 <!-- Mission Statement Section -->
-{% include 'mission.html' %}
+{% include 'includes/home_mission.html' %}
 
 {% endblock %}
 
+
 {% block js %}
-
-<!-- Bootstrap JS Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    // Initialize carousel with auto-scrolling
-    document.addEventListener('DOMContentLoaded', function () {
-        const myCarousel = new bootstrap.Carousel(document.getElementById('mainCarousel'), {
-            interval: 5000, // Change slide every 5 seconds
-            pause: 'hover', // Pause on hover
-            wrap: true // Continuously loop
-        });
-    });
-</script>
-
+<script src="{% static 'home/js/index.js' %}"></script>
 {% endblock js %}

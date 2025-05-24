@@ -4,119 +4,24 @@
 {% block title %}{{ talent.user.first_name }} {{ talent.user.last_name }}{% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+<link rel="stylesheet" href="{% static 'talent/css/detail.css' %}">
 {% endblock %}
 
 
 {% block content %}
+
 <!-- Hero -->
-<section class="talent-hero position-relative text-white"
-    style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('{{ talent.cover_image.url }}'); background-size: cover; background-position: center; min-height: 400px;">
-    <div class="container text-center py-5">
-        <img src="{{ talent.profile_image.url }}" alt="{{ talent.user.first_name }}"
-            class="rounded-circle border border-white shadow mb-3"
-            style="width: 120px; height: 120px; object-fit: cover;">
-        <h2 class="fw-bold">
-            {{ talent.user.first_name }} {{ talent.user.last_name }}
-            {% if talent.is_verified %}
-            <span class="badge bg-primary ms-2"><i class="fas fa-check-circle"></i> Verificado</span>
-            {% endif %}
-        </h2>
-        <p class="lead">{{ talent.specialty }}{% if talent.brand_name %} • {{ talent.brand_name }}{% endif %}</p>
-        <p class="text-white-50">{{ talent.location }}</p>
-    </div>
-</section>
 
-<!-- Detalle -->
-<section class="py-5">
-    <div class="container">
-        <div class="row">
-            <!-- Biografía y video -->
-            <div class="col-lg-8">
-                <h4 class="mb-3">Biografía</h4>
-                <p>{{ talent.biography|linebreaksbr }}</p>
+{% include 'includes/detail/detail_cover.html' %}
 
-                {% if talent.video_url %}
-                <h4 class="mt-5 mb-3">Video destacado</h4>
-                <div class="ratio ratio-16x9 mb-4">
-                    <iframe src="{{ talent.video_url }}" title="Video de {{ talent.full_name }}" frameborder="0"
-                        allowfullscreen class="rounded"></iframe>
-                </div>
-                {% endif %}
+<!-- todo| Detalle | -->
 
-                {% if talent.featured_in %}
-                <h4 class="mt-5 mb-3">Destacado en</h4>
-                <ul class="list-group list-group-flush mb-4">
-                    {% for medio in talent.featured_in_list %}
-                    <li class="list-group-item">{{ medio }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </div>
-
-            <!-- Contacto y redes -->
-            <div class="col-lg-4">
-                <div class="bg-light p-4 rounded shadow-sm">
-                    <h5 class="mb-4">Contacto</h5>
-                    <ul class="list-unstyled fs-6">
-                        {% if talent.contact_email %}
-                        <li class="mb-2">
-                            <i class="fas fa-envelope me-2 text-dark"></i>
-                            <a href="mailto:{{ talent.contact_email }}">{{ talent.contact_email }}</a>
-                        </li>
-                        {% endif %}
-
-                        {% if talent.phone_number %}
-                        <li class="mb-2">
-                            <i class="fas fa-phone me-2 text-dark"></i>
-                            {{ talent.phone_number }}
-                        </li>
-                        <li class="mb-3">
-                            <a href="https://wa.me/{{ talent.phone_number|cut:'+' }}" target="_blank"
-                                class="btn btn-success btn-sm w-100">
-                                <i class="fab fa-whatsapp me-1"></i> WhatsApp
-                            </a>
-                        </li>
-                        {% endif %}
-                    </ul>
-
-                    <hr>
-
-                    <h5 class="mb-3">Redes Sociales</h5>
-                    <div class="d-flex flex-wrap gap-2 fs-5">
-                        {% if talent.instagram_url %}
-                        <a href="{{ talent.instagram_url }}" target="_blank" class="social-icon instagram"
-                            aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                        {% endif %}
-                        {% if talent.linkedin_url %}
-                        <a href="{{ talent.linkedin_url }}" target="_blank" class="social-icon linkedin"
-                            aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                        {% endif %}
-                        {% if talent.website_url %}
-                        <a href="{{ talent.website_url }}" target="_blank" class="social-icon website"
-                            aria-label="Sitio web"><i class="fas fa-globe"></i></a>
-                        {% endif %}
-                        {% if talent.facebook_url %}
-                        <a href="{{ talent.facebook_url }}" target="_blank" class="social-icon facebook"
-                            aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        {% endif %}
-                        {% if talent.twitter_url %}
-                        <a href="{{ talent.twitter_url }}" target="_blank" class="social-icon twitter"
-                            aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        {% endif %}
-                        {% if talent.youtube_url %}
-                        <a href="{{ talent.youtube_url }}" class="social-icon youtube" target="_blank">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
+{% include 'includes/detail/detail_detail.html' %}
 
 
-            </div>
-        </div>
-    </div>
-</section>
+<!-- Mas drops -->
+
+{% include 'includes/detail/detail_drop.html' %}
 
 
 {% endblock %}
