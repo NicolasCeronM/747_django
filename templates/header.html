@@ -3,18 +3,18 @@
 <header class="header sticky-top">
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #000523;">
         <div class="container">
-            <!-- Logo on the left -->
+            <!-- Logo -->
             <a class="navbar-brand" href="{% url 'home:home' %}">
                 <img src="{% static 'img/sfs-short-logo.png' %}" alt="SEVEN FOUR SEVEN" height="40">
             </a>
 
-            <!-- Mobile menu toggle -->
+            <!-- Mobile toggle -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Navigation menu -->
+            <!-- Nav links -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
@@ -31,17 +31,40 @@
                     </li>
                 </ul>
 
-                <!-- Cart and Profile buttons on the right -->
-                <div class="d-flex">
-                    <a href="cart.html" class="btn btn-link position-relative me-2">
+                <!-- Cart and user menu -->
+                <div class="d-flex align-items-center">
+                    <a href="cart.html" class="btn btn-link position-relative me-3 text-white">
                         <i class="fas fa-shopping-bag fa-lg"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            0
-                        </span>
+                        <span
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
                     </a>
-                    <a href="profile.html" class="btn btn-link">
+
+                    {% if user.is_authenticated %}
+                    <!-- Dropdown con nombre de usuario -->
+                    <div class="dropdown">
+                        <a class="btn btn-link dropdown-toggle text-white" href="#" role="button" id="userMenuLink"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user fa-lg me-1"></i>{{ user.get_full_name|default:user.username }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuLink">
+                            <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form method="POST" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item">Cerrar sesión</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <!-- Botón de login -->
+                    <a href="{% url 'user:login' %}" class="btn btn-link text-white">
                         <i class="fas fa-user fa-lg"></i>
                     </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
