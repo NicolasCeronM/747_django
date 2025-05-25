@@ -26,6 +26,11 @@ urlpatterns = [
     path('designer/', include('apps.designer.urls'), name='designer'),
     path('drops/', include('apps.drop.urls'), name='drops'),
     path('user/', include('apps.user.urls'), name='user'),
+    path('product/', include('apps.product.urls'), name='product'),
+
+
+
+
     path('logout/', LogoutView.as_view(), name='logout'),
 ]
 
