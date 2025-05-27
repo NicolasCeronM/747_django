@@ -1,38 +1,92 @@
 {% extends "base.html" %}
-
 {% load static %}
 {% load crispy_forms_tags %}
 
 {% block title %}Iniciar sesión{% endblock %}
 
-
 {% block css %}
 <link rel="stylesheet" href="{% static 'home/css/login.css' %}">
 {% endblock css %}
 
-
 {% block content %}
+<div class="login-container p-3">
+    <div class="login-card">
+        <!-- Encabezado -->
+        <div class="login-header">
+            <h1 class="login-title">Bienvenido</h1>
+            <p class="login-subtitle">Inicia sesión en tu cuenta para acceder a drops exclusivos</p>
+        </div>
 
-<div class="login-container">
-    <div class="text-center mb-4">
-        <h1 class="login-title">Iniciar Sesión</h1>
-        <p class="login-subtitle">Bienvenido de vuelta</p>
-    </div>
-    <form method="POST" novalidate>
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn login-button w-100 mt-3">Entrar</button>
-    </form>
-    <div class="register-link">
-        ¿No tienes una cuenta? <a href="{% url 'user:register' %}">Regístrate</a>
+        <!-- Alertas Django (por ejemplo: invalid credentials) -->
+        {% if messages %}
+        <div id="alertContainer">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Formulario Django -->
+        <form method="POST" class="login-form" novalidate>
+            {% csrf_token %}
+
+            <div class="form-group mb-3">
+                {{ form.username|as_crispy_field }}
+            </div>
+
+            <div class="form-group mb-3">
+                <div class="input-group">
+                    {{ form.password|as_crispy_field }}
+                    <button type="button" class="password-toggle" onclick="togglePassword()"
+                        title="Mostrar/Ocultar contraseña">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-options mb-3 d-flex justify-content-between align-items-center">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="remember">
+                    <label class="form-check-label" for="remember">
+                        Recordarme
+                    </label>
+                </div>
+                <a href="#" class="forgot-password">
+                    ¿Olvidaste tu contraseña?
+                </a>
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">
+                <span class="btn-spinner" id="btnSpinner" style="display: none;"></span>
+                <span id="btnText">Iniciar Sesión</span>
+            </button>
+        </form>
+
+        <!-- División
+        <div class="login-divider">
+            <span>O continúa con</span>
+        </div>
+
+        Botones sociales 
+        <div class="social-login">
+            <a href="#" class="social-btn">
+                <i class="bi bi-google"></i>
+                <span>Google</span>
+            </a>
+            <a href="#" class="social-btn">
+                <i class="bi bi-facebook"></i>
+                <span>Facebook</span>
+            </a>
+        </div> -->
+
+        <!-- Link a registro -->
+        <div class="signup-link mt-3">
+            <p>¿No tienes una cuenta? <a href="{% url 'user:register' %}">Regístrate aquí</a></p>
+        </div>
     </div>
 </div>
-
+{% endblock %}
 
 {% block js %}
-
 <script src="{% static 'home/js/login.js' %}"></script>
-
-{% endblock js %}
-
 {% endblock %}

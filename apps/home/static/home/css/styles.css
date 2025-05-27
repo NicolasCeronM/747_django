@@ -1,130 +1,263 @@
 /* =================== Hero Carousel Styles  ========================== */
 .hero-carousel {
-    margin-bottom: 3rem;
+  margin-bottom: 3rem;
 }
 
 .hero-carousel .carousel-item {
-    height: 90vh;
-    min-height: 500px;
+  height: 90vh;
+  min-height: 500px;
 }
 
 .hero-carousel .carousel-item img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
 }
 
 .hero-carousel .carousel-caption {
-    bottom: 30%;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+  bottom: 30%;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 .hero-carousel .carousel-caption h2 {
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
 }
 
 .hero-carousel .carousel-caption .btn {
-    margin-top: 1rem;
-    padding: 0.75rem 2rem;
-    font-weight: 600;
+  margin-top: 1rem;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
 }
 
 /* ================ Drop Cards ======================*/
+.drops-section {
+  background: #f8f4ed;
+  padding: 4rem 0;
+  min-height: 80vh;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--primary-bg);
+  margin-bottom: 1rem;
+  letter-spacing: -1px;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: #6c757d;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.drops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
 .drop-card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    transition: transform 0.2s ease;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px var(--shadow-light);
+  transition: all 0.4s ease;
+  position: relative;
+  cursor: pointer;
 }
 
 .drop-card:hover {
-    transform: scale(1.02);
+  transform: translateY(-10px);
+  box-shadow: 0 20px 50px var(--shadow-medium);
 }
 
-.drop-image {
-    overflow: hidden;
-    flex-grow: 1;
+.drop-card-image {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
 }
 
-.drop-image img {
-    transition: transform 0.5s ease;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.drop-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
 }
 
-.drop-card:hover .drop-image img {
-    transform: scale(1.05);
+.drop-card:hover .drop-card-image img {
+  transform: scale(1.1);
+}
+.drop-number {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: var(--primary-bg);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 10;
 }
 
-.drop-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+.drop-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background: linear-gradient(
+    45deg,
+    rgba(0, 5, 35, 0.8) 0%,
+    rgba(255, 107, 53, 0.6) 100%
+  ); */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  padding: 2rem;
 }
 
-.drop-card:hover .drop-overlay {
-    opacity: 1;
+.artist-name {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.drop-info {
-    background: white;
+.artist-category {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.9;
+  margin-bottom: 1rem;
 }
 
+.drop-card-content {
+  padding: 1.5rem;
+}
+
+.drop-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--primary-bg);
+  margin-bottom: 0.5rem;
+}
+
+.drop-description {
+  color: #6c757d;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.drop-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.drop-date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.drop-status {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.view-all-section {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.view-all-btn {
+  background-color: var(--primary-bg);
+  color: white;
+  border: none;
+  padding: 1rem 3rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.view-all-btn:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+  color: white;
+}
 
 /* Carousel Animation */
 .carousel-fade .carousel-item {
-    opacity: 0;
-    transition: opacity 1s ease;
+  opacity: 0;
+  transition: opacity 1s ease;
 }
 
 .carousel-fade .carousel-item.active {
-    opacity: 1;
+  opacity: 1;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .hero-carousel .carousel-item {
-        height: 60vh;
-        min-height: 400px;
-    }
-    
-    .hero-carousel .carousel-caption {
-        bottom: 20%;
-    }
-    
-    .hero-carousel .carousel-caption h2 {
-        font-size: 2rem;
-    }
-    
-    .hero-carousel .carousel-caption p {
-        font-size: 1rem;
-    }
+  .hero-carousel .carousel-item {
+    height: 60vh;
+    min-height: 400px;
+  }
+
+  .hero-carousel .carousel-caption {
+    bottom: 20%;
+  }
+
+  .hero-carousel .carousel-caption h2 {
+    font-size: 2rem;
+  }
+
+  .hero-carousel .carousel-caption p {
+    font-size: 1rem;
+  }
 }
 
 /* ============ Mission ==================*/
 .mission-statement h2 {
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 
 .mission-statement i {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 .mission-statement p {
-    line-height: 1.7;
-    color: #333;
+  line-height: 1.7;
+  color: #333;
 }

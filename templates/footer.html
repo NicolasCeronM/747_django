@@ -1,71 +1,83 @@
 {% load static %}
-<footer class="sf-footer" style="background-color: #000523;">
+<!-- Footer -->
+<footer class="custom-footer">
     <div class="container">
-
-        <div class="sf-footer-content">
-            <!-- Brand Info -->
-            <img class="sf-footer-brand" src="{% static 'img/sfs-logo.png' %}" alt="Seven for seven logo" <p
-                class="sf-footer-description">No solo ME VEO bien, ESTOY HACIENDO el bien.</p>
-            </img>
-
-            <!-- Footer Columns -->
-            <div class="sf-footer-columns">
-                <!-- Commerce Column -->
-                <div class="sf-footer-column">
-                    <h3 class="sf-footer-column-title">Comercio</h3>
-                    <ul class="sf-footer-links">
-                        <li><a href="#">Hombres</a></li>
-                        <li><a href="#">Mujer</a></li>
-                        <li><a href="#">Niños</a></li>
-                        <li><a href="#">Accesorios</a></li>
-                        <li><a href="#">Recién llegados</a></li>
-                        <li><a href="#">Venta</a></li>
-                    </ul>
+        <div class="row">
+            <!-- Logo and Tagline -->
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="footer-logo">
+                    <img src="{% static 'img/sfs-logo.png' %}" alt="L41 Logo">
                 </div>
+                <p class="footer-tagline">
+                    No solo ME VEO bien, ESTOY HACIENDO el bien.
+                </p>
+            </div>
 
-                <!-- Company Column -->
-                <div class="sf-footer-column">
-                    <h3 class="sf-footer-column-title">Compañía</h3>
-                    <ul class="sf-footer-links">
-                        <li><a href="#">Sobre nosotros</a></li>
-                        <li><a href="#">Carreras</a></li>
-                        <li><a href="#">Prensa</a></li>
+            <!-- Comercio Links -->
+            <div class="col-lg-2 col-md-6 mb-4">
+                <div class="footer-section">
+                    <h6>Comercio</h6>
+                    <ul class="footer-links">
+                        <li><a href="#hombres">Hombres</a></li>
+                        <li><a href="#mujer">Mujer</a></li>
+                        <li><a href="#ninos">Niños</a></li>
+                        <li><a href="#accesorios">Accesorios</a></li>
+                        <li><a href="#nuevos">Recién llegados</a></li>
+                        <li><a href="#venta">Venta</a></li>
                     </ul>
-                </div>
-
-                <!-- Newsletter Column -->
-                <div class="sf-footer-column">
-                    <h3 class="sf-footer-column-title">Manténgase actualizado</h3>
-                    <p class="sf-footer-newsletter-desc">Suscríbete para recibir ofertas especiales, obsequios gratuitos
-                        y acceso anticipado a los drops.</p>
-                    <form class="sf-newsletter-form">
-                        <div class="sf-form-group">
-                            <label for="email" class="sf-form-label">Tu email</label>
-                            <input type="email" id="email" class="sf-form-input" placeholder="tucorreo@example.com">
-                        </div>
-                        <div class="sf-form-checkbox">
-                            <input type="checkbox" id="privacy" required>
-                            <label for="privacy">Al suscribirte, aceptas nuestra Política de privacidad y das tu
-                                consentimiento para recibir actualizaciones.</label>
-                        </div>
-                        <button type="submit" class="sf-subscribe-btn">Suscribirse</button>
-                    </form>
                 </div>
             </div>
 
-            <!-- Footer Bottom -->
-            <div class="sf-footer-bottom">
-                <div class="sf-copyright">
-                    © 2025 Seven four seven Clothing. Todos los derechos reservados.
+            <!-- Compañía Links -->
+            <div class="col-lg-2 col-md-6 mb-4">
+                <div class="footer-section">
+                    <h6>Compañía</h6>
+                    <ul class="footer-links">
+                        <li><a href="#about">Sobre nosotros</a></li>
+                        <li><a href="#careers">Carreras</a></li>
+                        <li><a href="#press">Prensa</a></li>
+                    </ul>
                 </div>
-                <div class="sf-legal-links">
-                    <a href="#">Condiciones de servicio</a>
-                    <a href="#">Política de privacidad</a>
-                    <a href="#">Información de envío</a>
-                    <a href="#">Devoluciones y cambios</a>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="col-lg-5 col-md-6 mb-4">
+                <div class="footer-section newsletter-section">
+                    <h6>Manténgase Actualizado</h6>
+                    <p class="newsletter-description">
+                        Suscríbete para recibir ofertas especiales, obsequios gratuitos y acceso anticipado a los drops.
+                    </p>
+                    <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+                        <input type="email" class="newsletter-input" placeholder="tucorreo@example.com" required
+                            id="newsletterEmail">
+                        <button type="submit" class="newsletter-btn">
+                            Suscribirse
+                        </button>
+                    </form>
+                    <div class="privacy-text">
+                        <input type="checkbox" id="privacyCheck" class="me-2" required>
+                        <label for="privacyCheck">
+                            Al suscribirte, aceptas nuestra <a href="#privacy">Política de privacidad</a> y das tu
+                            consentimiento para recibir actualizaciones.
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p class="copyright">
+                    © 2025 SevenFourSeven. Todos los derechos reservados.
+                </p>
+                <div class="footer-legal">
+                    <a href="#terms">Condiciones de servicio</a>
+                    <a href="#privacy">Política de privacidad</a>
+                    <a href="#shipping">Información de envío</a>
+                    <a href="#returns">Devoluciones y cambios</a>
                 </div>
             </div>
         </div>
     </div>
-
 </footer>

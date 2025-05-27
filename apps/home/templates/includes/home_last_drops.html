@@ -1,38 +1,59 @@
-<section ion class="featured-drops py-5">
+<section class="drops-section" id="drops">
     <div class="container">
-        <div class="section-header text-center mb-5">
-            <h2 class="text-uppercase">Ultimos drops</h2>
-            <p class="text-muted">Descubra nuestras colecciones más recientes y las historias que hay detrás de ellas
+        <!-- Section Header -->
+        <div class="section-header">
+            <h1 class="section-title">ÚLTIMOS DROPS</h1>
+            <p class="section-subtitle">
+                Descubra nuestras colecciones más recientes y las historias que hay detrás de ellas.
+                Cada drop representa una colaboración única con artistas que están redefiniendo la cultura urbana.
             </p>
         </div>
 
-        <div class="row g-4">
-            <!-- Last Drop -->
+        <!-- Drops Grid -->
+        <div class="drops-grid">
 
             {% for drop in latest_drops %}
-            <div class="col-md-4">
+            {% for talent in drop.designers.all %}
+
+            <a href="{% url 'drop:drop_detail' drop.id %}" style="text-decoration: none;">
+
                 <div class="drop-card">
-                    <div class="drop-image position-relative">
-                        <img src="{{ drop.cover_image.url }}" class="img-fluid" alt="Drop 001">
-                        <div class="drop-overlay">
-                            <a href="{% url 'drop:drop_detail' drop.id %}" class="btn btn-outline-light">Ver
-                                Drop</a>
+                    <div class="drop-card-image">
+                        <div class="drop-number">Drop #{{drop.drop_number}}</div>
+                        <img src="{{drop.cover_image.url}}" alt="Jhay Austin">
+                        <div class="drop-card-overlay">
+                            <!-- <h2 class="artist-name">#{{drop.drop_number}}</h2> -->
+                            <!-- <h2 class="artist-name">{{talent.user.username}}</h2>
+                            <p class="artist-category">{{talent.specialty}}</p> -->
                         </div>
                     </div>
-                    <div class="drop-info p-3">
-                        <h3>{{drop.name}}</h3>
+                    <div class="drop-card-content">
+                        <h3 class="drop-title">{{drop.name}}</h3>
+                        <p class="drop-description">
+                            {{drop.description|truncatechars:300}}
+                        </p>
+                        <div class="drop-meta">
+                            <div class="drop-date">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <span>{{drop.launch_date}}</span>
+                            </div>
+                            <!-- <span class="drop-status">Nuevo</span> -->
+                        </div>
                     </div>
                 </div>
-            </div>
-            {% empty %}
-            <p>No hay drops disponibles aún.</p>
+
+            </a>
+
+            {% endfor %}
             {% endfor %}
 
 
-
-            <div class="text-center mt-4">
-                <a href="{% url 'drop:drops' %}" class="btn btn-dark btn-lg rounded-pill px-4 mt-4">Ver todos los
-                    drops</a>
+            <!-- View All Button -->
+            <div class="view-all-section">
+                <a href="{% url 'drop:drops' %}" class="view-all-btn ">
+                    <span>Ver todos los drops</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
             </div>
         </div>
 </section>

@@ -1,20 +1,128 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 {% load static %}
 
+{% block title %}Productos{% endblock %}
 
 {% block css %}
-
+<link rel="stylesheet" href="{% static 'product/css/products.css' %}">
 {% endblock css %}
-
 
 {% block content %}
 
-<section>
-    <h2>Productos</h2>
+<!-- Titulo producto -->
+<section class="page-header p-4">
+    <div class="container">
+        <h1 class="page-title text-center">Productos</h1>
+        <p class="page-subtitle text-center">Descubre nuestra colección exclusiva</p>
+    </div>
 </section>
 
-{% endblock content %}
+<!-- Productos -->
+<section class="main-container">
+
+    <div class="content-wrapper">
+        <!-- Filters Sidebar -->
+        <aside class="filters-sidebar fade-in">
+            <h2 class="filters-title">
+                <i class="fas fa-filter"></i>
+                Filtros
+            </h2>
+
+            <div class="filter-group">
+                <label class="filter-label">Categoría</label>
+                <select class="filter-select" id="categoryFilter">
+                    <option value="">Todas las categorías</option>
+                    <option value="gorros">Gorros</option>
+                    <option value="pantalones">Pantalones</option>
+                    <option value="camisetas">Camisetas</option>
+                    <option value="accesorios">Accesorios</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Precio</label>
+                <select class="filter-select" id="priceFilter">
+                    <option value="">Todos los precios</option>
+                    <option value="0-25">$0 - $25</option>
+                    <option value="25-50">$25 - $50</option>
+                    <option value="50-100">$50 - $100</option>
+                    <option value="100+">$100+</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">Buscar</label>
+                <input type="text" class="search-input" placeholder="Buscar productos..." id="searchInput">
+            </div>
+
+            <div class="filter-buttons">
+                <button class="btn btn-primary" id="applyFilters">
+                    <i class="fas fa-search"></i>
+                    Aplicar Filtros
+                </button>
+                <button class="btn btn-secondary" id="clearFilters">
+                    <i class="fas fa-times"></i>
+                    Limpiar Filtros
+                </button>
+            </div>
+        </aside>
+
+        <!-- Products Grid -->
+        <section class="products-grid" id="productsGrid">
+            <!-- Product -->
+
+            {% for product in products %}
+
+            <article class="product-card fade-in">
+                <div id="carouselExampleIndicators" class="carousel slide">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+
+                        {% for image in product.images.all %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ product.name }}">
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+                <div class="product-info">
+                    <span class="fw-lighter">{{product.category}}</span>
+                    <h3 class="product-name">{{product.name}}</h3>
+                    <div class="product-price">CLP {{product.price}}</div>
+                    <button class="add-to-cart" data-product="gorro">
+                        <i class="fas fa-shopping-cart"></i>
+                        Agregar al Carrito
+                    </button>
+                </div>
+            </article>
+            {% endfor %}
+
+
+        </section>
+    </div>
+
+
+</section>
+
+{% endblock %}
 
 
 {% block js %}
