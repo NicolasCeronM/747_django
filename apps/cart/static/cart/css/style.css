@@ -1,0 +1,20 @@
+.custom-pay-btn {
+  background: linear-gradient(90deg, #ff7b39 0%, #ff652f 100%);
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.custom-pay-btn:hover {
+  background: linear-gradient(90deg, #e5642a 0%, #d24e1a 100%);
+  transform: translateY(-1px);
+  color: #fff;
+  text-decoration: none;
+}
+.text-orange {
+  color: #ff6b2c;
+}

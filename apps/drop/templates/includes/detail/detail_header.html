@@ -1,68 +1,52 @@
 {% with drop.designers.all.0 as talent %}
-<section class="drop-hero"
-    style="background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url({{ drop.cover_image.url }}); background-size: cover; background-position: center; min-height: 400px;">
-    <div class="container h-100 d-flex flex-column justify-content-center">
-        <!-- Título del drop -->
-        <div>
-            <h1 class="display-2 fw-bold text-white mt-3">{{ drop.name }} - #Drop{{ drop.drop_number }} </h1>
-        </div>
+<!-- Hero Section -->
+<section class="drop-hero">
+    <div class="container">
+        <div class="hero-content">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb-nav">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="drops-balanced.html">
+                            <i class="bi bi-house"></i>
+                            Drops
+                        </a>
+                    </li>
+                    <li class="breadcrumb-item active">Cicatrices que Brillan</li>
+                </ol>
+            </nav>
 
-        <!-- Talento destacado -->
-        {% if talent %}
-        <div class="d-flex align-items-center mt-4">
-            <div class="position-relative me-4 talent-profile-hover">
-
-                <img src="{{ talent.profile_image.url }}" alt="{{ talent.full_name }}"
-                    class="rounded-circle border border-white shadow talent-cover-img"
-                    style="height: 220px; width: 220px;">
-
-
-            </div>
-
-            <div class="text-white">
-                <h4 class="mb-1">{{ talent.user.first_name }} {{ talent.user.last_name }}</h4>
-                <small>{{ talent.specialty }}</small>
-
-                <p class="text-white-50 small mt-2">{{ talent.biography|truncatewords:20 }}</p>
-
-                <div class="d-flex gap-3 mt-2">
-                    {% if talent.instagram_url %}
-                    <a href="{{ talent.instagram_url }}" target="_blank" class="text-white fs-5"><i
-                            class="fab fa-instagram"></i></a>
-                    {% endif %}
-                    {% if talent.linkedin_url %}
-                    <a href="{{ talent.linkedin_url }}" target="_blank" class="text-white fs-5">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    {% endif %}
-                    {% if talent.website_url %}
-                    <a href="{{ talent.website_url }}" target="_blank" class="text-white fs-5"><i
-                            class="fas fa-globe"></i></a>
-                    {% endif %}
-                    {% if talent.facebook_url %}
-                    <a href="{{ talent.facebook_url }}" target="_blank" class="text-white fs-5">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    {% endif %}
-
-                    {% if talent.twitter_url %}
-                    <a href="{{ talent.twitter_url }}" target="_blank" class="text-white fs-5">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    {% endif %}
-                    {% if talent.youtube_url %}
-                    <a href="{{ talent.youtube_url }}" class="text-white fs-5" target="_blank">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    {% endif %}
+            <!-- Album Cover Info -->
+            <div class="album-info" style="display: flex; align-items: flex-end; gap: 2rem; margin-bottom: 2rem;">
+                <div class="album-cover-mini"
+                    style="width: 120px; height: 120px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; backdrop-filter: blur(10px); border: 2px solid rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; text-align: center; padding: 1rem;">
+                    CICATRICES<br>QUE<br>BRILLAN
                 </div>
+                <div class="album-details">
+                    <div class="drop-number">Drop #001</div>
+                    <h1 class="drop-title">Cicatrices que Brillan</h1>
+                    <div class="album-meta"
+                        style="display: flex; gap: 2rem; margin-top: 1rem; font-size: 0.9rem; opacity: 0.9;">
+                        <span><i class="bi bi-person"></i> Jhay Austin</span>
+                        <span><i class="bi bi-calendar3"></i> 2025</span>
+                        <span><i class="bi bi-music-note-list"></i> EP</span>
+                    </div>
+                </div>
+            </div>
 
-                <a href="{% url 'designers:detail' talent.id %}" class="btn btn-outline-light btn-sm mt-2">Ver
-                    perfil</a>
+            <!-- Play Button -->
+            <div class="hero-actions" style="display: flex; gap: 1rem; align-items: center;">
+                <button class="play-btn"
+                    style="background: var(--gradient-accent); border: none; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-md);"
+                    onclick="playAlbum()">
+                    <i class="bi bi-play-fill"></i>
+                </button>
+                <div class="play-info">
+                    <div style="font-weight: 600; margin-bottom: 0.25rem;">Escuchar ahora</div>
+                    <div style="font-size: 0.8rem; opacity: 0.8;">5 canciones • 18 min</div>
+                </div>
             </div>
         </div>
-
-        {% endif %}
     </div>
-</section>
+</section>>
 {% endwith %}

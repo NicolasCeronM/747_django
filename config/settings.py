@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'apps.drop',
     'apps.product',
     'apps.user',
+    'apps.cart',
 
     "crispy_forms",
     "crispy_bootstrap5",
@@ -153,4 +154,4 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 LOGIN_REDIRECT_URL = '/'  # Cambia por tu URL principal
 LOGOUT_REDIRECT_URL = '/'
-LOGIN_URL = 'login'
+LOGIN_URL = 'user:login'

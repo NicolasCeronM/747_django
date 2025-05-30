@@ -25,18 +25,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'products:products' %}">Productos</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
-                </li>
+                </li> -->
             </ul>
 
             <!-- Header Actions -->
             <div class="header-actions">
                 <!-- Cart Button -->
-                <button class="cart-btn">
+                <a href="{% url 'cart:view_cart' %}" class="cart-btn">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    <span class="cart-badge" id="cartBadge">0</span>
-                </button>
+                    <span class="cart-badge" id="cartBadge">{{ cart.items.all|length }}</span>
+                </a>
 
                 <!-- User Dropdown -->
 

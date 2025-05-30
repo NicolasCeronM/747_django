@@ -27,7 +27,7 @@ urlpatterns = [
     path('drops/', include('apps.drop.urls'), name='drops'),
     path('user/', include('apps.user.urls'), name='user'),
     path('product/', include('apps.product.urls'), name='product'),
-
+    path('cart/', include('apps.cart.urls'), name='cart'),
 
 
 

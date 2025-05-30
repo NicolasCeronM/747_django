@@ -1,16 +1,17 @@
 <section class="talent-hero position-relative text-white"
-    style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('{{ talent.cover_image.url }}'); background-size: cover; background-position: center; min-height: 400px;">
+    style="background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('{{ talent.cover_image.url }}'); background-size: cover; background-position: center; min-height: 400px;">
     <div class="container text-center py-5">
         <img src="{{ talent.profile_image.url }}" alt="{{ talent.user.first_name }}"
             class="rounded-circle border border-white shadow mb-3"
             style="width: 120px; height: 120px; object-fit: cover;">
         <h2 class="fw-bold">
-            {{ talent.user.first_name }} {{ talent.user.last_name }}
-            {% if talent.is_verified %}
-            <span class="badge bg-primary ms-2"><i class="fas fa-check-circle"></i> Verificado</span>
-            {% endif %}
+            {{ talent.brand_name }}
+
+
         </h2>
-        <p class="lead">{{ talent.specialty }}{% if talent.brand_name %} • {{ talent.brand_name }}{% endif %}</p>
+        <p class="lead">{{ talent.specialty }}{% if talent.brand_name %} •
+            {{ talent.user.first_name }}
+            {{talent.user.last_name }} {% endif %}</p>
         <p class="text-white-50">{{ talent.location }}</p>
     </div>
 </section>

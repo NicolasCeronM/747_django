@@ -9,118 +9,89 @@
 
 {% block content %}
 
-<!-- Titulo producto -->
-<section class="page-header p-4">
-    <div class="container">
-        <h1 class="page-title text-center">Productos</h1>
-        <p class="page-subtitle text-center">Descubre nuestra colección exclusiva</p>
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">Colección Exclusiva</h1>
+        <p class="text-muted">Estilo urbano, originalidad y autenticidad en cada prenda</p>
     </div>
-</section>
 
-<!-- Productos -->
-<section class="main-container">
-
-    <div class="content-wrapper">
-        <!-- Filters Sidebar -->
-        <aside class="filters-sidebar fade-in">
-            <h2 class="filters-title">
-                <i class="fas fa-filter"></i>
-                Filtros
-            </h2>
-
-            <div class="filter-group">
-                <label class="filter-label">Categoría</label>
-                <select class="filter-select" id="categoryFilter">
-                    <option value="">Todas las categorías</option>
-                    <option value="gorros">Gorros</option>
-                    <option value="pantalones">Pantalones</option>
-                    <option value="camisetas">Camisetas</option>
-                    <option value="accesorios">Accesorios</option>
-                </select>
-            </div>
-
-            <div class="filter-group">
-                <label class="filter-label">Precio</label>
-                <select class="filter-select" id="priceFilter">
-                    <option value="">Todos los precios</option>
-                    <option value="0-25">$0 - $25</option>
-                    <option value="25-50">$25 - $50</option>
-                    <option value="50-100">$50 - $100</option>
-                    <option value="100+">$100+</option>
-                </select>
-            </div>
-
-            <div class="filter-group">
-                <label class="filter-label">Buscar</label>
-                <input type="text" class="search-input" placeholder="Buscar productos..." id="searchInput">
-            </div>
-
-            <div class="filter-buttons">
-                <button class="btn btn-primary" id="applyFilters">
-                    <i class="fas fa-search"></i>
-                    Aplicar Filtros
-                </button>
-                <button class="btn btn-secondary" id="clearFilters">
-                    <i class="fas fa-times"></i>
-                    Limpiar Filtros
-                </button>
-            </div>
-        </aside>
-
-        <!-- Products Grid -->
-        <section class="products-grid" id="productsGrid">
-            <!-- Product -->
-
-            {% for product in products %}
-
-            <article class="product-card fade-in">
-                <div id="carouselExampleIndicators" class="carousel slide">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
+    <div class="row">
+        <!-- Filtros -->
+        <div class="col-md-3 mb-4">
+            <aside class="filter-box p-4 shadow-sm rounded-4">
+                <h5 class="fw-semibold mb-4">Filtrar</h5>
+                <form method="GET">
+                    <div class="mb-4">
+                        <label class="form-label">Categoría</label>
+                        <select class="form-select rounded-pill" name="category">
+                            <option selected>Todas</option>
+                            {% for cat in categories %}
+                            <option value="{{ cat.id }}">{{ cat.name }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
-                    <div class="carousel-inner">
+                    <div class="mb-4">
+                        <input type="text" class="form-control rounded-pill" name="search" placeholder="Buscar...">
+                    </div>
+                    <button class="btn btn-dark w-100 rounded-pill mb-2">Aplicar</button>
+                    <a href="#" class="btn btn-outline-secondary w-100 rounded-pill">Limpiar</a>
+                </form>
+            </aside>
+        </div>
 
-                        {% for image in product.images.all %}
-                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                            <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ product.name }}">
+        <!-- Productos -->
+        <div class="col-md-9">
+            <div class="row g-4">
+                {% for product in products %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm rounded-4 product-tile h-100">
+                        <div class="product-image-wrapper position-relative overflow-hidden rounded-4">
+                            {% with product.images.all as imgs %}
+                            {% if imgs|length > 1 %}
+                            <img src="{{ imgs.0.image.url }}" class="img-main img-fluid" alt="{{ product.name }}">
+                            <img src="{{ imgs.1.image.url }}"
+                                class="img-hover img-fluid position-absolute top-0 start-0" alt="{{ product.name }}">
+                            {% else %}
+                            <img src="{{ imgs.0.image.url }}" class="img-main img-fluid" alt="{{ product.name }}">
+                            {% endif %}
+                            {% endwith %}
                         </div>
-                        {% endfor %}
+                        <div class="card-body text-center">
+                            <h6 class="text-muted text-uppercase small">{{ product.category.name }}</h6>
+                            <h5 class="fw-bold">{{ product.name }}</h5>
+                            <p class="text-dark fs-5">CLP {{ product.price|floatformat:0 }}</p>
 
+                            <!-- Tallas -->
+                            {% if product.product_sizes.all %}
+                            <div class="mb-2">
+                                {% for s in product.product_sizes.all %}
+                                <span class="badge bg-light text-dark border me-1">{{ s.size }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            <!-- Colores -->
+                            {% if product.product_colors.all %}
+                            <div class="mb-3 d-flex justify-content-center gap-2">
+                                {% for c in product.product_colors.all %}
+                                <span class="color-circle" style="background-color: {{ c.hex_code }};"
+                                    title="{{ c.name }}"></span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            <a href="{% url 'cart:add_to_cart' product.id %}"
+                                class="btn btn-outline-dark w-100 rounded-pill">🛒
+                                Añadir al carrito</a>
+                        </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
                 </div>
-                <div class="product-info">
-                    <span class="fw-lighter">{{product.category}}</span>
-                    <h3 class="product-name">{{product.name}}</h3>
-                    <div class="product-price">CLP {{product.price}}</div>
-                    <button class="add-to-cart" data-product="gorro">
-                        <i class="fas fa-shopping-cart"></i>
-                        Agregar al Carrito
-                    </button>
-                </div>
-            </article>
-            {% endfor %}
-
-
-        </section>
+                {% endfor %}
+            </div>
+        </div>
     </div>
+</div>
 
-
-</section>
 
 {% endblock %}
 
