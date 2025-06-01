@@ -31,24 +31,34 @@ ALLOWED_HOSTS = ['sevnforseven.onrender.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
-INSTALLED_APPS = [
+BASE_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
 
-    'apps.home',
+THIRD_APPS = [
+    'crispy_forms',
+    'crispy_bootstrap5',
+]
+
+OWN_APPS = [
+    'apps.cart',
     'apps.designer',
     'apps.drop',
+    'apps.home',
+    'apps.payments',
     'apps.product',
     'apps.user',
-    'apps.cart',
-
-    "crispy_forms",
-    "crispy_bootstrap5",
+    
 ]
+
+INSTALLED_APPS = BASE_APPS + THIRD_APPS + OWN_APPS
+
+
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
@@ -119,9 +129,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
 #LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'es'
+LANGUAGE_CODE = 'es-cl'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Argentina/Buenos_aires'
 
 USE_I18N = True
 
@@ -155,3 +166,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 LOGIN_REDIRECT_URL = '/'  # Cambia por tu URL principal
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = 'user:login'
+
+# Mercado pago
+import os
+MP_ACCESS_TOKEN = os.getenv("MP_ACCESS_TOKEN")
+MP_PUBLIC_KEY = os.getenv("MP_PUBLIC_KEY")

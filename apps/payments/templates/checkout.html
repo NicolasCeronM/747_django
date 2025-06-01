@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Pago
+{% endblock title %}
+
+{% block css %}
+<!-- FontAwesome para íconos -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+    .checkout-section {
+        background-color: #f9f5ef;
+        border-radius: 12px;
+        margin-top: 30px;
+        padding: 40px 20px;
+    }
+
+    .title-with-icon {
+        font-weight: 700;
+        color: #333;
+        display: flex;
+        align-items: center;
+        font-size: 28px;
+        margin-bottom: 1.5rem;
+    }
+
+    .checkout-table th {
+        background-color: #1a1a1a;
+        color: white;
+        font-weight: 600;
+    }
+
+    .checkout-table td {
+        vertical-align: middle;
+    }
+
+    .btn-mercado {
+        background-color: #ffe600;
+        border: 2px solid #ffdc00;
+        color: #000;
+        padding: 10px 20px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .btn-mercado:hover {
+        background-color: #fff200;
+        transform: translateY(-2px);
+    }
+
+    .btn-webpay {
+        background-color: #ec4a4a;
+        color: #fff;
+        font-weight: 600;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        transition: all 0.3s ease;
+        text-align: center;
+    }
+
+    .btn-webpay:hover {
+        background-color: #c93939;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .title-with-icon {
+            font-size: 22px;
+        }
+
+        .checkout-section {
+            padding: 20px 15px;
+        }
+    }
+</style>
+{% endblock css %}
+
+{% block content %}
+<section class="checkout-section">
+    <div class="container">
+
+        <h2 class="title-with-icon">
+            <i class="fas fa-shopping-cart me-2"></i>Resumen de tu compra
+        </h2>
+
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle text-center checkout-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>
+                            {{ item.product.name }}<br>
+                            {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" width="60" class="img-thumbnail mt-2">
+                            {% endif %}
+                        </td>
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.product.price|floatformat:0 }}</td>
+                        <td>${{ item.subtotal }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-end mt-3">
+            <h4>Total a pagar: <strong class="text-success">${{ total|floatformat:0 }}</strong></h4>
+        </div>
+
+        <hr class="my-4">
+
+        <h4 class="mb-3">Selecciona tu método de pago</h4>
+
+        <div class="d-flex flex-column flex-md-row gap-3">
+            <!-- Mercado Pago -->
+            <div id="wallet_container" class="w-100 w-md-50"></div>
+
+            <!-- Webpay -->
+            <a href="{% url 'payments:webpay_init' %}" class="btn btn-webpay w-100 w-md-50">
+                <i class="fas fa-credit-card me-2"></i>Pagar con Webpay
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Mercado Pago SDK -->
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script>
+    const mp = new MercadoPago("{{ public_key }}", { locale: "es-CL" });
+    mp.checkout({
+        preference: {
+            id: "{{ preference_id }}"
+        },
+        render: {
+            container: "#wallet_container",
+            label: "Pagar con Mercado Pago"
+        }
+    });
+</script>
+{% endblock content %}

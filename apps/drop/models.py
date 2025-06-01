@@ -1,23 +1,24 @@
 from django.db import models
 from apps.designer.models import DesignerProfile
+# from django.utils.text import slugify Hcerlo cuando se reinicie la BBDD
 
 class Drop(models.Model):
     name = models.CharField(max_length=100)
     drop_number = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True,blank=True,verbose_name='slug')
     designers = models.ManyToManyField(DesignerProfile, related_name='drops')
-    launch_date = models.DateField()
-    end_date = models.DateField(blank=True, null=True)
     description = models.TextField()
     cover_image = models.ImageField(upload_to='drops/cover/')
     hero_video = models.URLField(blank=True,null=True, help_text="URL del video documental o presentación")
     is_active = models.BooleanField(default=True)
-    is_featured = models.BooleanField(default=False)
-    social_impact = models.TextField(help_text="Cómo este drop apoya a la comunidad")
     created_at = models.DateTimeField(auto_now_add=True)
 
+    # def save(self, *args, **kwargs):
+    #     self.slug = slugify(self.name)
+    #     super(Drop,self).save(*args,**kwargs)
+
     def __str__(self):
-        return f"{self.name} ({self.launch_date.year})"
+        return f"{self.name} ({self.created_at.year})"
 
     class Meta:
-        ordering = ['-launch_date']
+        ordering = ['-created_at']

@@ -1,0 +1,7 @@
+<h1>✅ Pago Webpay exitoso</h1>
+
+<p><strong>Orden:</strong> {{ order.buy_order }}</p>
+<p><strong>Total pagado:</strong> ${{ order.total|floatformat:0 }}</p>
+
+<p><strong>ID Transacción:</strong> {{ response.transaction_id }}</p>
+<p><strong>Estado:</strong> {{ response.status }}</p>
