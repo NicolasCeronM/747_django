@@ -61,10 +61,6 @@ Este proyecto es una tienda online desarrollada en Django orientada a la venta d
    python manage.py runserver
    ```
 
-## 📷 Capturas de Pantalla (opcional)
-
-> *(Agrega aquí imágenes de la tienda, páginas de detalle, carrito, etc.)*
-
 ## 📌 TODO y Roadmap
 
 - [x] Implementación de carrito de compras.
