@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+        background: #f3f4f6;
+    }
+
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .order-header h2 {
+        font-weight: 800;
+        font-size: 2.2rem;
+        color: #111827;
+    }
+
+    .order-subtitle {
+        color: #6b7280;
+        font-size: 0.95rem;
+    }
+
+    .btn {
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 0.5rem 1.2rem;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(to right, #2563eb, #1d4ed8);
+        color: white;
+        border: none;
+    }
+
+    .btn-outline-dark {
+        background: white;
+        border: 1px solid #d1d5db;
+        color: #111827;
+    }
+
+    .filters {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .filters label {
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .filters input,
+    .filters select {
+        padding: 0.5rem;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        width: 100%;
+    }
+
+    .btn-clear {
+        background: #ef4444;
+        color: white;
+        border: none;
+        padding: 0.5rem 1.2rem;
+        border-radius: 8px;
+    }
+
+    .order-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        padding: 2rem;
+    }
+
+    .orders-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+    }
+
+    .orders-table th,
+    .orders-table td {
+        padding: 1rem;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+    }
+
+    .orders-table th {
+        background: #f9fafb;
+        color: #374151;
+        font-weight: 700;
+    }
+
+    .orders-table td a {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .badge {
+        padding: 0.35rem 0.9rem;
+        border-radius: 9999px;
+        font-size: 0.85rem;
+        color: white;
+        font-weight: 600;
+    }
+
+    .badge.pagado {
+        background: #22c55e;
+    }
+
+    .badge.enviado {
+        background: #3b82f6;
+    }
+
+    .badge.entregado {
+        background: #10b981;
+    }
+
+    .btn-icon {
+        background: #f3f4f6;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        padding: 0.5rem;
+        margin-right: 0.3rem;
+        cursor: pointer;
+    }
+
+    .btn-icon i {
+        color: #374151;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="order-header">
+        <div>
+            <h2><i class="fas fa-box"></i> Mis Pedidos</h2>
+            <p class="order-subtitle">Gestiona y revisa todos tus pedidos realizados</p>
+        </div>
+        <div>
+            <a class="btn btn-outline-dark me-2">&#x25BC; Filtros</a>
+            <a class="btn btn-primary">+ Nueva Compra</a>
+        </div>
+    </div>
+
+    <form class="filters w-100" method="get">
+        <div style="flex: 1; min-width: 200px">
+            <label>Estado:</label>
+            <select>
+                <option>Todos</option>
+                <option>Pagado</option>
+                <option>Enviado</option>
+                <option>Entregado</option>
+            </select>
+        </div>
+        <div style="flex: 1; min-width: 200px">
+            <label>Fecha:</label>
+            <select>
+                <option>Todas</option>
+                <option>Últimos 7 días</option>
+                <option>Últimos 30 días</option>
+            </select>
+        </div>
+        <div style="flex: 2; min-width: 250px">
+            <label>Buscar:</label>
+            <input type="text" placeholder="Buscar por ID o producto...">
+        </div>
+        <div style="align-self: end;">
+            <button type="submit" class="btn-clear">&#x2716; Limpiar</button>
+        </div>
+    </form>
+
+    <div class="order-container">
+        <h4 style="font-weight: bold; color: #111827;">Historial de Pedidos</h4>
+        <table class="orders-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Productos</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td><a href="#">#{{ order.id }}</a></td>
+                    <td>{{ order.created_at|date:"d M Y" }}<br><small>{{ order.created_at|time:"H:i" }}</small></td>
+                    <td>
+                        <strong>{{ order.items.first.product.name }}</strong><br>
+                        {% if order.items.count > 1 %}+{{ order.items.count|add:"-1" }} más{% endif %}
+                    </td>
+                    <td style="color:#2563eb;"><strong>${{ order.total|floatformat:0 }}</strong></td>
+                    <td>
+                        <span class="badge {{ order.status|lower }}">{{ order.status|title }}</span>
+                    </td>
+                    <td>
+                        <button class="btn-icon"><i class="fas fa-eye"></i></button>
+                        <a href="{% url 'orders:download_invoice' order.id %}" title="Descargar boleta"
+                            class="btn-icon"><i class="fas fa-download"></i></a>
+                        <button class="btn-icon"><i class="fas fa-star"></i></button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

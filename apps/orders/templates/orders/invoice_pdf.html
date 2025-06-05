@@ -1,594 +1,143 @@
-<!-- Adaptación de tu layout original -->
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
-    <title>Factura Electrónica - SevenFourSeven</title>
     <style>
-        /* Reset y variables CSS */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary-blue: #1e88e5;
-            --primary-blue-dark: #1565c0;
-            --accent-orange: #ff5722;
-            --dark-navy: #0a1628;
-            --light-gray: #f8f9fa;
-            --medium-gray: #6c757d;
-            --dark-gray: #343a40;
-            --border-color: #dee2e6;
-            --success-green: #28a745;
-            --text-primary: #212529;
-            --text-secondary: #6c757d;
-            --shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-            --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            color: var(--text-primary);
-            line-height: 1.6;
-            padding: 2rem 1rem;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 12px;
+            padding: 20px;
+            color: #333;
         }
 
-        .invoice-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Watermark de fondo */
-        .invoice-container::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 8rem;
-            color: rgba(30, 136, 229, 0.03);
-            font-weight: bold;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .invoice-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Header de la factura */
-        .invoice-header {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+        .header {
+            background-color: #1e88e5;
             color: white;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
+            padding: 20px;
         }
 
-        .invoice-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-        }
-
-        .invoice-header::after {
-            content: '';
-            position: absolute;
-            bottom: -30%;
-            left: -5%;
-            width: 150px;
-            height: 150px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            position: relative;
-            z-index: 3;
-        }
-
-        .company-info h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .company-tagline {
-            font-size: 1rem;
-            opacity: 0.9;
-            font-style: italic;
-        }
-
-        .invoice-title {
-            text-align: right;
-        }
-
-        .invoice-title h2 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .invoice-number {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        /* Información de la orden */
-        .order-info {
-            padding: 2rem;
-            background: var(--light-gray);
-            border-bottom: 3px solid var(--primary-blue);
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .info-item {
-            background: white;
-            padding: 1.25rem;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            border-left: 4px solid var(--primary-blue);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .info-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        }
-
-        .info-label {
-            font-weight: 600;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .info-value {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .status-badge {
-            background: linear-gradient(135deg, var(--success-green) 0%, #20c997 100%);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
-        }
-
-        /* Tabla de productos */
-        .products-section {
-            padding: 2rem;
+        .header h1 {
+            margin: 0;
         }
 
         .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 2px solid #1e88e5;
+            margin-top: 20px;
+            margin-bottom: 10px;
         }
 
-        .section-title::before {
-            content: '';
-            width: 4px;
-            height: 2rem;
-            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
-            border-radius: 2px;
-        }
-
-        .products-table {
+        table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
+            margin-bottom: 20px;
         }
 
-        .products-table thead {
-            background: linear-gradient(135deg, var(--dark-navy) 0%, #1a2332 100%);
+        th {
+            background: #0a1628;
             color: white;
+            padding: 8px;
         }
 
-        .products-table th {
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+        td {
+            padding: 8px;
+            border: 1px solid #ccc;
         }
 
-        .products-table th:last-child {
+        .text-right {
             text-align: right;
         }
 
-        .products-table tbody tr {
-            border-bottom: 1px solid var(--border-color);
-            transition: background-color 0.2s ease;
-        }
-
-        .products-table tbody tr:hover {
-            background-color: rgba(30, 136, 229, 0.05);
-        }
-
-        .products-table tbody tr:last-child {
-            border-bottom: none;
-        }
-
-        .products-table td {
-            padding: 1.25rem 1rem;
-            vertical-align: middle;
-        }
-
-        .product-name {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .product-description {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .quantity-badge {
-            background: var(--primary-blue);
+        .badge {
+            background: #28a745;
             color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 0.875rem;
-            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: bold;
         }
 
-        .price {
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: var(--text-primary);
-        }
-
-        .total-price {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--primary-blue);
-        }
-
-        /* Sección de totales */
-        .totals-section {
-            background: var(--light-gray);
-            padding: 2rem;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .totals-table {
-            width: 100%;
-            max-width: 400px;
-            margin-left: auto;
-        }
-
-        .totals-table tr {
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .totals-table tr:last-child {
-            border-bottom: 3px solid var(--primary-blue);
-            background: white;
-        }
-
-        .totals-table td {
-            padding: 0.75rem 1rem;
-            font-weight: 500;
-        }
-
-        .totals-table td:first-child {
-            color: var(--text-secondary);
-        }
-
-        .totals-table td:last-child {
-            text-align: right;
-            font-weight: 600;
-        }
-
-        .grand-total {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--primary-blue);
-        }
-
-        .free-shipping {
-            color: var(--success-green);
-            font-weight: 600;
-        }
-
-        /* Footer */
-        .invoice-footer {
-            background: var(--dark-navy);
+        .footer {
+            background: #0a1628;
             color: white;
-            padding: 2rem;
             text-align: center;
-        }
-
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .company-details {
-            text-align: left;
-        }
-
-        .company-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .company-name .accent {
-            color: var(--accent-orange);
-        }
-
-        .contact-info {
-            font-size: 0.875rem;
-            opacity: 0.8;
-        }
-
-        .qr-placeholder {
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            text-align: center;
-            line-height: 1.2;
-        }
-
-        /* Elementos decorativos */
-        .decorative-line {
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary-blue) 0%, var(--accent-orange) 100%);
-            margin: 1rem 0;
-        }
-
-        /* Iconos usando CSS */
-        .icon {
-            display: inline-block;
-            width: 1rem;
-            height: 1rem;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
-        .icon-order::before {
-            content: "📋";
-        }
-
-        .icon-date::before {
-            content: "📅";
-        }
-
-        .icon-user::before {
-            content: "👤";
-        }
-
-        .icon-email::before {
-            content: "📧";
-        }
-
-        .icon-status::before {
-            content: "✅";
-        }
-
-
-
-        /* Estilos para impresión */
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-
-            .invoice-container {
-                box-shadow: none;
-                border-radius: 0;
-            }
-
-            .info-item:hover,
-            .products-table tbody tr:hover {
-                transform: none;
-                background-color: transparent;
-            }
-        }
-
-        /* Animaciones sutiles */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .invoice-container {
-            animation: fadeInUp 0.6s ease-out;
+            font-size: 10px;
+            padding: 15px;
         }
     </style>
 </head>
 
 <body>
-    <div class="invoice-container">
-        <div class="invoice-content">
-            <!-- Header -->
-            <header class="invoice-header">
-                <div class="header-content">
-                    <div class="company-info">
-                        <h1>SevenFourSeven</h1>
-                        <p class="company-tagline">No solo ME VEO bien, ESTOY HACIENDO el bien</p>
-                    </div>
-                    <div class="invoice-title">
-                        <h2>Factura Electrónica</h2>
-                        <span class="invoice-number">Orden N°: {{ order.id }}</span>
-                    </div>
-                </div>
-            </header>
 
-            <!-- Información de la orden -->
-            <section class="order-info">
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label"><span class="icon-order"></span>Número de Orden</div>
-                        <div class="info-value">#{{ order.id|stringformat:"06d" }}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label"><span class="icon-date"></span>Fecha de Emisión</div>
-                        <div class="info-value">{{ order.created_at|date:"d \d\e F, Y" }}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label"><span class="icon-user"></span>Cliente</div>
-                        <div class="info-value">{{ order.user.get_full_name|default:"Cliente Invitado" }}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label"><span class="icon-email"></span>Correo Electrónico</div>
-                        <div class="info-value">{{ order.user.email }}</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label"><span class="icon-status"></span>Estado del Pedido</div>
-                        <div class="status-badge">✓ {{ order.status|default:"Confirmado" }}</div>
-                    </div>
-                </div>
-            </section>
+    <h1><strong>Factura Electrónica</strong> - Orden N° {{ order.id }}</h1>
 
-            <!-- Productos -->
-            <section class="products-section">
-                <h3 class="section-title">Productos Adquiridos</h3>
-                <div class="decorative-line"></div>
+    <table>
+        <tr>
+            <td><strong>Cliente:</strong><br>
 
-                <table class="products-table">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Precio Unitario</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in order.items.all %}
-                        <tr>
-                            <td>
-                                <div class="product-name">{{ item.product.name }}</div>
-                                <div class="product-description">
-                                    {% if item.size %}Talla: {{ item.size }} • {% endif %}
-                                    {% if item.color %}Color: {{ item.color }} • {% endif %}
-                                    SKU: {{ item.product.id|stringformat:"06d" }}
-                                </div>
-                            </td>
-                            <td><span class="quantity-badge">{{ item.quantity }}</span></td>
-                            <td><span class="price">${{ item.product.price|floatformat:0 }}</span></td>
-                            <td><span class="price">${{ item.get_total_price|floatformat:0 }}</span></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </section>
+                {% if order.user.first_name and order.user.last_name %}
+                {{ order.user.first_name |default:"None" }}
+                {% endif %}
 
-            <!-- Totales -->
-            <section class="totals-section">
-                <table class="totals-table">
-                    <tr>
-                        <td>Subtotal:</td>
-                        <td>${{ order.subtotal|default:order.total|floatformat:0 }}</td>
-                    </tr>
-                    <tr>
-                        <td>Envío:</td>
-                        <td class="free-shipping">
-                            {% if order.shipping_cost == 0 %}Gratis{% else %}${{ order.shipping_cost }}{% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Descuento:</td>
-                        <td>${{ order.discount|default:"0" }}</td>
-                    </tr>
-                    <tr>
-                        <td>IVA (19%):</td>
-                        <td>${{ order.total|divisibleby:1.19|floatformat:0 }}</td>
-                    </tr>
-                    <tr>
-                        <td class="grand-total">Total:</td>
-                        <td class="grand-total">${{ order.total|floatformat:0 }}</td>
-                    </tr>
-                </table>
-            </section>
 
-            <!-- Footer -->
-            <footer class="invoice-footer">
-                <div class="footer-content">
-                    <div class="company-details">
-                        <div class="company-name">seven<span class="accent">four</span>seven</div>
-                        <div class="contact-info">
-                            www.747store.cl<br>
-                            contacto@747store.cl<br>
-                            +56 9 1234 5678
-                        </div>
-                    </div>
-                    <div class="qr-placeholder">
-                        QR Code<br>Verificación
-                    </div>
-                </div>
-            </footer>
-        </div>
+                {{order.user.username}}</td>
+            <td><strong>Correo:</strong><br>{{ order.user.email }}</td>
+        </tr>
+        <tr>
+            <td><strong>Fecha de emisión:</strong><br>{{ order.created_at|date:"d/m/Y" }}</td>
+            <td><strong>Estado del pedido:</strong><br><span class="badge">Confirmado</span></td>
+        </tr>
+    </table>
+
+    <div class="section-title">Productos Adquiridos</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>
+                    <strong>{{ item.product.name }}</strong><br>
+                    Talla: {{ item.size|default:"-" }} - Color: {{ item.color|default:"-" }}
+                </td>
+                <td class="text-right">{{ item.quantity }}</td>
+                <td class="text-right">${{ item.product.price|floatformat:0 }}</td>
+                <td class="text-right">${{ item.subtotal|floatformat:0 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table>
+        <tr>
+            <td><strong>Subtotal:</strong></td>
+            <td class="text-right">${{ order.subtotal|default:order.total|floatformat:0 }}</td>
+        </tr>
+        <tr>
+            <td><strong>Envío:</strong></td>
+            <td class="text-right">
+                {% if order.shipping_cost == 0 %}Gratis{% else %}${{ order.shipping_cost }}{% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Descuento:</strong></td>
+            <td class="text-right">${{ order.discount|default:"0" }}</td>
+        </tr>
+        <tr>
+            <td><strong>Total:</strong></td>
+            <td class="text-right"><strong>${{ order.total|floatformat:0 }}</strong></td>
+        </tr>
+    </table>
+
+    <div class="footer">
+        https://sevnforseven.onrender.com • contacto@747store.cl • +56 9 1234 5678
     </div>
 </body>
 

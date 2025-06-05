@@ -5,6 +5,9 @@ from django.http import HttpResponse
 from xhtml2pdf import pisa
 from .models import Order, OrderItem
 from apps.product.models import Product
+from django.utils import timezone
+from datetime import timedelta
+from django.db.models import Q
 
 @login_required
 def create_order(request):
@@ -54,3 +57,31 @@ def download_invoice(request, order_id):
     if pisa_status.err:
         return HttpResponse('Error al generar el PDF', status=500)
     return response
+
+# MIS PEDIDOS
+
+@login_required
+def mis_pedidos(request):
+    orders = Order.objects.filter(user=request.user).select_related('user').prefetch_related('items__product')
+    
+    estado = request.GET.get('estado')
+    fecha = request.GET.get('fecha')
+    query = request.GET.get('q')
+
+    if estado:
+        orders = orders.filter(status__iexact=estado)
+
+    if fecha:
+        days = int(fecha)
+        from_date = timezone.now() - timedelta(days=days)
+        orders = orders.filter(created_at__gte=from_date)
+
+    if query:
+        orders = orders.filter(
+            Q(id__icontains=query) |
+            Q(items__product__name__icontains=query)
+        ).distinct()
+
+    orders = orders.order_by('-created_at')
+
+    return render(request, 'orders/mis_pedidos.html', {'orders': orders})
