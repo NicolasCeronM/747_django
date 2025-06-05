@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block title %}
+Orden
+{% endblock title %}
+
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'orders/css/style.css' %}">
+{% endblock css %}
+
+
+
+{% block content %}
+<main class="main-content">
+    <div class="confirmation-container">
+        <div class="confirmation-card">
+
+            <!-- Success Header -->
+            <div class="success-header">
+                <div class="success-icon-container">
+                    <div class="success-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="success-ripple"></div>
+                </div>
+                <h1 class="success-title">¡Gracias por tu compra!</h1>
+                <p class="success-subtitle">Tu pedido ha sido procesado exitosamente</p>
+            </div>
+
+            <!-- Order Information -->
+            <div class="order-info-section">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Orden número:</span>
+                        <span class="info-value order-number">{{ order.id }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Fecha:</span>
+                        <span class="info-value">{{ order.created_at|date:"d/m/Y" }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Estado:</span>
+                        <span class="status-badge confirmed">
+                            <i class="fas fa-check-circle"></i>
+                            {{ order.status|default:"Confirmado" }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary-section">
+                <h2 class="section-title">
+                    <i class="fas fa-receipt"></i>
+                    Resumen de compra
+                </h2>
+
+                <div class="product-list">
+                    {% for item in order_items %}
+                    <div class="product-item">
+                        <div class="product-image">
+                            {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" width="80" height="80" class="rounded">
+                            {% else %}
+                            <div class="product-placeholder">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="product-details">
+                            <h3 class="product-name">{{ item.product.name }}</h3>
+                            <div class="product-specs">
+                                <span class="spec-item">
+                                    <i class="fas fa-expand-arrows-alt"></i>
+                                    Talla: {{ item.size|default:"Única" }}
+                                </span>
+                            </div>
+                            <div class="quantity-info">
+                                <i class="fas fa-times"></i>
+                                <span>Cantidad: {{ item.quantity }}</span>
+                            </div>
+                        </div>
+                        <div class="product-price">
+                            <span class="price-amount">${{ item.subtotal|floatformat:0 }}</span>
+                            <span class="price-unit">(${{ item.product.price|floatformat:0 }} c/u)</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Order Totals -->
+                <div class="order-totals">
+                    <div class="total-line">
+                        <span>Subtotal:</span>
+                        <span>${{ order.subtotal|floatformat:0 }}</span>
+                    </div>
+                    <div class="total-line">
+                        <span>Envío:</span>
+                        <span class="free-shipping">
+                            <i class="fas fa-truck"></i>
+                            Gratis
+                            <!-- {% if order.shipping_cost == 0 %}Gratis{% else %}${{ order.shipping_cost }}{% endif %} -->
+                        </span>
+                    </div>
+                    <div class="total-line">
+                        {% if order.discount %}
+                        <span>Descuento:</span>
+                        <span class="discount">-${{ order.discount|default:0 }}</span>
+                        {% endif %}
+
+
+                    </div>
+                    <div class="total-line grand-total">
+                        <span>Total:</span>
+                        <span>${{ order.total|floatformat:0 }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delivery Information -->
+            <div class="delivery-section">
+                <h3 class="section-title">
+                    <i class="fas fa-shipping-fast"></i>
+                    Información de entrega
+                </h3>
+                <div class="delivery-info">
+                    <div class="delivery-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <div>
+                            <strong>Fecha estimada de entrega:</strong>
+                            <span>{{ order.delivery_date|default:"3 a 5 días hábiles" }}</span>
+                        </div>
+                    </div>
+                    <div class="delivery-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Dirección de envío:</strong>
+                            <span>{{ order.shipping_address|default:"No especificada" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="#" class="btn primary-btn">
+                    <i class="fas fa-eye"></i>
+                    Ver mi pedido
+                </a>
+                <a href="{% url 'products:products' %}" class="btn secondary-btn">
+                    <i class="fas fa-shopping-bag"></i>
+                    Seguir comprando
+                </a>
+            </div>
+
+            <!-- Additional Actions -->
+            <div class="additional-actions">
+                <a href="{% url 'orders:download_invoice' order.id %}" class="action-link">
+                    <i class="fas fa-download"></i>
+                    Descargar factura
+                </a>
+                <a href="#" class="action-link">
+                    <i class="fas fa-share-alt"></i>
+                    Compartir pedido
+                </a>
+                <a href="#" class="action-link">
+                    <i class="fas fa-headset"></i>
+                    Contactar soporte
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}

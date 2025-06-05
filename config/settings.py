@@ -50,9 +50,11 @@ OWN_APPS = [
     'apps.designer',
     'apps.drop',
     'apps.home',
+    'apps.orders',
     'apps.payments',
     'apps.product',
     'apps.user',
+    
     
 ]
 
@@ -169,5 +171,5 @@ LOGIN_URL = 'user:login'
 
 # Mercado pago
 import os
-MP_ACCESS_TOKEN = os.getenv("MP_ACCESS_TOKEN")
-MP_PUBLIC_KEY = os.getenv("MP_PUBLIC_KEY")
+MP_ACCESS_TOKEN='APP_USR-4153326339464661-053019-33ad4d046004cf19c964cd67db661711-2466662727'
+MP_PUBLIC_KEY='APP_USR-0c88dbd0-a5e2-4a21-84d7-50ae62103304'

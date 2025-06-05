@@ -1,25 +1,32 @@
 # Django imports
 from django.shortcuts import render, redirect
-from django.contrib import messages
-# Own imports
 from django.conf import settings
-from apps.cart.models import CartItem, Cart
-# Mercado pago imports
+from django.contrib import messages
+
+# Modelos y lógica propia
+from apps.cart.models import Cart
+from apps.orders.utils import create_order_from_cart
+
+# Mercado Pago
 from .services.mercado_pago import crear_preferencia
-# WebPay imports
+
+# WebPay
 from transbank.webpay.webpay_plus.transaction import Transaction
 from transbank.common.options import WebpayOptions
 
-# Create your views here.
-
-# MERCADO PAGO VIEWS
+# ====================================================
+# ✅ VISTAS DE CHECKOUT Y PAGO CON MERCADO PAGO
+# ====================================================
 
 def checkout(request):
+    """
+    Genera la preferencia de pago con Mercado Pago y muestra el resumen del carrito.
+    """
     cart = Cart.objects.get(user=request.user)
     cart_items = cart.items.all()
 
     if not cart_items:
-        return redirect("cart:view_cart" )
+        return redirect("cart:view_cart")
 
     resumen_items = []
     for item in cart_items:
@@ -28,17 +35,17 @@ def checkout(request):
             "quantity": item.quantity,
             "unit_price": float(item.product.price),
             "subtotal": float(item.product.price * item.quantity),
-            #"image": item.product.image.url if item.product.image else None
         })
 
     total = sum(i["subtotal"] for i in resumen_items)
 
+    # Guardar resumen en sesión
     request.session["payment_summary"] = {
         "items": resumen_items,
         "total": total
     }
 
-    # 🟦 Crear preferencia Mercado Pago
+    # Crear preferencia de Mercado Pago
     productos = [
         {
             "title": item["title"],
@@ -50,14 +57,12 @@ def checkout(request):
     ]
 
     back_urls = {
-        "success": "https://2kvhrc1g-8000.brs.devtunnels.ms//payments/success/",
-        "failure": "https://2kvhrc1g-8000.brs.devtunnels.ms//payments/failure/",
-        "pending": "https://2kvhrc1g-8000.brs.devtunnels.ms//payments/pending/"
+        "success": "https://2kvhrc1g-8000.brs.devtunnels.ms/payments/checkout/success/",
+        "failure": "https://2kvhrc1g-8000.brs.devtunnels.ms/payments/failure/",
+        "pending": "https://2kvhrc1g-8000.brs.devtunnels.ms/payments/pending/"
     }
 
     preference = crear_preferencia(productos, back_urls)
-    #print("MP preference response:", preference)
-
 
     return render(request, "checkout.html", {
         "cart_items": cart_items,
@@ -66,27 +71,37 @@ def checkout(request):
         "public_key": settings.MP_PUBLIC_KEY
     })
 
-def success(request):
-    context = {
-        "collection_id": request.GET.get("collection_id"),
-        "collection_status": request.GET.get("collection_status"),
-        "payment_id": request.GET.get("payment_id"),
-        "status": request.GET.get("status"),
-        "payment_type": request.GET.get("payment_type"),
-        "merchant_order_id": request.GET.get("merchant_order_id"),
-    }
 
-    return render(request, "success.html", context)
+def checkout_success(request):
+    """
+    Procesa el retorno de Mercado Pago después del pago. Crea la orden si fue aprobado.
+    """
+    payment_status = request.GET.get('status')
+    payment_id = request.GET.get('payment_id')
+
+    if payment_status == 'approved':
+        order = create_order_from_cart(request, payment_id=payment_id)
+        return redirect('orders:success', order_id=order.id)
+    else:
+        return render(request, 'failed.html')
+
 
 def failure(request):
-    return render(request, "mercado_pago/failure.html")
+    return render(request, 'mercado_pago/failure.html')
+
 
 def pending(request):
-    return render(request, "mercado_pago/pending.html")
+    return render(request, 'mercado_pago/pending.html')
 
-# webPay VIEWS
+
+# ====================================================
+# ✅ VISTAS DE WEBPAY
+# ====================================================
 
 def webpay_init(request):
+    """
+    Inicia una transacción con Webpay.
+    """
     cart = Cart.objects.get(user=request.user)
     cart_items = cart.items.all()
 
@@ -94,7 +109,7 @@ def webpay_init(request):
 
     buy_order = f"order-{request.user.id}-{cart.id}"
     session_id = f"session-{request.user.id}"
-    return_url = request.build_absolute_uri("/payments/success/")
+    return_url = request.build_absolute_uri("/payments/webpay/return/")
 
     tx = Transaction(WebpayOptions(
         commerce_code="597055555532",
@@ -107,8 +122,11 @@ def webpay_init(request):
     return redirect(response["url"] + "?token_ws=" + response["token"])
 
 
-def webpay_commit(request):
+def webpay_return(request):
     token = request.GET.get("token_ws")
+
+    if not token:
+        return render(request, 'failed.html')
 
     tx = Transaction(WebpayOptions(
         commerce_code="597055555532",  
@@ -118,17 +136,29 @@ def webpay_commit(request):
 
     response = tx.commit(token)
 
-    order = request.session.pop("webpay_order", None)
+    if response.get("status") == "AUTHORIZED":
+        order = create_order_from_cart(
+            request,
+            payment_id=response.get("payment_response", {}).get("payment_code", "")  # o usa 'buy_order'
+        )
+        if order:
+            return redirect('orders:success', order_id=order.id)
+        else:
+            return render(request, 'payments/failed.html', {'message': 'No se pudo crear la orden. Carrito vacío o no encontrado.'})
 
-    return render(request, "success.html", {
-        "response": response,
-        "order": order
-    })
 
 
-# VIEWS COMPARTIDAS
+
+
+# ====================================================
+# ✅ VISTA GENÉRICA (opcional si usas sesión solamente)
+# ====================================================
 
 def payment_success(request):
+    """
+    Vista de confirmación genérica (si se usa sesión en vez de orden real).
+    Ya no es necesaria si se usa `orders:success` correctamente.
+    """
     order = request.session.get("payment_summary")
 
     context = {
@@ -138,18 +168,13 @@ def payment_success(request):
         "order": order
     }
 
-    # Limpia carrito del usuario
+    # Limpieza del carrito
     try:
         cart = Cart.objects.get(user=request.user)
         cart.items.all().delete()
     except:
         pass
 
-    # Limpia resumen de sesión
     request.session.pop("payment_summary", None)
 
     return render(request, "success.html", context)
-
-
-
-

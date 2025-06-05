@@ -11,10 +11,13 @@ urlpatterns = [
 
     #WebPay
     path("webpay/", views.webpay_init, name="webpay_init"),
-    path("webpay/commit/", views.webpay_commit, name="webpay_commit"),
+    # path("webpay/commit/", views.webpay_commit, name="webpay_commit"),
+    # ------
+    path('webpay/return/', views.webpay_return, name='webpay_return'),
+
 
     #AMBAS
-    path("success/", views.payment_success, name="payment_success"),
+    path("success/", views.checkout_success, name="payment_success"),
 
 
 ]
