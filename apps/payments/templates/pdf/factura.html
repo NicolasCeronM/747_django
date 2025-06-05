@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 13px;
+            padding: 30px;
+            background: #fff;
+            color: #1f2937;
+        }
+
+        h1 {
+            color: #1e3a8a;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 8px;
+            text-align: left;
+        }
+
+        td {
+            padding: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: #10b981;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #d1d5db;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 11px;
+            color: #6b7280;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🧾 Factura Electrónica – Orden #{{ order.id }}</h1>
+
+    <table>
+        <tr>
+            <td><strong>Cliente:</strong><br>
+                {% if order.user.first_name or order.user.last_name %}
+                {{ order.user.first_name }} {{ order.user.last_name }}
+                {% else %}
+                {{ order.user.username }}
+                {% endif %}
+            </td>
+            <td><strong>Correo:</strong><br>{{ order.user.email }}</td>
+        </tr>
+        <tr>
+            <td><strong>Fecha de emisión:</strong><br>{{ order.created_at|date:"d/m/Y" }}</td>
+            <td><strong>Estado del pedido:</strong><br><span class="badge">Confirmado</span></td>
+        </tr>
+    </table>
+
+    <div class="section-title">Productos Adquiridos</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>
+                    <strong>{{ item.product.name }}</strong><br>
+                    Talla: {{ item.size|default:"-" }} - Color: {{ item.color|default:"-" }}
+                </td>
+                <td class="text-right">{{ item.quantity }}</td>
+                <td class="text-right">${{ item.product.price|floatformat:0 }}</td>
+                <td class="text-right">${{ item.subtotal|floatformat:0 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table>
+        <tr>
+            <td><strong>Subtotal:</strong></td>
+            <td class="text-right">${{ order.subtotal|floatformat:0 }}</td>
+        </tr>
+        <tr>
+            <td><strong>Envío:</strong></td>
+            <td class="text-right">
+                {% if order.shipping_cost == 0 %}Gratis{% else %}${{ order.shipping_cost|floatformat:0 }}{% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Descuento:</strong></td>
+            <td class="text-right">-${{ order.discount|default:0|floatformat:0 }}</td>
+        </tr>
+        <tr>
+            <td><strong>Total:</strong></td>
+            <td class="text-right"><strong>${{ order.total|floatformat:0 }}</strong></td>
+        </tr>
+    </table>
+
+    <div class="footer">
+        www.747store.cl • contacto@747store.cl • +56 9 1234 5678
+    </div>
+</body>
+
+</html>

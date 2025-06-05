@@ -173,3 +173,12 @@ LOGIN_URL = 'user:login'
 import os
 MP_ACCESS_TOKEN='APP_USR-4153326339464661-053019-33ad4d046004cf19c964cd67db661711-2466662727'
 MP_PUBLIC_KEY='APP_USR-0c88dbd0-a5e2-4a21-84d7-50ae62103304'
+
+#E-MAIL
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'nicolas.ceron.i.m@gmail.com'
+EMAIL_HOST_PASSWORD = 'drsd dgii xpzi bylw'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

@@ -1,146 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+Pedidos
+{% endblock title %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'orders/css/pedidos.css' %}">
+{% endblock css %}
+
+
 {% block content %}
-<style>
-    body {
-        background: #f3f4f6;
-    }
-
-    .order-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 2rem;
-    }
-
-    .order-header h2 {
-        font-weight: 800;
-        font-size: 2.2rem;
-        color: #111827;
-    }
-
-    .order-subtitle {
-        color: #6b7280;
-        font-size: 0.95rem;
-    }
-
-    .btn {
-        font-weight: 600;
-        border-radius: 8px;
-        padding: 0.5rem 1.2rem;
-        cursor: pointer;
-        text-decoration: none;
-    }
-
-    .btn-primary {
-        background: linear-gradient(to right, #2563eb, #1d4ed8);
-        color: white;
-        border: none;
-    }
-
-    .btn-outline-dark {
-        background: white;
-        border: 1px solid #d1d5db;
-        color: #111827;
-    }
-
-    .filters {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 12px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
-        margin-bottom: 2rem;
-    }
-
-    .filters label {
-        font-weight: 600;
-        color: #374151;
-    }
-
-    .filters input,
-    .filters select {
-        padding: 0.5rem;
-        border-radius: 8px;
-        border: 1px solid #d1d5db;
-        width: 100%;
-    }
-
-    .btn-clear {
-        background: #ef4444;
-        color: white;
-        border: none;
-        padding: 0.5rem 1.2rem;
-        border-radius: 8px;
-    }
-
-    .order-container {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-        padding: 2rem;
-    }
-
-    .orders-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 0.95rem;
-    }
-
-    .orders-table th,
-    .orders-table td {
-        padding: 1rem;
-        border-bottom: 1px solid #e5e7eb;
-        text-align: left;
-    }
-
-    .orders-table th {
-        background: #f9fafb;
-        color: #374151;
-        font-weight: 700;
-    }
-
-    .orders-table td a {
-        color: #2563eb;
-        text-decoration: none;
-        font-weight: 600;
-    }
-
-    .badge {
-        padding: 0.35rem 0.9rem;
-        border-radius: 9999px;
-        font-size: 0.85rem;
-        color: white;
-        font-weight: 600;
-    }
-
-    .badge.pagado {
-        background: #22c55e;
-    }
-
-    .badge.enviado {
-        background: #3b82f6;
-    }
-
-    .badge.entregado {
-        background: #10b981;
-    }
-
-    .btn-icon {
-        background: #f3f4f6;
-        border: 1px solid #d1d5db;
-        border-radius: 8px;
-        padding: 0.5rem;
-        margin-right: 0.3rem;
-        cursor: pointer;
-    }
-
-    .btn-icon i {
-        color: #374151;
-    }
-</style>
-
 <div class="container py-5">
     <div class="order-header">
         <div>

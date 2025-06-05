@@ -6,6 +6,7 @@ from django.contrib import messages
 # Modelos y lógica propia
 from apps.cart.models import Cart
 from apps.orders.utils import create_order_from_cart
+from .utils import enviar_correo_compra, generar_factura_pdf
 
 # Mercado Pago
 from .services.mercado_pago import crear_preferencia
@@ -142,9 +143,10 @@ def webpay_return(request):
             payment_id=response.get("payment_response", {}).get("payment_code", "")  # o usa 'buy_order'
         )
         if order:
+            enviar_correo_compra(request.user, order)
             return redirect('orders:success', order_id=order.id)
         else:
-            return render(request, 'payments/failed.html', {'message': 'No se pudo crear la orden. Carrito vacío o no encontrado.'})
+            return render(request, 'failed.html', {'message': 'No se pudo crear la orden. Carrito vacío o no encontrado.'})
 
 
 

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmación de compra</title>
+</head>
+
+<body style="font-family: Arial, sans-serif;">
+    <h2>¡Gracias por tu compra, {{ usuario.first_name }}!</h2>
+    <p>Tu pedido <strong>#{{ pedido.id }}</strong> fue confirmado correctamente.</p>
+
+    <h4>Resumen del pedido:</h4>
+    <ul>
+        {% for item in pedido.items.all %}
+        <li>{{ item.product.name }} x{{ item.quantity }} — ${{ item.price }}</li>
+        {% endfor %}
+    </ul>
+
+    <p><strong>Total pagado:</strong> ${{ pedido.total }}</p>
+    <p>Te notificaremos cuando tu pedido sea enviado 🚚</p>
+    <br>
+    <p>Equipo SEVEN FOUR SEVEN</p>
+</body>
+
+</html>
