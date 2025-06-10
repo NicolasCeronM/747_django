@@ -1,0 +1,50 @@
+<div class="col-lg-4">
+    <div class="summary-card">
+        <h3 class="summary-title">
+            <i class="fas fa-receipt me-2"></i>Resumen del Pedido
+        </h3>
+
+        <div class="summary-row">
+            <span>Subtotal (<span id="item-count"> {{ cart.items.all|length }})</span>
+                artículos</span>
+            <span class="fw-bold" id="subtotal">{{cart.items.all.subtotal}}</span>
+        </div>
+
+        <div class="summary-row">
+            <span><i class="fas fa-shipping-fast me-2 text-success"></i>Envío</span>
+            <span class="text-success fw-bold">Gratis</span>
+        </div>
+
+        <div class="summary-row">
+            <span>Descuento</span>
+            <span class="text-success" id="discount">-$0</span>
+        </div>
+
+        <div class="summary-row total">
+            <span>Total</span>
+            <span id="total">${{ cart.total }}</span>
+        </div>
+
+        <div class="discount-input">
+            <input type="text" placeholder="Código de descuento" id="discount-code">
+            <button class="apply-btn" onclick="applyDiscount()">
+                <i class="fas fa-tag me-2"></i>Aplicar
+            </button>
+        </div>
+
+        <a href="{% url 'payments:checkout' %}" class="btn checkout-btn" onclick="proceedToCheckout()">
+            <i class="fas fa-lock me-2"></i>Proceder al Pago
+        </a>
+
+        <div class="text-center text-muted">
+            <small>Métodos de pago aceptados:</small><br>
+            <i class="fab fa-cc-visa fa-2x me-2"></i>
+            <i class="fab fa-cc-mastercard fa-2x me-2"></i>
+            <i class="fab fa-cc-paypal fa-2x"></i>
+        </div>
+
+        <div class="security-badge">
+            <i class="fas fa-shield-alt me-2"></i>Compra 100% segura
+        </div>
+    </div>
+</div>

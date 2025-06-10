@@ -16,9 +16,12 @@ Orden
 
 
 {% block content %}
+
 <main class="main-content">
+
     <div class="confirmation-container">
         <div class="confirmation-card">
+
 
             <!-- Success Header -->
             <div class="success-header">
@@ -178,4 +181,28 @@ Orden
         </div>
     </div>
 </main>
+
+
 {% endblock content %}
+
+
+{% block js %}
+{% if messages %}
+
+{% for message in messages %}
+<script>
+
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: '{{message}}',
+        showConfirmButton: false,
+        timer: 5000
+    });
+
+</script>
+{% endfor %}
+
+{% endif %}
+
+{% endblock js %}

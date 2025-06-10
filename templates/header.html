@@ -25,9 +25,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'products:products' %}">Productos</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li> -->
             </ul>
 
             <!-- Header Actions -->
@@ -35,7 +32,7 @@
                 <!-- Cart Button -->
                 <a href="{% url 'cart:view_cart' %}" class="cart-btn">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    <span class="cart-badge" id="cartBadge">{{ cart.items.all|length }}</span>
+                    <!-- <span class="cart-badge" id="cartBadge">23</span> -->
                 </a>
 
                 <!-- User Dropdown -->

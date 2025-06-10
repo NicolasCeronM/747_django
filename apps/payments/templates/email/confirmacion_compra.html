@@ -1,26 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
-    <title>Confirmación de compra</title>
+    <style>
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            background-color: #f9fafb;
+            color: #333;
+            padding: 0;
+            margin: 0;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .email-header {
+            background-color: #000523;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .email-header h1 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .email-body {
+            padding: 20px 30px;
+        }
+
+        .email-body h2 {
+            color: #000523;
+        }
+
+        .order-summary {
+            margin: 20px 0;
+            background-color: #f3f4f6;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .order-summary ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .order-summary li {
+            margin-bottom: 8px;
+        }
+
+        .total {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #111827;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+    </style>
 </head>
 
-<body style="font-family: Arial, sans-serif;">
-    <h2>¡Gracias por tu compra, {{ usuario.first_name }}!</h2>
-    <p>Tu pedido <strong>#{{ pedido.id }}</strong> fue confirmado correctamente.</p>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <h1>🧾 Compra #{{ pedido.id }} confirmada en SEVEN FOUR SEVEN</h1>
+        </div>
 
-    <h4>Resumen del pedido:</h4>
-    <ul>
-        {% for item in pedido.items.all %}
-        <li>{{ item.product.name }} x{{ item.quantity }} — ${{ item.price }}</li>
-        {% endfor %}
-    </ul>
+        <div class="email-body">
+            <h2>¡Gracias por tu compra,
 
-    <p><strong>Total pagado:</strong> ${{ pedido.total }}</p>
-    <p>Te notificaremos cuando tu pedido sea enviado 🚚</p>
-    <br>
-    <p>Equipo SEVEN FOUR SEVEN</p>
+                {% if usuario.first_name %}
+                {{ usuario.first_name }}
+                {% else %}
+                {{ usuario.username }}
+                {% endif %}
+
+                !
+            </h2>
+            <p>Tu pedido <strong>#{{ pedido.id }}</strong> fue confirmado correctamente.</p>
+
+            <div class="order-summary">
+                <h3>Resumen del pedido:</h3>
+                <ul>
+                    {% for item in pedido.items.all %}
+                    <li>{{ item.product.name }} x{{ item.quantity }} — ${{ item.subtotal|floatformat:0 }}</li>
+                    {% endfor %}
+                </ul>
+                <p class="total">Total pagado: ${{ pedido.total|floatformat:0 }}</p>
+            </div>
+
+            <p>Te notificaremos cuando tu pedido sea enviado 🚚</p>
+        </div>
+
+        <div class="footer">
+            Equipo SEVEN FOUR SEVEN<br>
+            Este correo fue generado automáticamente, por favor no respondas.
+        </div>
+    </div>
 </body>
 
 </html>

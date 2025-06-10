@@ -29,127 +29,28 @@ Carrito
                     <span id="success-text"></span>
                 </div>
 
-                <div id="cart-items">
-                    <!-- Producto 1 -->
-                    {% if cart.total > 0 %} {% for item in cart.items.all %} <div class="product-card"
-                        data-product-id="1">
-                        <div class="row align-items-center">
-                            <div class="col-md-2 col-3">
-                                {% with item.product.images.all.first as image %}
-                                {% if image %}
-                                <img src="{{ image.image.url }}" alt="{{ item.product.name }}" width="64" height="64"
-                                    class="rounded border img-fluid">
-                                {% endif %}
-                                {% endwith %}
-                            </div>
-                            <div class="col-md-4 col-9">
-                                <div class="product-info">
-                                    <h5>{{ item.product.name }}</h5>
-                                    <p class="mb-2 text-muted">{{item.product.description|truncatewords:9}}</p>
-                                    <div class="product-details">
-                                        <span><i class="fas fa-ruler me-1"></i>Talla: M</span>
-                                        <span><i class="fas fa-palette me-1"></i>Color: Negro</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2 col-6 text-center">
-                                <div class="price-display">${{ item.subtotal}}</div>
-                            </div>
-                            <div class="col-md-3 col-6">
-                                <div class="quantity-controls">
-                                    <button class="quantity-btn" onclick="updateQuantity(1, -1)">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <input type="number" value="{{ item.quantity }}"
-                                        class="form-control form-control-sm text-center" style="width: 60px;">
-                                    <button class="quantity-btn" onclick="updateQuantity(1, 1)">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-md-1 col-12 text-center mt-md-0 mt-2">
-                                <a href="{% url 'cart:remove_item' item.id %}" class="delete-btn"
-                                    title="Eliminar producto">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                    {% else %}
-                    <div id="empty-cart" class="empty-cart">
-                        <i class="fas fa-shopping-cart"></i>
-                        <h3>Tu carrito está vacío</h3>
-                        <p>¡Agrega algunos productos para comenzar!</p>
-                    </div>
-                    {% endif %}
-                </div>
+                <!-- Items del carro -->
+
+                {% include 'includes/item_cart.html' %}
 
 
             </div>
 
-            <div class="action-buttons">
+            <!-- <div class="action-buttons">
                 <a href="#" class="action-btn">
                     <i class="fas fa-arrow-left me-2"></i>Seguir Comprando
                 </a>
                 <a href="#" class="action-btn secondary">
                     <i class="fas fa-heart me-2"></i>Guardar para después
                 </a>
-            </div>
+            </div> -->
         </div>
 
         <!-- Resumen de pédido -->
 
-        <div class="col-lg-4">
-            <div class="summary-card">
-                <h3 class="summary-title">
-                    <i class="fas fa-receipt me-2"></i>Resumen del Pedido
-                </h3>
+        {% include 'includes/summary_cart.html' %}
 
-                <div class="summary-row">
-                    <span>Subtotal (<span id="item-count"> {{ cart.items.all|length }})</span>
-                        artículos</span>
-                    <span class="fw-bold" id="subtotal">{{cart.items.all.subtotal}}</span>
-                </div>
 
-                <div class="summary-row">
-                    <span><i class="fas fa-shipping-fast me-2 text-success"></i>Envío</span>
-                    <span class="text-success fw-bold">Gratis</span>
-                </div>
-
-                <div class="summary-row">
-                    <span>Descuento</span>
-                    <span class="text-success" id="discount">-$0</span>
-                </div>
-
-                <div class="summary-row total">
-                    <span>Total</span>
-                    <span id="total">${{ cart.total }}</span>
-                </div>
-
-                <div class="discount-input">
-                    <input type="text" placeholder="Código de descuento" id="discount-code">
-                    <button class="apply-btn" onclick="applyDiscount()">
-                        <i class="fas fa-tag me-2"></i>Aplicar
-                    </button>
-                </div>
-
-                <a href="{% url 'payments:checkout' %}" class="btn checkout-btn" onclick="proceedToCheckout()">
-                    <i class="fas fa-lock me-2"></i>Proceder al Pago
-                </a>
-
-                <div class="text-center text-muted">
-                    <small>Métodos de pago aceptados:</small><br>
-                    <i class="fab fa-cc-visa fa-2x me-2"></i>
-                    <i class="fab fa-cc-mastercard fa-2x me-2"></i>
-                    <i class="fab fa-cc-paypal fa-2x"></i>
-                </div>
-
-                <div class="security-badge">
-                    <i class="fas fa-shield-alt me-2"></i>Compra 100% segura
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

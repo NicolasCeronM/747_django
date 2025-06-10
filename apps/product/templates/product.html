@@ -17,28 +17,7 @@
 
     <div class="row">
         <!-- Filtros -->
-        <div class="col-md-3 mb-4">
-            <aside class="filter-box p-4 shadow-sm rounded-4">
-                <h5 class="fw-semibold mb-4">Filtrar</h5>
-                <form method="GET">
-                    <div class="mb-4">
-                        <label class="form-label">Categoría</label>
-                        <select class="form-select rounded-pill" name="category">
-                            <option selected>Todas</option>
-                            {% for cat in categories %}
-                            <option value="{{ cat.id }}">{{ cat.name }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="mb-4">
-                        <input type="text" class="form-control rounded-pill" name="search" placeholder="Buscar...">
-                    </div>
-                    <button class="btn btn-dark w-100 rounded-pill mb-2">Aplicar</button>
-                    <a href="#" class="btn btn-outline-secondary w-100 rounded-pill">Limpiar</a>
-                </form>
-            </aside>
-        </div>
-
+        {% include 'includes/product_filter.html' %}
         <!-- Productos -->
         <div class="col-md-9">
             <div class="row g-4">
@@ -69,20 +48,12 @@
                                 {% endfor %}
                             </div>
                             {% endif %}
-
-                            <!-- Colores -->
-                            {% if product.product_colors.all %}
-                            <div class="mb-3 d-flex justify-content-center gap-2">
-                                {% for c in product.product_colors.all %}
-                                <span class="color-circle" style="background-color: {{ c.hex_code }};"
-                                    title="{{ c.name }}"></span>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
-
+                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                             <a href="{% url 'cart:add_to_cart' product.id %}"
-                                class="btn btn-outline-dark w-100 rounded-pill">🛒
-                                Añadir al carrito</a>
+                                class="btn btn-outline-dark w-100 rounded-pill add-to-cart-btn"
+                                data-product-id="{{ product.id }}">
+                                Agregar al carrito
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -91,11 +62,9 @@
         </div>
     </div>
 </div>
-
-
 {% endblock %}
 
 
 {% block js %}
-
+<script src="{% static 'cart/js/cart_ajax.js' %}"></script>
 {% endblock js %}
