@@ -10,61 +10,26 @@
 {% block content %}
 
 <div class="container py-5">
-    <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold">Colección Exclusiva</h1>
-        <p class="text-muted">Estilo urbano, originalidad y autenticidad en cada prenda</p>
-    </div>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Colección Exclusiva</h1>
+            <p class="hero-subtitle">Estilo urbano, originalidad y autenticidad en cada prenda</p>
+        </div>
+    </section>
 
     <div class="row">
         <!-- Filtros -->
-        {% include 'includes/product_filter.html' %}
+        {% include 'includes/product/product_filter.html' %}
         <!-- Productos -->
-        <div class="col-md-9">
-            <div class="row g-4">
-                {% for product in products %}
-                <div class="col-md-6 col-lg-4">
-                    <div class="card border-0 shadow-sm rounded-4 product-tile h-100">
-                        <div class="product-image-wrapper position-relative overflow-hidden rounded-4">
-                            {% with product.images.all as imgs %}
-                            {% if imgs|length > 1 %}
-                            <img src="{{ imgs.0.image.url }}" class="img-main img-fluid" alt="{{ product.name }}">
-                            <img src="{{ imgs.1.image.url }}"
-                                class="img-hover img-fluid position-absolute top-0 start-0" alt="{{ product.name }}">
-                            {% else %}
-                            <img src="{{ imgs.0.image.url }}" class="img-main img-fluid" alt="{{ product.name }}">
-                            {% endif %}
-                            {% endwith %}
-                        </div>
-                        <div class="card-body text-center">
-                            <h6 class="text-muted text-uppercase small">{{ product.category.name }}</h6>
-                            <h5 class="fw-bold">{{ product.name }}</h5>
-                            <p class="text-dark fs-5">CLP {{ product.price|floatformat:0 }}</p>
+        {% include 'includes/product/product_product.html' %}
 
-                            <!-- Tallas -->
-                            {% if product.product_sizes.all %}
-                            <div class="mb-2">
-                                {% for s in product.product_sizes.all %}
-                                <span class="badge bg-light text-dark border me-1">{{ s.size }}</span>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
-                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                            <a href="{% url 'cart:add_to_cart' product.id %}"
-                                class="btn btn-outline-dark w-100 rounded-pill add-to-cart-btn"
-                                data-product-id="{{ product.id }}">
-                                Agregar al carrito
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
     </div>
 </div>
 {% endblock %}
 
 
 {% block js %}
-<script src="{% static 'cart/js/cart_ajax.js' %}"></script>
+<!-- <script src="{% static 'cart/js/cart_ajax.js' %}"></script> -->
+
 {% endblock js %}

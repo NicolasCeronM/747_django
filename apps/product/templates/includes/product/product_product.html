@@ -1,0 +1,78 @@
+<!-- Products Section -->
+<div class="col-lg-9">
+    <div class="products-section">
+        <div class="results-info">
+            <span class="results-count">Mostrando 6 productos</span>
+            <select class="sort-select">
+                <option value="newest">Más recientes</option>
+                <option value="price-low">Precio: menor a mayor</option>
+                <option value="price-high">Precio: mayor a menor</option>
+                <option value="name">Nombre A-Z</option>
+            </select>
+        </div>
+
+        <div class="products-grid">
+
+            <!-- Products -->
+            {% for product in products %}
+            <a href="{% url 'products:product_detail' product.id %}">
+                <div class="product-card" onmouseenter="startImageCycle(this)" onmouseleave="stopImageCycle(this)">
+
+                    <div class="image-wrapper">
+                        <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="product-image"
+                            data-images='{% for img in product.images.all %}{{ img.image.url }}{% if not forloop.last %},{% endif %}{% endfor %}'>
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-category">NINGUNA</div>
+                        <p class="product-title">{{product.name}}</p>
+                        <div class="product-price">CLP {{product.price|floatformat:0}}</div>
+                        <div class="size-options">
+                            {% for size in product.product_sizes.all %}
+                            <div class="size-option" onclick="selectSize(this)">{{size.size}}</div>
+                            {% endfor %}
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart('{{ product.name }}')">Agregar al
+                            carrito</button>
+                    </div>
+                </div>
+            </a>
+
+
+            {% endfor %}
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    let intervalMap = new Map();
+
+    function startImageCycle(card) {
+        const img = card.querySelector('.product-image');
+        const images = img.dataset.images.split(',');
+        let index = 0;
+
+        if (images.length <= 1) return;
+
+        const interval = setInterval(() => {
+            index = (index + 1) % images.length;
+            img.src = images[index];
+        }, 1500); // cada 1 segundo
+
+        intervalMap.set(card, interval);
+    }
+
+    function stopImageCycle(card) {
+        const interval = intervalMap.get(card);
+        if (interval) {
+            clearInterval(interval);
+            intervalMap.delete(card);
+
+            const img = card.querySelector('.product-image');
+            const images = img.dataset.images.split(',');
+            img.src = images[0];
+        }
+    }
+</script>

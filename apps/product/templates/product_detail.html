@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+{{product.name}}
+{% endblock title %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'product/css/product_detail.css' %}">
+{% endblock css %}
+
+
+{% block content %}
+<!-- Breadcrumb -->
+<section class="breadcrumb-section">
+    <div class="container-custom">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-custom">
+                <li class="breadcrumb-item"><a href="{% url 'products:products' %}">Productos</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Fleece pants graffiti</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Main Content -->
+<main class="main-content">
+    <div class="container-custom">
+        <div class="row">
+            <!-- Product Images -->
+            <div class="col-lg-6">
+                <div class="product-images">
+                    <div class="image-grid">
+                        {% for img in product.images.all %}
+                        <div class="image-container" onclick="openImageModal(0)">
+                            <img src="{{img.image.url}}" alt="SIMA PULLOVER HOODY - Vista frontal"
+                                class="product-image">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="col-lg-6">
+                <div class="product-info">
+                    <h1 class="product-title">{{product.name}}</h1>
+                    <span class="new-color-badge">Nuevo color</span>
+
+                    <div class="rating-section">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <a href="#" class="rating-text">8 Opiniones</a>
+                    </div>
+
+                    <p class="product-description">
+                        {{product.description}}
+                    </p>
+
+                    <div class="price-section">
+                        <div class="price">CLP {{product.price|floatformat:0}}</div>
+                        <div class="payment-info">
+                            4 pagos de $35.00 a 0% de interés con <strong>Klarna</strong><br>
+                            <a href="#">Más información</a>
+                        </div>
+                    </div>
+
+                    <div class="size-section">
+                        <div class="size-label">Talla:</div>
+                        <div class="size-selector">
+
+                            {% for size in product.product_sizes.all %}
+                            <div class="size-option" onclick="selectSize(this)">{{size.size}}</div>
+                            {% endfor %}
+                        </div>
+                        <a href="#" class="size-guide">Tabla de tallas y guía de cortes</a>
+                    </div>
+
+                    <a href="{% url 'cart:add_to_cart' product.id %}" class="btn add-to-cart-btn">
+                        Añadir a la cesta
+                    </a>
+
+                    <!-- Info Accordion -->
+                    <div class="accordion info-accordion" id="productAccordion">
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#delivery">
+                                    Entrega
+                                </button>
+                            </h2>
+                            <div id="delivery" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
+                                <div class="accordion-body">
+                                    Envío gratuito en pedidos superiores a $100.<br>
+                                    Entrega estándar: 3-5 días laborables<br>
+                                    Entrega express: 1-2 días laborables
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#tienda">
+                                    Retiro en tienda
+                                </button>
+                            </h2>
+                            <div id="tienda" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
+                                <div class="accordion-body">
+                                    Envío gratuito en pedidos superiores a $100.<br>
+                                    Entrega estándar: 3-5 días laborables<br>
+                                    Entrega express: 1-2 días laborables
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#Prenda">
+                                    Descripcion de prenda
+                                </button>
+                            </h2>
+                            <div id="Prenda" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
+                                <div class="accordion-body">
+                                    Envío gratuito en pedidos superiores a $100.<br>
+                                    Entrega estándar: 3-5 días laborables<br>
+                                    Entrega express: 1-2 días laborables
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
