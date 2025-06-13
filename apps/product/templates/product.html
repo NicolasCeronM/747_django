@@ -8,28 +8,22 @@
 {% endblock css %}
 
 {% block content %}
+<!-- Hero Section -->
+{% include 'includes/product/product_hero.html' %}
 
-<div class="container py-5">
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container">
-            <h1 class="hero-title">Colección Exclusiva</h1>
-            <p class="hero-subtitle">Estilo urbano, originalidad y autenticidad en cada prenda</p>
-        </div>
-    </section>
+<main class="products-container" id="productos">
 
-    <div class="row">
-        <!-- Filtros -->
-        {% include 'includes/product/product_filter.html' %}
-        <!-- Productos -->
-        {% include 'includes/product/product_product.html' %}
+    <!-- Filtros -->
+    {% include 'includes/product/product_filter.html' %}
+    <!-- Productos -->
+    {% include 'includes/product/product_product.html' %}
 
-    </div>
-</div>
+
+</main>
 {% endblock %}
 
 
 {% block js %}
-<!-- <script src="{% static 'cart/js/cart_ajax.js' %}"></script> -->
+<script src="{% static 'product/js/product.js' %}"></script>
 
 {% endblock js %}

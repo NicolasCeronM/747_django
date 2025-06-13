@@ -1,78 +1,64 @@
-<!-- Products Section -->
-<div class="col-lg-9">
-    <div class="products-section">
-        <div class="results-info">
-            <span class="results-count">Mostrando 6 productos</span>
-            <select class="sort-select">
-                <option value="newest">Más recientes</option>
-                <option value="price-low">Precio: menor a mayor</option>
-                <option value="price-high">Precio: mayor a menor</option>
-                <option value="name">Nombre A-Z</option>
+<div class="products-wrapper">
+    <div class="products-header">
+        <p>Mostrando 6 productos</p>
+        <div class="sort-dropdown">
+            <select name="sort" id="sort">
+                <option value="recientes">Más recientes</option>
+                <option value="precio-asc">Precio: menor a mayor</option>
+                <option value="precio-desc">Precio: mayor a menor</option>
+                <option value="nombre">Nombre</option>
             </select>
         </div>
+    </div>
 
-        <div class="products-grid">
+    <div class="products-grid">
+        <!-- Producto 1 -->
 
-            <!-- Products -->
-            {% for product in products %}
-            <a href="{% url 'products:product_detail' product.id %}">
-                <div class="product-card" onmouseenter="startImageCycle(this)" onmouseleave="stopImageCycle(this)">
+        {% for p in products %}
 
-                    <div class="image-wrapper">
-                        <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="product-image"
-                            data-images='{% for img in product.images.all %}{{ img.image.url }}{% if not forloop.last %},{% endif %}{% endfor %}'>
+        <div class="product-card">
+            <a href="{% url 'products:product_detail' p.id %}">
+                <div class="product-images">
+
+                    {% for img in p.images.all %}
+                    <img src="{{ img.image.url }}" alt="{{ p.name }}" class="{% if forloop.first %}active{% endif %}">
+                    {% endfor %}
+                    <!-- Indicadores de puntos -->
+                    <div class="image-indicators">
+                        {% for img in p.images.all %}
+                        <span class="indicator {% if forloop.first %}active{% endif %}" data-index="0"></span>
+                        {% endfor %}
+
                     </div>
 
-                    <div class="product-info">
-                        <div class="product-category">NINGUNA</div>
-                        <p class="product-title">{{product.name}}</p>
-                        <div class="product-price">CLP {{product.price|floatformat:0}}</div>
-                        <div class="size-options">
-                            {% for size in product.product_sizes.all %}
-                            <div class="size-option" onclick="selectSize(this)">{{size.size}}</div>
-                            {% endfor %}
-                        </div>
-                        <button class="add-to-cart" onclick="addToCart('{{ product.name }}')">Agregar al
-                            carrito</button>
-                    </div>
                 </div>
             </a>
+            <div class="product-info">
+                <h3 class="product-name">{{p.name}}</h3>
+                <p class="product-price">CLP {{p.price|floatformat:0}} </p>
+                <div class="product-sizes">
 
+                    {% for s in p.product_sizes.all %}
 
-            {% endfor %}
+                    <button class="size-btn">{{s.size}}</button>
 
-
+                    {% endfor %}
+                </div>
+                <button class="add-to-cart rounded-5">Agregar al carrito</button>
+            </div>
         </div>
+
+        {% endfor %}
     </div>
+
+    <!-- <div class="pagination">
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn next"><i class="fas fa-chevron-right"></i></button>
+    </div> -->
 </div>
 
 <script>
-    let intervalMap = new Map();
 
-    function startImageCycle(card) {
-        const img = card.querySelector('.product-image');
-        const images = img.dataset.images.split(',');
-        let index = 0;
-
-        if (images.length <= 1) return;
-
-        const interval = setInterval(() => {
-            index = (index + 1) % images.length;
-            img.src = images[index];
-        }, 1500); // cada 1 segundo
-
-        intervalMap.set(card, interval);
-    }
-
-    function stopImageCycle(card) {
-        const interval = intervalMap.get(card);
-        if (interval) {
-            clearInterval(interval);
-            intervalMap.delete(card);
-
-            const img = card.querySelector('.product-image');
-            const images = img.dataset.images.split(',');
-            img.src = images[0];
-        }
-    }
 </script>

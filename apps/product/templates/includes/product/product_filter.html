@@ -1,33 +1,27 @@
-<!-- Filters Sidebar -->
-<div class="col-lg-3">
-    <button class="mobile-filters-toggle" onclick="toggleFilters()">
-        <i class="fas fa-filter"></i> Filtros
-    </button>
+<aside class="filters">
+    <h2>Filtrar</h2>
 
-    <div class="filters-sidebar" id="filtersSidebar">
-        <h3 class="filters-title">Filtrar</h3>
+    <div class="filter-group">
+        <h3>Categoría</h3>
+        <select name="categoria" id="categoria">
+            <option value="">Todas</option>
+            <option value="poleras">Poleras</option>
+            <option value="polerones">Polerones</option>
+            <option value="pantalones">Pantalones</option>
+            <option value="accesorios">Accesorios</option>
+        </select>
+    </div>
 
-        <div class="filter-group">
-            <label class="filter-label">Categoría</label>
-            <select class="filter-select" id="categoryFilter">
-                <option value="">Todas</option>
-                <option value="poleron">Polerón</option>
-                <option value="pantalon">Pantalón</option>
-                <option value="polera">Polera</option>
-                <option value="hoodie">Hoodie</option>
-            </select>
-        </div>
-
-        <div class="filter-group">
-            <label class="filter-label">Buscar</label>
-            <input type="text" class="search-input" placeholder="Buscar productos..." id="searchInput">
-        </div>
-
-        <div class="filter-buttons">
-            <button class="btn-apply" onclick="applyFilters()">Aplicar</button>
-            <button class="btn-clear" onclick="clearFilters()">Limpiar</button>
+    <div class="filter-group">
+        <h3>Buscar</h3>
+        <div class="search-box">
+            <input type="text" placeholder="Buscar productos..." id="search">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
         </div>
     </div>
 
-    <div class="filters-overlay" id="filtersOverlay" onclick="toggleFilters()"></div>
-</div>
+    <div class="filter-buttons">
+        <button class="btn btn-primary" id="aplicar">Aplicar</button>
+        <button class="btn btn-secondary" id="limpiar">Limpiar</button>
+    </div>
+</aside>
