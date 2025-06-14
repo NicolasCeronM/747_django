@@ -1,0 +1,52 @@
+{% load static %}
+<!-- Modal profesional con logo arriba -->
+<div id="popup" class="popup-overlay">
+    <div class="popup-box">
+
+        <!-- Logo arriba -->
+        <div class="popup-logo">
+            <img src="{% static 'home/img/sfs-logo.png' %}" alt="Seven Four Seven" />
+        </div>
+
+        <!-- Cerrar -->
+        <button class="popup-close" onclick="rejectPopup()">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Título + texto -->
+        <h2 class="popup-title">¡Felicidades! Has sido seleccionado</h2>
+        <p class="popup-subtitle">Obtén acceso anticipado a los próximos drops.
+            Sé parte del círculo exclusivo de Seven Four Seven.</p>
+
+        <!-- Formulario -->
+        <div class="popup-form" id="subscriptionForm">
+            <!-- Error visual -->
+            <div id="popupError" class="popup-error" style="display: none;"></div>
+
+            <div class="input-wrapper">
+                <i class="fas fa-envelope input-icon"></i>
+                <input type="email" id="popupEmail" placeholder="tu@email.com" required />
+            </div>
+
+            <button type="button" class="popup-button" onclick="acceptPopup()">Suscribirse</button>
+
+            <label class="popup-checkbox">
+                <input type="checkbox" id="popupConsent">
+                <span class="checkmark"></span>
+                Acepto recibir comunicaciones por email
+            </label>
+
+            <p class="popup-privacy">
+                Al suscribirte, aceptas nuestra <a href="#" class="privacy-link">política de privacidad</a>
+            </p>
+        </div>
+
+        <!-- Estado de éxito -->
+        <div class="popup-success" id="successState" style="display: none;">
+            <i class="fas fa-check-circle success-icon"></i>
+            <h3 class="success-title">¡Bienvenido a la familia!</h3>
+            <p class="success-message">Revisa tu correo para confirmar la suscripción.</p>
+            <button onclick="closePopup()" class="popup-button">Continuar</button>
+        </div>
+    </div>
+</div>
