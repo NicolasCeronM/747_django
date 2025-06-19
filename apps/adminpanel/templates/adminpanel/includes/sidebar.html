@@ -1,0 +1,66 @@
+<!-- adminpanel/templates/adminpanel/includes/sidebar.html -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="logo">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-GEWqgXKUQzDFyohWN5ZuBZR2AQ9ZII.png"
+                alt="Logo" class="logo-img">
+            <span class="logo-text">747 Admin</span>
+        </div>
+        <button class="sidebar-toggle always-visible" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <nav class="sidebar-nav">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-chart-line nav-icon"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-users nav-icon"></i>
+                    <span class="nav-text">Usuarios</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-box nav-icon"></i>
+                    <span class="nav-text">Productos</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-shopping-cart nav-icon"></i>
+                    <span class="nav-text">Pedidos</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-star nav-icon"></i>
+                    <span class="nav-text">Talentos</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+
+<script>// adminpanel/static/adminpanel/js/toggle_sidebar.js
+    document.addEventListener('DOMContentLoaded', function () {
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('sidebarToggle');
+
+        // Restaurar estado guardado
+        if (localStorage.getItem('sidebarCollapsed') === 'true') {
+            sidebar.classList.add('collapsed');
+        }
+
+        // Toggle colapsado
+        toggleBtn?.addEventListener('click', function () {
+            sidebar.classList.toggle('collapsed');
+            localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+        });
+    });
+</script>

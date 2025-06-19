@@ -31,6 +31,7 @@ urlpatterns = [
     path('payments/', include('apps.payments.urls'), name='payments'),
     path('orders/', include('apps.orders.urls'), name='orders'),
 
+    path('adminpanel/', include('apps.adminpanel.urls'), name='adminpanel'),
 
 
     path('logout/', LogoutView.as_view(), name='logout'),

@@ -45,6 +45,14 @@
                         <span>{{user.username}}</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
+
+                        <!-- {% if user.is_superuser%}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'adminpanel:dashboard' %}">
+                                <i class="fa-regular fa-user "></i>Administrador
+                            </a>
+                        </li>
+                        {% endif %} -->
                         <li>
                             <a class="dropdown-item" href="#profile">
                                 <i class="fa-regular fa-user "></i>Mi Perfil

@@ -46,6 +46,7 @@ THIRD_APPS = [
 ]
 
 OWN_APPS = [
+    'apps.adminpanel',
     'apps.cart',
     'apps.designer',
     'apps.drop',
