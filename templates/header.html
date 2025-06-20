@@ -30,10 +30,16 @@
             <!-- Header Actions -->
             <div class="header-actions">
                 <!-- Cart Button -->
-                <a href="{% url 'cart:view_cart' %}" class="cart-btn">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <!-- <span class="cart-badge" id="cartBadge">23</span> -->
-                </a>
+                <!-- Ícono de carrito con badge -->
+                <button class="cart-btn position-relative" onclick="window.location.href='/cart/'">
+
+
+
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count" class="cart-badge">
+                        {{ cart.items.count|default:"0" }}
+                    </span>
+                </button>
 
                 <!-- User Dropdown -->
 
@@ -46,13 +52,13 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
 
-                        <!-- {% if user.is_superuser%}
+                        {% if user.is_superuser%}
                         <li>
                             <a class="dropdown-item" href="{% url 'adminpanel:dashboard' %}">
                                 <i class="fa-regular fa-user "></i>Administrador
                             </a>
                         </li>
-                        {% endif %} -->
+                        {% endif %}
                         <li>
                             <a class="dropdown-item" href="#profile">
                                 <i class="fa-regular fa-user "></i>Mi Perfil

@@ -8,7 +8,7 @@ urlpatterns = [
     path('add/<int:id>/', views.add_to_cart, name='add_to_cart'),
     path('remove/<int:id>/', views.remove_item, name='remove_item'),
     #Nuevas acciones con ajax
+    path('add-ajax/', views.add_to_cart_ajax, name='add_to_cart_ajax'),
     # path('count/', views.cart_count_ajax, name='cart_count_ajax'),
-    # path('add/', views.add_to_cart_ajax, name='add_to_cart_ajax'),
 
 ]

@@ -17,10 +17,10 @@
 <body>
     <div class="admin-layout">
         {% include 'adminpanel/includes/sidebar.html' %}
+        {% include 'adminpanel/includes/header.html' %}
         <div class="main-content">
-            {% include 'adminpanel/includes/header.html' %}
             <div class="content-area" id="panel-content">
-                {% block body %}{% endblock %}
+                {% block content %}{% endblock %}
             </div>
         </div>
     </div>

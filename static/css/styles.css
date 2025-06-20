@@ -103,6 +103,24 @@
   animation: pulse 2s infinite;
 }
 
+.nav-cart {
+  position: relative;
+  color: #fff;
+  text-decoration: none;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: #e3342f;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 9999px;
+}
+
 @keyframes pulse {
   0% {
     transform: scale(1);

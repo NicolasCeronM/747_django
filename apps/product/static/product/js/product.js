@@ -1,5 +1,5 @@
+console.log([...document.querySelectorAll(".add-to-cart")].length);
 document.addEventListener("DOMContentLoaded", function () {
-  // Funcionalidad para cambiar imágenes al pasar el mouse por las cards
   const productCards = document.querySelectorAll(".product-card");
 
   productCards.forEach((card) => {
@@ -8,157 +8,138 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentIndex = 0;
     let interval;
 
-    // Iniciar rotación de imágenes al pasar el mouse
+    // Rotación de imágenes
     card.addEventListener("mouseenter", () => {
       if (images.length <= 1) return;
-
       interval = setInterval(() => {
-        // Quitar clase activa de la imagen e indicador actual
         images[currentIndex].classList.remove("active");
         indicators[currentIndex].classList.remove("active");
 
-        // Actualizar índice
         currentIndex = (currentIndex + 1) % images.length;
-
-        // Añadir clase activa a la nueva imagen e indicador
         images[currentIndex].classList.add("active");
         indicators[currentIndex].classList.add("active");
-      }, 1000); // Cambiar imagen cada segundo
+      }, 1000);
     });
 
-    // Detener rotación al quitar el mouse
     card.addEventListener("mouseleave", () => {
       clearInterval(interval);
-
-      // Restaurar la primera imagen
-      images.forEach((img, index) => {
-        img.classList.toggle("active", index === 0);
-      });
-
-      // Restaurar el primer indicador
-      indicators.forEach((indicator, index) => {
-        indicator.classList.toggle("active", index === 0);
-      });
-
+      images.forEach((img, index) =>
+        img.classList.toggle("active", index === 0)
+      );
+      indicators.forEach((ind, index) =>
+        ind.classList.toggle("active", index === 0)
+      );
       currentIndex = 0;
     });
 
-    // Permitir clic en los indicadores para cambiar la imagen
     indicators.forEach((indicator, index) => {
       indicator.addEventListener("click", (e) => {
-        e.stopPropagation(); // Evitar que el evento se propague
-
-        // Detener el intervalo si está activo
+        e.stopPropagation();
         clearInterval(interval);
-
-        // Quitar clase activa de todas las imágenes e indicadores
         images.forEach((img) => img.classList.remove("active"));
         indicators.forEach((ind) => ind.classList.remove("active"));
-
-        // Activar la imagen e indicador seleccionados
         images[index].classList.add("active");
         indicator.classList.add("active");
-
-        // Actualizar el índice actual
         currentIndex = index;
       });
     });
-  });
 
-  // Funcionalidad para los botones de talla
-  const sizeButtons = document.querySelectorAll(".size-btn");
-
-  sizeButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      // Quitar selección de otros botones en el mismo grupo
-      const siblings = this.parentElement.querySelectorAll(".size-btn");
-      siblings.forEach((sibling) => {
-        sibling.classList.remove("selected");
+    // Botón de talla
+    const sizeButtons = card.querySelectorAll(".size-btn");
+    sizeButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        sizeButtons.forEach((b) => b.classList.remove("selected"));
+        this.classList.add("selected");
       });
-
-      // Seleccionar este botón
-      this.classList.add("selected");
     });
-  });
 
-  // Funcionalidad para el botón de agregar al carrito
-  const addToCartButtons = document.querySelectorAll(".add-to-cart");
+    // Botón agregar al carrito
+    const addToCartBtn = card.querySelector(".add-to-cart");
 
-  addToCartButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      const productCard = this.closest(".product-card");
-      const productName =
-        productCard.querySelector(".product-name").textContent;
+    if (!addToCartBtn.dataset.bound) {
+      addToCartBtn.dataset.bound = true;
 
-      // Animación de botón
-      const originalText = this.textContent;
-      this.textContent = "✓ Agregado";
+      addToCartBtn.addEventListener("click", function () {
+        const productId = card.dataset.productId;
+        const selectedSizeBtn = card.querySelector(".size-btn.selected");
+        const selectedSize = selectedSizeBtn
+          ? selectedSizeBtn.dataset.size
+          : null;
 
-      setTimeout(() => {
-        this.textContent = originalText;
-      }, 1500);
+        if (!productId || productId === "undefined") {
+          console.error("ID de producto no definido");
+          return;
+        }
 
-      // Aquí se podría implementar la lógica real para agregar al carrito
-      console.log(`Producto agregado: ${productName}`);
-    });
-  });
+        if (!selectedSize) {
+          Swal.fire({
+            icon: "warning",
+            title: "Selecciona una talla",
+            text: "Debes elegir una talla antes de agregar al carrito",
+          });
+          return;
+        }
 
-  // Funcionalidad para el filtro
-  const aplicarBtn = document.getElementById("aplicar");
-  const limpiarBtn = document.getElementById("limpiar");
-  const categoriaSelect = document.getElementById("categoria");
-  const searchInput = document.getElementById("search");
+        const originalText = this.textContent;
+        this.textContent = "✓ Agregado";
+        setTimeout(() => {
+          this.textContent = originalText;
+        }, 1500);
 
-  aplicarBtn.addEventListener("click", function () {
-    const categoria = categoriaSelect.value;
-    const searchTerm = searchInput.value.toLowerCase();
+        fetch("/cart/add-ajax/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: new URLSearchParams({
+            product_id: productId,
+            size: selectedSize,
+            quantity: 1,
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) throw new Error("Error HTTP: " + response.status);
+            return response.json();
+          })
+          .then((data) => {
+            if (data.success) {
+              const cartCount = document.getElementById("cart-count");
+              if (cartCount) {
+                cartCount.textContent = data.total_items;
+                cartCount.classList.remove("d-none");
+              }
 
-    productCards.forEach((card) => {
-      const productName = card
-        .querySelector(".product-name")
-        .textContent.toLowerCase();
-      const productBrand = card
-        .querySelector(".product-brand")
-        .textContent.toLowerCase();
-
-      let showCard = true;
-
-      // Filtrar por categoría
-      if (categoria && !productName.includes(categoria.toLowerCase())) {
-        showCard = false;
-      }
-
-      // Filtrar por término de búsqueda
-      if (
-        searchTerm &&
-        !productName.includes(searchTerm) &&
-        !productBrand.includes(searchTerm)
-      ) {
-        showCard = false;
-      }
-
-      card.style.display = showCard ? "block" : "none";
-    });
-  });
-
-  limpiarBtn.addEventListener("click", function () {
-    categoriaSelect.value = "";
-    searchInput.value = "";
-
-    productCards.forEach((card) => {
-      card.style.display = "block";
-    });
-  });
-
-  // Funcionalidad para la paginación
-  const pageButtons = document.querySelectorAll(".page-btn");
-
-  pageButtons.forEach((button) => {
-    button.addEventListener("click", function () {
-      if (this.classList.contains("next")) return;
-
-      pageButtons.forEach((btn) => btn.classList.remove("active"));
-      this.classList.add("active");
-    });
+              // Modal o animación aquí si lo deseas
+            } else {
+              Swal.fire({ icon: "error", title: "Error", text: data.message });
+            }
+          })
+          .catch((error) => {
+            console.error("Error en la solicitud AJAX:", error);
+            Swal.fire({
+              icon: "error",
+              title: "Error inesperado",
+              text: "Ocurrió un error al agregar el producto.",
+            });
+          });
+      });
+    }
   });
 });
+
+// Función para obtener CSRF token
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.startsWith(name + "=")) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}

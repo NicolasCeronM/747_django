@@ -4,11 +4,10 @@
             <i class="fas fa-receipt me-2"></i>Resumen del Pedido
         </h3>
 
-        <div class="summary-row">
-            <span>Subtotal (<span id="item-count"> {{ cart.items.all|length }})</span>
-                artículos</span>
-            <span class="fw-bold" id="subtotal">{{cart.items.all.subtotal}}</span>
-        </div>
+        <!-- <div class="summary-row">
+            <span>Subtotal</span>
+            <span class="fw-bold" id="subtotal">{{cart.items}}</span>
+        </div> -->
 
         <div class="summary-row">
             <span><i class="fas fa-shipping-fast me-2 text-success"></i>Envío</span>
@@ -22,7 +21,7 @@
 
         <div class="summary-row total">
             <span>Total</span>
-            <span id="total">${{ cart.total }}</span>
+            <span id="total">${{ cart.total|floatformat:0}}</span>
         </div>
 
         <div class="discount-input">

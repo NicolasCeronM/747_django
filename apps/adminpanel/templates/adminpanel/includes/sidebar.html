@@ -1,10 +1,10 @@
 <!-- adminpanel/templates/adminpanel/includes/sidebar.html -->
+{% load static %}
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <div class="logo">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-GEWqgXKUQzDFyohWN5ZuBZR2AQ9ZII.png"
-                alt="Logo" class="logo-img">
-            <span class="logo-text">747 Admin</span>
+            <img src="{% static 'adminpanel/img/sfs-short-logo.png' %}" alt="Logo" class="img-fluid" width="60">
+            <span class="logo-text">Administrador</span>
         </div>
         <button class="sidebar-toggle always-visible" id="sidebarToggle">
             <i class="fas fa-bars"></i>
@@ -14,7 +14,7 @@
     <nav class="sidebar-nav">
         <ul class="nav-list">
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{% url 'adminpanel:dashboard' %}" class="nav-link active">
                     <i class="fas fa-chart-line nav-icon"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>
@@ -26,7 +26,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{% url 'adminpanel:producto' %}" class="nav-link">
                     <i class="fas fa-box nav-icon"></i>
                     <span class="nav-text">Productos</span>
                 </a>

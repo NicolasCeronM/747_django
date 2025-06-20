@@ -38,36 +38,41 @@ def remove_item(request, id):
 #AJAX
 
 
-@login_required
-def cart_count_ajax(request):
-    cart = getattr(request.user, 'cart', None)
-    count = cart.items.count() if cart else 0
-    return JsonResponse({'count': count})
-
 @require_POST
-@login_required
 def add_to_cart_ajax(request):
-    print("POST recibido:", request.POST)
-    product_id = request.POST.get('product_id')
-    quantity = int(request.POST.get('quantity', 1))
+    if not request.user.is_authenticated:
+        return JsonResponse({'success': False, 'message': 'Debes iniciar sesión.'}, status=403)
 
     try:
+        product_id = request.POST.get('product_id')
+        size = request.POST.get('size')
+        quantity = int(request.POST.get('quantity', 1))
+
+        if not product_id or product_id == 'undefined':
+            return JsonResponse({'success': False, 'message': 'ID de producto inválido.'}, status=400)
+
         product = Product.objects.get(id=product_id)
+        cart, created = Cart.objects.get_or_create(user=request.user)
+
+        filters = {'cart': cart, 'product': product}
+        if size:
+            filters['size'] = size
+
+        item, created = CartItem.objects.get_or_create(**filters)
+        if created:
+            item.quantity = quantity
+        else:
+            item.quantity += quantity
+        item.save()
+
+        total_items = CartItem.objects.filter(cart=cart).count()
+
+        return JsonResponse({'success': True, 'message': 'Producto agregado al carrito.', 'total_items': total_items})
+
     except Product.DoesNotExist:
-        print("Producto no encontrado")
-        return JsonResponse({'error': 'Producto no encontrado'}, status=404)
+        return JsonResponse({'success': False, 'message': 'Producto no encontrado.'}, status=404)
 
-    cart, _ = Cart.objects.get_or_create(user=request.user)
-    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-    if not created:
-        cart_item.quantity += quantity
-    else:
-        cart_item.quantity = quantity
-    cart_item.save()
-    print("Producto agregado correctamente")
-
-    return JsonResponse({
-        'success': True,
-        'cart_count': cart.items.count(),
-        'item_quantity': cart_item.quantity,
-    })
+    except Exception as e:
+        import traceback
+        
+        return JsonResponse({'success': False, 'message': f'Error inesperado: {str(e)}'}, status=500)

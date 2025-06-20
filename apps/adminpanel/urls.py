@@ -6,4 +6,5 @@ app_name = 'adminpanel'
 
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
+    path('producto/', views.productos, name='producto'),
 ]

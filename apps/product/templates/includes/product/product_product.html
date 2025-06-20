@@ -15,39 +15,35 @@
         <!-- Producto 1 -->
 
         {% for p in products %}
-
-        <div class="product-card">
+        <div class="product-card" data-product-id="{{ p.id }}">
             <a href="{% url 'products:product_detail' p.id %}">
                 <div class="product-images">
-
                     {% for img in p.images.all %}
                     <img src="{{ img.image.url }}" alt="{{ p.name }}" class="{% if forloop.first %}active{% endif %}">
                     {% endfor %}
-                    <!-- Indicadores de puntos -->
+
                     <div class="image-indicators">
                         {% for img in p.images.all %}
-                        <span class="indicator {% if forloop.first %}active{% endif %}" data-index="0"></span>
+                        <span class="indicator {% if forloop.first %}active{% endif %}"></span>
                         {% endfor %}
-
                     </div>
-
                 </div>
             </a>
+
             <div class="product-info">
-                <h3 class="product-name">{{p.name}}</h3>
-                <p class="product-price">CLP {{p.price|floatformat:0}} </p>
+                <h3 class="product-name">{{ p.name }}</h3>
+                <p class="product-price">CLP {{ p.price|floatformat:0 }}</p>
+
                 <div class="product-sizes">
-
                     {% for s in p.product_sizes.all %}
-
-                    <button class="size-btn">{{s.size}}</button>
-
+                    <button class="size-btn" data-size="{{ s.size }}">{{ s.size }}</button>
                     {% endfor %}
                 </div>
+
+                <!-- Botón agregar al carrito -->
                 <button class="add-to-cart rounded-5">Agregar al carrito</button>
             </div>
         </div>
-
         {% endfor %}
     </div>
 
