@@ -1,0 +1,76 @@
+{% load humanize %}
+<div class="table-container" id="tabla-productos">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+
+                <th>Drop</th>
+                <th>Descuento</th>
+                <th>Stock</th>
+                <th>Disponible</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            {% for product in products %}
+
+            <tr>
+
+                <td>
+                    {% if product.images.first %}
+                    <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}" class="product-thumbnail">
+                    {% else %}
+                    <span class="text-muted">Sin imagen</span>
+                    {% endif %}
+                </td>
+                </td>
+                <td class="product-name">{{product.name}}</td>
+                <td class="price">{{product.price|floatformat:0|intcomma}}</td>
+                <td>{{product.drop.name|default:'-'}}</td>
+                <td>{{product.discount|default:'-'}} %</td>
+                <td class="stock 
+                            {% if product.stock <= 5 %}
+                            low
+                            {% elif product.stock <= 50 %}
+                            medium
+                            {% else %}
+                            high
+                            {% endif %}
+                                ">
+                    {{ product.stock }}
+                </td>
+                <td>
+                    {% if product.is_available %}
+                    <span class="available-badge">Sí</span>
+                    {% else %}
+                    <span class="available-badge bg-danger">No</span>
+                    {% endif %}
+                </td>
+                <td class="actions">
+                    <button class="btn btn-edit" title="Modificar producto"><i
+                            class="fa-solid fa-pen-to-square fa-xl"></i></button>
+                    <!-- Asegura que esté esto en tu base o listado -->
+                    <form style="display:none;">{% csrf_token %}</form>
+
+                    <button type="button" class="btn btn-delete" title="Eliminar producto"
+                        onclick="confirmarEliminacion({{ product.id }}, '{{ product.name }}')">
+                        <i class="fa-solid fa-trash fa-xl"></i>
+                    </button>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="8" class="text-center">No hay productos disponibles</td>
+            </tr>
+
+            {% endfor %}
+
+
+        </tbody>
+    </table>
+</div>

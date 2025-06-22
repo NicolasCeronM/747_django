@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Drop
-from apps.designer.models import DesignerProfile
+from apps.talent.models import Talent
 from apps.drop.models import Drop
 from apps.product.models import Product
 
@@ -9,7 +9,7 @@ from apps.product.models import Product
 def drops(request):
 
     drops = Drop.objects.all()
-    designers = DesignerProfile.objects.all()
+    designers = Talent.objects.all()
 
     data = {
         'drops': drops,

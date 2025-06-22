@@ -1,0 +1,42 @@
+<!-- adminpanel/templates/adminpanel/includes/header.html -->
+<header class="main-header">
+    <div class="header-left">
+        <h1 class="page-title" id="pageTitle">Panel de Administración</h1>
+    </div>
+
+    <div class="header-right">
+        <!-- Buscador -->
+        <div class="search-box">
+            <input type="text" placeholder="Buscar..." class="search-input">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <!-- Notificaciones -->
+        <button class="notification-btn" aria-label="Notificaciones">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge">3</span>
+        </button>
+
+        <!-- Usuario -->
+        <div class="user-menu">
+            <button class="user-menu-btn">
+                <img src="https://via.placeholder.com/32x32/ff6b00/fff?text={{ request.user.first_name|first|default:'A' }}"
+                    alt="Avatar" class="user-avatar-small">
+                <span class="username">Avatar</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="user-dropdown">
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-user"></i> Mi perfil
+                </a>
+                <a href="#" class="dropdown-item">
+                    <i class="fas fa-cog"></i> Configuración
+                </a>
+                <div class="dropdown-divider"></div>
+                <a href="{% url 'logout' %}" class="dropdown-item">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                </a>
+            </div>
+        </div>
+    </div>
+</header>

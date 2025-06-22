@@ -3,13 +3,13 @@
 <section class="artist-section">
     <div class="container">
         <div class="artist-card">
-            {% for talent in drop.designers.all %}
+            {% for talent in drop.talent.all %}
             <div class="artist-profile">
 
                 <img src="{{talent.profile_image.url}}" alt="{{talent.user.username}}" class=" artist-avatar">
 
                 <div class="artist-info">
-                    <h2>{{talent.user.username}}</h2>
+                    <h2>{{talent.brand_name}}</h2>
                     <div class="artist-tag">Cantante Urbano</div>
                     <p class="artist-description">
                         {{talent.biography|truncatechars:200}}
@@ -21,41 +21,34 @@
             <div class="artist-actions">
                 <div class="social-links">
 
-                    {% if talent.instagram_url %}
-                    <a href="{{talent.instagram_url}}" target="_blank" class="social-link" title="Instagram">
-                        <i class="fa-brands fa-instagram"></i>
+                    {% for link in talent.social_links.all %}
+                    {% if link.platform == 'instagram' %}
+                    <a href="{{ link.url }}" target="_blank" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    {% endif %}
+                    {% if link.platform == 'facebook'%}
+                    <a href="{{ link.url }}" target="_blank" class="social-link "><i class="fab fa-facebook-f"></i></a>
+                    {% endif %}
+                    {% if link.platform == 'twitter' %}
+
+                    <a href="{{ link.url }}" target="_blank" class="social-link">
+                        <i class="fab fa-twitter"></i> Twitter
+                    </a>
+
+                    {% endif %}
+                    {% if link.platform == 'youtube' %}
+                    <a href="{{ link.url }}" class="social-link " target="_blank">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    {% endif %}
+                    {% if link.platform == 'website' %}
+                    <a href="{{ link.url }}" target="_blank" class="social-link">
+                        <i class="fas fa-globe"></i>
                     </a>
                     {% endif %}
 
-                    {% if talent.twitter_url %}
-                    <a href="{{talent.twitter_url }}" target="_blank" class="social-link" title="Twitter">
-                        <i class="fa-brands fa-x-twitter"></i>
-                    </a>
-                    {% endif %}
-
-                    {% if talent.linkedin_url %}
-                    <a href="{{talent.linkedin_url}}" class="social-link" target="_blank" title="Linkedin">
-                        <i class="fa-brands fa-linkedin-in"></i>
-                    </a>
-                    {% endif %}
-
-                    {% if talent.website_url %}
-                    <a href="{{talent.website_url}}" class="social-link" target="_blank" title="Website">
-                        <i class="fa-solid fa-globe"></i>
-                    </a>
-                    {% endif %}
-
-                    {% if talent.facebook_url %}
-                    <a href="{{talent.facebook_url}}" class="social-link" target="_blank" title="Facebook">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </a>
-                    {% endif %}
-
-                    {% if talent.youtube_url %}
-                    <a href="{{talent.youtube_url}}" class="social-link" target="_blank" title="Youtube">
-                        <i class="fa-brands fa-youtube"></i>
-                    </a>
-                    {% endif %}
+                    {% endfor %}
 
                 </div>
                 <a href="{% url 'designers:detail' talent.id  %}" class="view-profile-btn"

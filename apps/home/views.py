@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.contrib import messages
 from apps.drop.models import Drop
 
 # Create your views here.
@@ -13,7 +12,6 @@ def home(request):
     data = {
         'latest_drops':latest_drops
     }
-    messages.success(request, "🎉 Felicitaciones, bienvenido a nuestra tienda!")
 
     return render(request,'index.html', data)
 

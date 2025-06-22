@@ -105,25 +105,36 @@ body {
   height: var(--header-height);
   width: calc(100% - var(--sidebar-width));
   margin-left: var(--sidebar-width);
-  background-color: #ffffff;
+  background-color: white;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 1.5rem;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  padding: 0 2rem;
+  border-bottom: 1px solid var(--medium-gray);
   position: fixed;
   top: 0;
   z-index: 999;
 }
 
-.header-left .page-title {
+.page-title {
   font-size: 1.4rem;
   font-weight: 600;
   margin: 0;
+  color: var(--text-color);
 }
 
+/* Search box */
 .search-box {
   position: relative;
+  margin-right: 1.5rem;
+}
+
+.search-input {
+  padding: 0.5rem 2.2rem 0.5rem 2.2rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: #f1f3f5;
+  font-size: 14px;
 }
 
 .search-icon {
@@ -131,14 +142,91 @@ body {
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #999;
+  color: #888;
 }
 
-.search-input {
-  padding: 0.5rem 1rem 0.5rem 2.2rem;
+/* Notification */
+.notification-btn {
+  background: none;
+  border: none;
+  position: relative;
+  font-size: 1.2rem;
+  margin-right: 1.5rem;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -7px;
+  background: var(--accent-color);
+  color: white;
+  font-size: 10px;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
+/* User menu */
+.user-menu {
+  position: relative;
+}
+
+.user-menu-btn {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.user-avatar-small {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+}
+
+.username {
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.user-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 110%;
+  background-color: white;
   border: 1px solid var(--medium-gray);
-  border-radius: 6px;
-  outline: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+  z-index: 1001;
+}
+
+.user-menu:hover .user-dropdown {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  font-size: 14px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: var(--light-gray);
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: var(--medium-gray);
+  margin: 5px 0;
 }
 
 /* ============================================

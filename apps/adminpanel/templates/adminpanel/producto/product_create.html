@@ -1,0 +1,112 @@
+{% extends 'adminpanel/base/base_admin.html' %}
+{% load static %}
+
+{% block title %}Ingresar nuevo producto{% endblock %}
+
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'adminpanel/css/producto_create.css' %}">
+{% endblock css %}
+
+
+
+{% block content %}
+
+<div class="content-area">
+    <nav class="breadcrumb mb-4">
+        <a href="{% url 'adminpanel:producto' %}" class="breadcrumb-link">Productos</a>
+        <span class="breadcrumb-separator">&gt;</span>
+        <span class="breadcrumb-current">Ingresar nuevo producto</span>
+    </nav>
+
+    <h1 class="form-title">Ingresar nuevo producto</h1>
+    <p class="form-subtitle">Completa la información del producto para agregarlo al inventario</p>
+
+    <div class="form-section">
+        <div class="form-section-header">
+
+            <h2>Información del Producto</h2>
+            <p>Ingresa todos los detalles necesarios para crear el producto</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-grid">
+                <div>
+                    <label for="name">Nombre *</label>
+                    <input type="text" name="name" class="input" placeholder="Ej: Poleron hoodie Loose Fit" required>
+                </div>
+
+                <div>
+                    <label for="price">Precio *</label>
+                    <input type="number" name="price" class="input" required>
+                </div>
+
+                <div class="full-width">
+                    <label for="description">Descripción</label>
+                    <textarea name="description" class="textarea"
+                        placeholder="Describe las características, materiales y detalles del producto..."></textarea>
+                </div>
+
+
+
+                <div>
+                    <label for="drop">Drop</label>
+                    <select name="drop" class="select">
+                        <option value="">Seleccionar drop</option>
+                        {% for d in drops %}
+                        <option value="{{ d.id }}">{{ d.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label for="discount">Descuento (%)</label>
+                    <input type="number" name="discount" class="input">
+                </div>
+
+                <div>
+                    <label for="stock">Stock *</label>
+                    <input type="number" name="stock" class="input" required>
+                </div>
+
+                <div class="full-width">
+                    <label>
+                        <input type="checkbox" name="is_available" checked>
+                        Producto disponible para la venta
+                    </label>
+                </div>
+
+                <div class="full-width">
+                    <label for="images">Imágenes del producto</label>
+                    <div class="image-drop-area mb-2">
+                        <input type="file" id="image-input" class="input-file" accept="image/*" multiple>
+                    </div>
+                    <div id="preview-container" class="d-flex gap-2 flex-wrap"></div>
+                    <p class="drop-subtext">Puedes agregar varias imágenes, incluso en tandas diferentes.</p>
+                </div>
+
+
+                <div class="full-width">
+                    <label for="sizes">Tallas disponibles</label>
+                    <div id="size-container" class="tag-input-wrapper">
+                        <ul id="size-tags" class="tag-list"></ul>
+                        <input type="text" id="size-input"
+                            placeholder="Escribe una talla y presiona Enter (Ej: S, M, L, XL)" class="input tag-input">
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn-submit">Guardar Producto</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'adminpanel/js/product_create.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Biografía y video -->
+            <div class="col-lg-8">
+                <h4 class="mb-3">Biografía</h4>
+                <p>{{ talent.biography|linebreaksbr }}</p>
+
+                {% if talent.video_url %}
+                <h4 class="mt-5 mb-3">Video destacado</h4>
+                <div class="ratio ratio-16x9 mb-4">
+                    <iframe src="{{ talent.video_url }}" title="Video de {{ talent.full_name }}" frameborder="0"
+                        allowfullscreen class="rounded"></iframe>
+                </div>
+                {% endif %}
+
+
+            </div>
+
+            <!-- Contacto y redes -->
+            <div class="col-lg-4">
+                <div class="bg-light p-4 rounded shadow-sm">
+                    <h5 class="mb-4">Contacto</h5>
+                    <ul class="list-unstyled fs-6">
+                        {% if talent.contact_email %}
+                        <li class="mb-2">
+                            <i class="fas fa-envelope me-2 text-dark"></i>
+                            <a href="mailto:{{ talent.contact_email }}">{{ talent.contact_email }}</a>
+                        </li>
+                        {% endif %}
+
+                        {% if talent.phone_number %}
+                        <li class="mb-2">
+                            <i class="fas fa-phone me-2 text-dark"></i>
+                            {{ talent.phone_number }}
+                        </li>
+                        <li class="mb-3">
+                            <a href="https://wa.me/{{ talent.phone_number|cut:'+' }}" target="_blank"
+                                class="btn btn-success btn-sm w-100">
+                                <i class="fab fa-whatsapp me-1"></i> WhatsApp
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+
+                    <hr>
+
+                    <h5 class="mb-3">Redes Sociales</h5>
+                    <div class="d-flex flex-wrap gap-2 fs-5">
+                        {% for link in talent.social_links.all %}
+                        {% if link.platform == 'instagram' %}
+                        <a href="{{ link.url }}" target="_blank" class="social-icon instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        {% endif %}
+                        {% if link.platform == 'facebook'%}
+                        <a href="{{ link.url }}" target="_blank" class="social-icon facebook"><i
+                                class="fab fa-facebook-f"></i></a>
+                        {% endif %}
+                        {% if link.platform == 'twitter' %}
+
+                        <a href="{{ link.url }}" target="_blank" class="social-icon twitter">
+                            <i class="fab fa-twitter"></i> Twitter
+                        </a>
+
+                        {% endif %}
+                        {% if link.platform == 'youtube' %}
+                        <a href="{{ link.url }}" class="social-icon youtube " target="_blank">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        {% endif %}
+                        {% if link.platform == 'website' %}
+                        <a href="{{ link.url }}" target="_blank" class="social-icon website">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                        {% endif %}
+
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>

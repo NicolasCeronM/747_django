@@ -13,7 +13,7 @@
         <div class="drops-grid">
 
             {% for drop in latest_drops %}
-            {% for talent in drop.designers.all %}
+            {% for talent in drop.talent.all %}
 
             <a href="{% url 'drop:drop_detail' drop.id %}" style="text-decoration: none;">
 

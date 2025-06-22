@@ -38,6 +38,7 @@ BASE_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
 
 THIRD_APPS = [
@@ -48,13 +49,13 @@ THIRD_APPS = [
 OWN_APPS = [
     'apps.adminpanel',
     'apps.cart',
-    'apps.designer',
     'apps.drop',
     'apps.home',
     'apps.orders',
     'apps.payments',
     'apps.product',
     'apps.user',
+    'apps.talent',
     
     
 ]

@@ -1,0 +1,62 @@
+<!-- adminpanel/templates/adminpanel/dashboard.html -->
+{% extends 'adminpanel/base/base_admin.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="admin-layout">
+
+
+
+    <div class="content-area">
+
+        <!-- Contenido del dashboard -->
+        <section class="content-section active" id="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">1,247</h3>
+                        <p class="stat-label">Usuarios totales</p>
+                        <span class="stat-change positive">+12% este mes</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">89</h3>
+                        <p class="stat-label">Pedidos hoy</p>
+                        <span class="stat-change positive">+8% vs ayer</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">$24,580</h3>
+                        <p class="stat-label">Ingresos del mes</p>
+                        <span class="stat-change negative">-3% vs mes anterior</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">15</h3>
+                        <p class="stat-label">Talentos activos</p>
+                        <span class="stat-change positive">+2 nuevos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</div>
+{% endblock %}
