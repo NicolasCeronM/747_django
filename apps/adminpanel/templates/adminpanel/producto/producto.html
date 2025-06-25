@@ -1,4 +1,4 @@
-{% extends 'adminpanel/base/base_admin.html' %}
+{% extends 'base/base_admin.html' %}
 {% load static %}
 
 
@@ -40,11 +40,12 @@ Productos
                 <input type="text" name="q" class="search-input" placeholder="Buscar producto..."
                     value="{{ request.GET.q }}" hx-get="{% url 'adminpanel:producto_table' %}"
                     hx-target="#tabla-productos" hx-trigger="keyup changed delay:300ms"
-                    hx-include="[name='q'], [name='category']" autocomplete="off">
+                    hx-include="[name='q'], [name='drop']" autocomplete="off">
             </div>
 
             <select name="drop" class="category-select" hx-get="{% url 'adminpanel:producto_table' %}"
-                hx-target="#tabla-productos" hx-trigger="change">
+                hx-target="#tabla-productos" hx-trigger="change" hx-include="[name='q'], [name='drop']">
+
                 <option value="">Todos los drops</option>
                 {% for d in drops %}
                 <option value="{{ d.id }}">
@@ -52,6 +53,7 @@ Productos
                 </option>
                 {% endfor %}
             </select>
+
 
 
             <a href="{% url 'adminpanel:product_create' %}" class="btn btn-success fs-6">

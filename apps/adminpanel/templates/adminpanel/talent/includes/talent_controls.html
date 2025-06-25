@@ -1,0 +1,33 @@
+<div class="controls">
+    <div class="controls-row">
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Buscar por nombre, marca o especialidad..."
+                id="searchInput">
+        </div>
+
+        <select class="filter-select" id="specialtyFilter">
+            <option value="">Todas las especialidades</option>
+            <option value="musica">Música</option>
+            <option value="arte">Arte</option>
+            <option value="fotografia">Fotografía</option>
+            <option value="video">Video</option>
+            <option value="diseno">Diseño</option>
+            <option value="moda">Moda</option>
+            <option value="otro">Otro</option>
+        </select>
+
+        <select class="filter-select" id="locationFilter">
+            <option value="">Todas las ubicaciones</option>
+            <option value="santiago">Santiago</option>
+            <option value="valparaiso">Valparaíso</option>
+            <option value="concepcion">Concepción</option>
+            <option value="otro">Otro</option>
+        </select>
+
+
+        <a href="{% url 'adminpanel:talent_create' %}" class="add-btn" id="addTalentBtn">
+            <span><i class="fa-solid fa-plus"></i></span>
+            Agregar Talento
+        </a>
+    </div>
+</div>

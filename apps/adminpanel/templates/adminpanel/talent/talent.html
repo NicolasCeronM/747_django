@@ -1,0 +1,59 @@
+{% extends 'base/base_admin.html' %}
+{% load static %}
+
+
+{% block title %}
+Talentos
+{% endblock title %}
+
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'adminpanel/css/talent.css' %}">
+{% endblock css %}
+
+
+{% block content %}
+
+<!-- Content Area -->
+<div class="content-area">
+    <div class="content-header">
+        <h1 class="content-title">Talentos</h1>
+        <p class="content-subtitle">Gestiona la comunidad de talentos y creadores</p>
+    </div>
+
+
+    <!-- Controls -->
+    {% include 'adminpanel/talent/includes/talent_controls.html' %}
+
+
+    <!-- Talents Grid -->
+    <div class="talents-grid" id="talentsGrid">
+
+        {% if messages %}
+        {% for message in messages %}
+        <div id="swal-message" data-text="{{ message|escapejs }}" style="display: none;"></div>
+        {% endfor %}
+        {% endif %}
+
+
+        {% for talent in talents %}
+
+        {% include 'adminpanel/talent/includes/talent_card.html' %}
+
+        {% endfor %}
+
+    </div>
+
+    <!-- MODAL TALENTO DETALLE -->
+    {% include 'adminpanel/talent/includes/talent_modal.html' %}
+
+
+</div>
+
+
+{% endblock content %}
+
+
+{% block js %}
+<script src="{% static 'adminpanel/js/talent.js' %}"> </script>
+{% endblock js %}

@@ -1,0 +1,40 @@
+<div class="talent-card" onclick="openTalentModal('{{ talent.id }}');">
+    <div class="talent-card-header">
+        <div class="talent-avatar">
+            <img src="{{ talent.profile_image.url }}" alt="{{ talent.full_name }}">
+            <!-- Si no hay imagen, mostrar iniciales -->
+            <!-- <div class="talent-initials">CR</div> -->
+        </div>
+        {% if talent.verified %}
+        <div class="talent-badge">✔ VERIFICADO</div>
+        {% endif %}
+    </div>
+    <div class="talent-card-body">
+        <h3 class="talent-name">{{ talent.brand_name }}</h3>
+        <p class="talent-brand">{{ talent.full_name }}</p>
+        <ul class="talent-info">
+            <li><i class="fa-solid fa-briefcase"></i> {{ talent.specialty }}</li>
+            <li><i class="fa-solid fa-location-dot"></i> {{ talent.location }}</li>
+        </ul>
+        <p class="talent-description">
+            {{ talent.biography|truncatewords:25 }}
+        </p>
+        <div class="talent-socials">
+            {% for social in talent.social_links.all %}
+            <a href="{{ social.url }}" target="_blank">
+                <p>{{social.platform}}</p>
+            </a>
+            {% endfor %}
+        </div>
+        <form style="display: none;">{% csrf_token %}</form>
+
+        <div class="talent-actions">
+            <button class="btn-view" onclick="openTalentModal('{{ talent.id }}'); event.stopPropagation()">Ver</button>
+            <a href="#" class="btn-edit">Editar</a>
+            <button class="btn btn-danger"
+                onclick="confirmarEliminacion('{{ talent.id }}', '{{ talent.full_name }}'); event.stopPropagation();">Eliminar</button>
+        </div>
+
+
+    </div>
+</div>

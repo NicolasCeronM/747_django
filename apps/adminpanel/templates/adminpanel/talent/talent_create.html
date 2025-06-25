@@ -1,0 +1,174 @@
+{% extends 'base/base_admin.html' %}
+{% load static %}
+
+{% block title %}Nuevo Talento{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'adminpanel/css/talent_create.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="content-area">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="{% url 'adminpanel:talento' %}">Talentos</a> › Nuevo Talento
+    </div>
+
+    <div class="form-header">
+        <h1>Nuevo Talento</h1>
+        <p>Agrega un nuevo miembro a la comunidad</p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- === Información del Talento === -->
+        <section class="form-section section-header">
+            <h2> Información del Talento</h2>
+            <p>Completa todos los datos para agregar un nuevo talento a la comunidad</p>
+        </section>
+
+        <!-- === Información Personal === -->
+        <section class="form-section">
+            <h3><i class="fas fa-user"></i> Información Personal</h3>
+            <div class="form-grid grid-3">
+                <div class="form-group">
+                    {{ form.full_name.label_tag }}
+                    {{ form.full_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.brand_name.label_tag }}
+                    {{ form.brand_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.location.label_tag }}
+                    {{ form.location }}
+                </div>
+                <div class="form-group">
+                    {{ form.specialty.label_tag }}
+                    {{ form.specialty }}
+                </div>
+                <div class="form-group">
+                    {{ form.experience.label_tag }}
+                    {{ form.experience }}
+                </div>
+            </div>
+
+            <div class="form-grid grid-1">
+                <div class="form-group">
+                    {{ form.biography.label_tag }}
+                    {{ form.biography }}
+                </div>
+            </div>
+        </section>
+
+        <!-- === Información de Contacto === -->
+        <section class="form-section">
+            <h3><i class="fas fa-envelope"></i> Información de Contacto</h3>
+            <div class="form-grid grid-2">
+                <div class="form-group">
+                    {{ form.contact_email.label_tag }}
+                    {{ form.contact_email }}
+                </div>
+                <div class="form-group">
+                    {{ form.phone_number.label_tag }}
+                    {{ form.phone_number }}
+                </div>
+            </div>
+        </section>
+
+        <!-- === Archivos Multimedia === -->
+        <section class="form-section">
+            <h3><i class="fas fa-photo-video"></i> Archivos Multimedia</h3>
+            <div class="form-grid grid-3">
+                <div class="form-group">
+                    {{ form.profile_image.label_tag }}
+                    {{ form.profile_image }}
+                </div>
+                <div class="form-group">
+                    {{ form.cover_image.label_tag }}
+                    {{ form.cover_image }}
+                </div>
+                <div class="form-group">
+                    {{ form.video_url.label_tag }}
+                    {{ form.video_url }}
+                </div>
+            </div>
+        </section>
+
+
+        <!-- === Redes Sociales === -->
+        <section class="form-section">
+            <h3><i class="fas fa-globe"></i> Redes Sociales</h3>
+            {{ formset.management_form }}
+            <div id="socialLinksContainer">
+                {% for social in formset %}
+                <div class="social-link-form">
+                    {{ social.platform }}{{ social.url }}{{ social.DELETE }}
+                    <button type="button" class="btn btn-danger" onclick="this.parentElement.remove()">Eliminar</button>
+                </div>
+                {% endfor %}
+            </div>
+            <button type="button" class="btn btn-success" onclick="agregarRedSocial()">+ Agregar Red Social</button>
+        </section>
+
+        <!-- === Estado Verificación === -->
+        <section class="form-section">
+            <h3><i class="fas fa-check-circle"></i> Estado de Verificación</h3>
+            <div class="form-check">
+                {{ form.is_verified }}
+                <label for="{{ form.is_verified.id_for_label }}">Marcar como talento verificado</label>
+            </div>
+            <small>Solo marcar si el talento ha sido previamente verificado por el equipo</small>
+        </section>
+
+        <!-- === Botones === -->
+        <div class="form-footer">
+            <button type="submit" class="btn btn-primary">Guardar Talento</button>
+            <a href="{% url 'adminpanel:talento' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    function agregarRedSocial() {
+        const container = document.getElementById("socialLinksContainer");
+        const totalForms = document.querySelector("#id_form-TOTAL_FORMS");
+        const currentFormCount = parseInt(totalForms.value);
+
+        const newForm = container.children[0].cloneNode(true);
+        newForm.querySelectorAll('input, select').forEach(el => {
+            const name = el.name.replace(/-\d+-/, `-${currentFormCount}-`);
+            const id = el.id.replace(/-\d+-/, `-${currentFormCount}-`);
+            el.name = name;
+            el.id = id;
+            el.value = '';
+        });
+
+        totalForms.value = currentFormCount + 1;
+        container.appendChild(newForm);
+    }
+    const profileInput = document.getElementById('{{ form.profile_image.id_for_label }}');
+    const profilePreview = document.getElementById('profilePreview');
+
+    if (profileInput) {
+        profileInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    profilePreview.src = e.target.result;
+                    profilePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                profilePreview.src = '#';
+                profilePreview.style.display = 'none';
+            }
+        });
+    }
+</script>
+{% endblock %}

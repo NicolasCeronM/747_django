@@ -1,16 +1,15 @@
 # adminpanel/urls.py
 from django.urls import path
 from . import views
+from  apps.adminpanel.templates.adminpanel.producto import urls_producto
+from  apps.adminpanel.templates.adminpanel.talent import urls_talent
+from  apps.adminpanel.templates.drop import urls_drop
+from  apps.adminpanel.templates.order import urls_order
+from  apps.adminpanel.templates.user import urls_user
 
 app_name = 'adminpanel'
 
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
-    path('producto/', views.productos, name='producto'),
-    path('producto/crear/', views.product_create, name='product_create'),
-    path('producto/<int:id>/eliminar/', views.eliminar_producto, name='product_delete'),
-
-
-    # HTMX endpoints
-    path('producto/table/', views.productos_htmx, name='producto_table'),
-]
+    
+]+ urls_producto.urlpatterns_producto + urls_talent.urlpatterns_talento + urls_drop.urlpatterns_drop + urls_order.urlpatterns_order + urls_user.urlpatterns_user

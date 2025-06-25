@@ -1,0 +1,45 @@
+<!-- adminpanel/templates/adminpanel/dashboard.html -->
+{% extends 'base/base_admin.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<style>
+    .en-proceso-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+        text-align: center;
+    }
+
+    .en-proceso-content {
+        padding: 2rem;
+        max-width: 500px;
+    }
+
+    .en-proceso-img {
+        max-width: 180px;
+        margin-bottom: 1.5rem;
+        opacity: 0.9;
+    }
+
+    .en-proceso-content h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        color: #111827;
+    }
+
+    .en-proceso-content p {
+        font-size: 1rem;
+        color: #6b7280;
+    }
+</style>
+<div class="en-proceso-container">
+    <div class="en-proceso-content">
+
+        <h1>🚧 En proceso</h1>
+        <p>Esta sección del panel aún está en desarrollo.<br>¡Estará disponible muy pronto!</p>
+    </div>
+</div>
+{% endblock %}

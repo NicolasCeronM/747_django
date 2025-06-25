@@ -1,0 +1,326 @@
+{% load static %}
+<style>
+    /* ==== SIDEBAR GENERAL ==== */
+    .sidebar {
+        width: 260px;
+        background: linear-gradient(180deg, #000523 0%, #0a0a2e 50%, #000523 100%);
+        color: white;
+        position: fixed;
+        height: 100vh;
+        overflow-y: auto;
+        transition: all 0.3s ease;
+        z-index: 1000;
+        box-shadow: 4px 0 20px rgba(0, 5, 35, 0.3);
+        border-right: 1px solid rgba(255, 107, 0, 0.1);
+    }
+
+    .sidebar.collapsed {
+        width: 70px;
+    }
+
+    /* ==== HEADER ==== */
+    .sidebar-header {
+        padding: 20px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background: linear-gradient(180deg, #000523 0%, #0a0a2e 50%, #000523 100%);
+        position: relative;
+    }
+
+
+
+    .header-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .logo {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #ff6b00 0%, #e55a00 100%);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 16px;
+        color: white;
+        box-shadow: 0 8px 16px rgba(255, 107, 0, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .sidebar-title {
+        font-size: 16px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .sidebar-subtitle {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.7);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .sidebar-toggle {
+        position: absolute;
+        top: 20px;
+        right: -10px;
+        width: 22px;
+        height: 22px;
+        background: #ff6b00;
+        border: none;
+        border-radius: 50%;
+        color: white;
+        cursor: pointer;
+        font-size: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+    }
+
+    /* ==== NAVEGACIÓN ==== */
+    .sidebar-nav {
+        padding: 18px 0;
+        flex: 1;
+    }
+
+    .nav-section {
+        margin-bottom: 28px;
+    }
+
+    .nav-section-title {
+        padding: 0 16px 10px;
+        font-size: 10px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.5);
+        text-transform: uppercase;
+    }
+
+    .nav-menu {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-item {
+        padding: 0 10px;
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        position: relative;
+        font-size: 14px;
+        border: 1px solid transparent;
+    }
+
+    .nav-link:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border-color: rgba(255, 107, 0, 0.3);
+        transform: translateX(3px);
+    }
+
+    .nav-link.active {
+        background: linear-gradient(135deg, #ff6b00 0%, #e55a00 100%);
+        color: white;
+        border-color: #ff6b00;
+        box-shadow: 0 6px 12px rgba(255, 107, 0, 0.25);
+    }
+
+    .nav-icon {
+        font-size: 16px;
+        width: 20px;
+        text-align: center;
+    }
+
+    .nav-text {
+        white-space: nowrap;
+    }
+
+    /* ==== BADGE ==== */
+    .nav-badge {
+        margin-left: auto;
+        background: #ef4444;
+        color: white;
+        font-size: 10px;
+        font-weight: 600;
+        padding: 2px 6px;
+        border-radius: 10px;
+    }
+
+    /* ==== FOOTER ==== */
+    .sidebar-footer {
+        padding: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        margin-bottom: 12px;
+    }
+
+    .user-avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #ff6b00 0%, #e55a00 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 14px;
+        color: white;
+    }
+
+    .user-name {
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .user-role {
+        font-size: 10px;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .footer-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .footer-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12px;
+        padding: 8px 10px;
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        border-radius: 8px;
+    }
+
+    .footer-link:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+</style>
+
+<div class="sidebar" id="sidebar">
+    <!-- Header -->
+    <div class="sidebar-header">
+
+        <div class="header-content">
+            <img src="{% static 'adminpanel/img/sfs-short-logo.png' %}" class="img-fluid" width="60px" alt="">
+            <div class="header-text">
+                <div class="sidebar-title">Administrador</div>
+                <div class="sidebar-subtitle">Panel de Control</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación -->
+    <nav class="sidebar-nav">
+        <!-- PRICIPAL -->
+        <div class="nav-section">
+            <div class="nav-section-title">Principal</div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="{% url 'adminpanel:dashboard' %}" class="nav-link
+                    {% if request.path == '/adminpanel/' %} active {% endif %}
+                    ">
+                        <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span>
+                        <span class="nav-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'adminpanel:user_list' %}" class="nav-link
+                    {% if request.path == '/adminpanel/user/'%} active {% endif %}
+                    ">
+                        <span class="nav-icon"><i class="fa-solid fa-user"></i></span>
+                        <span class="nav-text">Usuarios</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- E-COMMERCE -->
+        <div class="nav-section">
+            <div class="nav-section-title">E-commerce</div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="{% url 'adminpanel:producto' %}"
+                        class="nav-link
+                    {% if request.path == '/adminpanel/producto/' or request.path == '/adminpanel/producto/crear/' %} active {% endif %}">
+                        <span class="nav-icon"><i class="fa-solid fa-box"></i></span>
+                        <span class="nav-text">Productos</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'adminpanel:pedido_list' %}" class="nav-link
+                    {% if request.path == '/adminpanel/pedido/' %} active {% endif %}
+                        ">
+                        <span class="nav-icon"><i class="fa-solid fa-ticket"></i></span>
+                        <span class="nav-text">Pedidos</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- CONTENIDO -->
+        <div class="nav-section">
+            <div class="nav-section-title">Contenido</div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="{% url 'adminpanel:talento' %}" class="nav-link
+                    {% if request.path == '/adminpanel/talento/' %} active {% endif %}">
+                        <span class="nav-icon"><i class="fa-solid fa-star"></i></span>
+                        <span class="nav-text">Talentos</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'adminpanel:drop_list' %}" class="nav-link
+                    {% if request.path == '/adminpanel/drop/' %} active {% endif %}">
+                        <span class="nav-icon"><i class="fa-solid fa-tag"></i></span>
+                        <span class="nav-text">Drops</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Footer -->
+    <div class="sidebar-footer">
+        <div class="user-profile">
+            <div class="user-avatar">A</div>
+            <div class="user-info">
+                <div class="user-name">Admin</div>
+                <div class="user-role">Administrador</div>
+            </div>
+        </div>
+        <div class="footer-actions">
+            <a href="{% url 'home:home' %}" class="footer-link"><span>🏪</span>Ver tienda</a>
+            <a href="#" class="footer-link"><span>👤</span>Mi perfil</a>
+            <a href="#" class="footer-link"><span>🚪</span>Cerrar sesión</a>
+        </div>
+    </div>
+</div>

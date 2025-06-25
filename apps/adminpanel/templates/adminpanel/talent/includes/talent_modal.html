@@ -1,0 +1,86 @@
+<div id="talentModal" class="talent-modal-overlay" style="display: none;">
+    <div class="talent-modal-box">
+        <button class="close-modal" onclick="closeTalentModal()">×</button>
+        <div id="talentLoader" class="talent-loader">
+            <div class="loader-spinner"></div>
+            <p>Cargando información del talento...</p>
+        </div>
+
+
+        <div class="talent-modal-header">
+            <div class="talent-avatar-lg">
+                <img id="talentAvatar" src="{{talent.profile_image.url}}" alt="Talento">
+                <!-- <div class="talent-initials">MG</div> -->
+            </div>
+            <div>
+                <h2 id="talentName">{{talent.full_name}}</h2>
+                <p class="talent-brand-info" id="talentBrand">{{talent.brand_name}} • {{talent.specialty}} -
+                    {{talent.location }}</p>
+                <span class="badge-verified" id="talentVerified">✔ Talento Verificado</span>
+            </div>
+        </div>
+
+        <div class="talent-modal-section">
+            <h3><i class="bi bi-person-circle"></i> Información Personal</h3>
+            <div class="info-grid">
+                <div><strong>Nombre completo</strong><br><span id="infoNombre">{{talent.full_name}}</span></div>
+                <div><strong>Marca/Estudio</strong><br><span id="infoMarca">{{talent.brand_name}}</span></div>
+                <div><strong>Especialidad</strong><br><span id="infoEspecialidad">{{talent.specialty}}</span></div>
+                <div><strong>Ubicación</strong><br><span id="infoUbicacion">{{talent.location}}</span></div>
+                <div><strong>Fecha de registro</strong><br><span id="infoFecha">{{talent.created_at}}</span></div>
+            </div>
+        </div>
+
+        <div class="talent-modal-section">
+            <h3><i class="bi bi-card-text"></i> Biografía</h3>
+            <p id="infoBio">{{ talent.biography }}</p>
+        </div>
+
+        <div class="talent-modal-section">
+            <h3><i class="bi bi-telephone-fill"></i> Información de Contacto</h3>
+            <p><strong>Email:</strong> <a id="infoEmail" href="#">{{ talent.contact_email }}</a></p>
+            <p><strong>Teléfono:</strong> <a id="infoTelefono" href="#">{{ talent.phone_number }}</a>
+            </p>
+        </div>
+
+        <div class="talent-modal-section">
+            <h3><i class="bi bi-share-fill"></i> Redes Sociales</h3>
+            <div class="social-links" id="infoRedes"></div>
+            {% for link in talent.social_links.all %}
+            {% if link.platform == 'instagram' %}
+            <a href="{{ link.url }}" target="_blank" class="">
+                <i class="fab fa-instagram"></i>
+            </a>
+            {% endif %}
+            {% if link.platform == 'facebook'%}
+            <a href="{{ link.url }}" target="_blank" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+            {% endif %}
+            {% if link.platform == 'twitter' %}
+
+            <a href="{{ link.url }}" target="_blank" class="social-icon twitter">
+                <i class="fab fa-twitter"></i> Twitter
+            </a>
+
+            {% endif %}
+            {% if link.platform == 'youtube' %}
+            <a href="{{ link.url }}" class="social-icon youtube " target="_blank">
+                <i class="fab fa-youtube"></i>
+            </a>
+            {% endif %}
+            {% if link.platform == 'website' %}
+            <a href="{{ link.url }}" target="_blank" class="social-icon website">
+                <i class="fas fa-globe"></i>
+            </a>
+            {% endif %}
+
+            {% endfor %}
+        </div>
+
+        <div class="talent-modal-section">
+            <h3><i class="bi bi-camera-video-fill"></i> Video de Presentación</h3>
+            <div class="video-container" id="videoContainer">
+                <iframe id="talentVideo" src="{{ talent.video_url }}" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
