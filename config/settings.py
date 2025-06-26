@@ -54,8 +54,10 @@ OWN_APPS = [
     'apps.orders',
     'apps.payments',
     'apps.product',
-    'apps.user',
     'apps.talent',
+    'apps.user',
+    'apps.subscriptions',
+    
     
     
 ]
