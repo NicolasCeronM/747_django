@@ -5,7 +5,7 @@
             <div class="col-md-2 col-3">
                 {% with item.product.images.all.first as image %}
                 {% if image %}
-                <img src="{{ image.image.url }}" alt="{{ item.product.name }}" width="64" height="64"
+                <img src="{{ image.image_url }}" alt="{{ item.product.name }}" width="64" height="64"
                     class="rounded border img-fluid">
                 {% endif %}
                 {% endwith %}

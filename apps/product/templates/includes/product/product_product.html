@@ -1,3 +1,4 @@
+{% load static %}
 <div class="products-wrapper">
     <div class="products-header">
         <p>Mostrando {{products|length}} productos</p>
@@ -19,7 +20,11 @@
             <a href="{% url 'products:product_detail' p.id %}">
                 <div class="product-images">
                     {% for img in p.images.all %}
-                    <img src="{{ img.image.url }}" alt="{{ p.name }}" class="{% if forloop.first %}active{% endif %}">
+                    <div class="lazy-img-wrapper {% if forloop.first %}active{% endif %}">
+                        <div class="spinner"></div>
+                        <img src="{% static 'product/img/chico.jpg' %}" data-src="{{ img.image_url }}"
+                            alt="{{ p.name }}" class="lazy-img">
+                    </div>
                     {% endfor %}
 
                     <div class="image-indicators">

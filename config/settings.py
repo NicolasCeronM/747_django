@@ -44,6 +44,8 @@ BASE_APPS = [
 THIRD_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 OWN_APPS = [
@@ -64,7 +66,13 @@ OWN_APPS = [
 
 INSTALLED_APPS = BASE_APPS + THIRD_APPS + OWN_APPS
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'diq1yirce',
+    'API_KEY': '965315131439593',
+    'API_SECRET': 'eqqHJgtPNSEhSjV_6IYfBchgP5A'
+}
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 

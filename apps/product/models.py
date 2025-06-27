@@ -20,7 +20,8 @@ class Product(models.Model):
         return self.name
 
 class ProductImage(models.Model):
-    image = models.ImageField(upload_to='products/')
+    image = models.ImageField(upload_to='products/',blank=True,null=True)
+    image_url = models.URLField("URL de la imagen", max_length=500, blank=True, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
 
 class ProductSize(models.Model):

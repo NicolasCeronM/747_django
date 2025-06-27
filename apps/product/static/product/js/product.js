@@ -1,30 +1,31 @@
 console.log([...document.querySelectorAll(".add-to-cart")].length);
+
 document.addEventListener("DOMContentLoaded", function () {
   const productCards = document.querySelectorAll(".product-card");
 
   productCards.forEach((card) => {
-    const images = card.querySelectorAll(".product-images img");
+    const wrappers = card.querySelectorAll(".product-images .lazy-img-wrapper");
     const indicators = card.querySelectorAll(".image-indicators .indicator");
     let currentIndex = 0;
     let interval;
 
-    // Rotación de imágenes
+    // =============== ROTACIÓN DE IMÁGENES (HOVER) ===============
     card.addEventListener("mouseenter", () => {
-      if (images.length <= 1) return;
+      if (wrappers.length <= 1) return;
       interval = setInterval(() => {
-        images[currentIndex].classList.remove("active");
+        wrappers[currentIndex].classList.remove("active");
         indicators[currentIndex].classList.remove("active");
 
-        currentIndex = (currentIndex + 1) % images.length;
-        images[currentIndex].classList.add("active");
+        currentIndex = (currentIndex + 1) % wrappers.length;
+        wrappers[currentIndex].classList.add("active");
         indicators[currentIndex].classList.add("active");
       }, 1000);
     });
 
     card.addEventListener("mouseleave", () => {
       clearInterval(interval);
-      images.forEach((img, index) =>
-        img.classList.toggle("active", index === 0)
+      wrappers.forEach((wrap, index) =>
+        wrap.classList.toggle("active", index === 0)
       );
       indicators.forEach((ind, index) =>
         ind.classList.toggle("active", index === 0)
@@ -36,15 +37,15 @@ document.addEventListener("DOMContentLoaded", function () {
       indicator.addEventListener("click", (e) => {
         e.stopPropagation();
         clearInterval(interval);
-        images.forEach((img) => img.classList.remove("active"));
+        wrappers.forEach((wrap) => wrap.classList.remove("active"));
         indicators.forEach((ind) => ind.classList.remove("active"));
-        images[index].classList.add("active");
+        wrappers[index].classList.add("active");
         indicator.classList.add("active");
         currentIndex = index;
       });
     });
 
-    // Botón de talla
+    // =============== TALLA SELECCIONADA ===============
     const sizeButtons = card.querySelectorAll(".size-btn");
     sizeButtons.forEach((button) => {
       button.addEventListener("click", function () {
@@ -53,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     });
 
-    // Botón agregar al carrito
+    // =============== AGREGAR AL CARRITO (AJAX) ===============
     const addToCartBtn = card.querySelector(".add-to-cart");
 
     if (!addToCartBtn.dataset.bound) {
@@ -109,8 +110,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 cartCount.textContent = data.total_items;
                 cartCount.classList.remove("d-none");
               }
-
-              // Modal o animación aquí si lo deseas
             } else {
               Swal.fire({ icon: "error", title: "Error", text: data.message });
             }
@@ -126,9 +125,32 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
+
+  // =============== CARGA DIFERIDA DE IMÁGENES (LAZY LOAD) ===============
+  cargarImagenesLazy();
 });
 
-// Función para obtener CSRF token
+function cargarImagenesLazy() {
+  const lazyWrappers = document.querySelectorAll(".lazy-img-wrapper");
+
+  lazyWrappers.forEach((wrapper) => {
+    const img = wrapper.querySelector("img.lazy-img");
+    const realSrc = img.dataset.src;
+
+    if (img.classList.contains("loaded")) return;
+
+    const loader = new Image();
+    loader.src = realSrc;
+
+    loader.onload = function () {
+      img.src = realSrc;
+      img.classList.add("loaded");
+      wrapper.classList.add("loaded");
+    };
+  });
+}
+
+// =============== TOKEN CSRF PARA POST ===============
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {

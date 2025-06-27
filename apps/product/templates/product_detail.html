@@ -35,8 +35,9 @@
                     <div class="image-grid">
                         {% for img in product.images.all %}
                         <div class="image-container" onclick="openImageModal(0)">
-                            <img src="{{img.image.url}}" alt="SIMA PULLOVER HOODY - Vista frontal"
-                                class="product-image">
+                            <div class="spinner"></div>
+                            <img data-src="{{ img.image_url }}" src="{% static 'img/placeholder.jpg' %}"
+                                alt="SIMA PULLOVER HOODY - Vista frontal" class="product-image lazy-img">
                         </div>
                         {% endfor %}
                     </div>
@@ -143,4 +144,23 @@
         </div>
     </div>
 </main>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const lazyImages = document.querySelectorAll(".lazy-img");
+
+        lazyImages.forEach(img => {
+            const wrapper = img.closest(".image-container");
+            const realSrc = img.dataset.src;
+
+            const loader = new Image();
+            loader.src = realSrc;
+
+            loader.onload = function () {
+                img.src = realSrc;
+                img.classList.add("loaded");
+                wrapper.classList.add("loaded"); // oculta spinner
+            };
+        });
+    });
+</script>
 {% endblock content %}
