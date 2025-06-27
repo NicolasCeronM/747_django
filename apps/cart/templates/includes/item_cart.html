@@ -1,3 +1,4 @@
+{% load humanize %}
 <div id="cart-items">
     <!-- Producto -->
     {% if cart.total > 0 %} {% for item in cart.items.all %} <div class="product-card" data-product-id="1">
@@ -21,7 +22,7 @@
                 </div>
             </div>
             <div class="col-md-2 col-6 text-center">
-                <div class="price-display">${{ item.subtotal|floatformat:0}}</div>
+                <div class="price-display">${{ item.subtotal|floatformat:0|intcomma}}</div>
             </div>
             <div class="col-md-3 col-6">
                 <div class="quantity-controls">

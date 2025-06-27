@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% load humanize %}
+
+
+
 
 {% block title %}
 {{product.name}}
@@ -73,7 +77,7 @@
                     </p>
 
                     <div class="price-section">
-                        <div class="price">CLP {{product.price|floatformat:0}}</div>
+                        <div class="price">CLP {{product.price|floatformat:0|intcomma}}</div>
                         <div class="payment-info">
                             4 pagos de $35.00 a 0% de interés con <strong>Klarna</strong><br>
                             <a href="#">Más información</a>

@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 <div class="products-wrapper">
     <div class="products-header">
         <p>Mostrando {{products|length}} productos</p>
@@ -38,7 +39,7 @@
 
             <div class="product-info">
                 <h3 class="product-name">{{ p.name }}</h3>
-                <p class="product-price">CLP {{ p.price|floatformat:0 }}</p>
+                <p class="product-price">CLP {{ p.price|floatformat:0|intcomma }}</p>
 
                 <div class="product-sizes">
                     {% for s in p.product_sizes.all %}

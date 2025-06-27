@@ -139,6 +139,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 #LANGUAGE_CODE = 'en-us'
 LANGUAGE_CODE = 'es-cl'
+#LANGUAGE_CODE = 'de'
 
 TIME_ZONE = 'UTC'
 # TIME_ZONE = 'America/Argentina/Buenos_aires'

@@ -100,18 +100,44 @@ document.addEventListener("DOMContentLoaded", function () {
           }),
         })
           .then((response) => {
-            if (!response.ok) throw new Error("Error HTTP: " + response.status);
+            if (!response.ok) {
+              if (response.status === 403) {
+                Swal.fire({
+                  icon: "warning",
+                  title: "Inicia sesión",
+                  text: "Debes iniciar sesión para agregar productos al carrito.",
+                });
+                return;
+              } else {
+                throw new Error("Error HTTP: " + response.status);
+              }
+            }
             return response.json();
           })
           .then((data) => {
+            if (!data) return;
             if (data.success) {
               const cartCount = document.getElementById("cart-count");
               if (cartCount) {
                 cartCount.textContent = data.total_items;
                 cartCount.classList.remove("d-none");
               }
+
+              Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "Producto agregado al carrito",
+                showConfirmButton: false,
+                timer: 1800,
+                timerProgressBar: true,
+              });
             } else {
-              Swal.fire({ icon: "error", title: "Error", text: data.message });
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: data.message,
+              });
             }
           })
           .catch((error) => {
