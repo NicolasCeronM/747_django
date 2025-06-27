@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -68,11 +67,6 @@ INSTALLED_APPS = BASE_APPS + THIRD_APPS + OWN_APPS
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'diq1yirce',
-    'API_KEY': '965315131439593',
-    'API_SECRET': 'eqqHJgtPNSEhSjV_6IYfBchgP5A'
-}
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
@@ -195,3 +189,13 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'nicolas.ceron.i.m@gmail.com'
 EMAIL_HOST_PASSWORD = 'drsd dgii xpzi bylw'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+import cloudinary
+from decouple import config
+
+cloudinary.config( 
+  cloud_name = 'diq1yirce',
+  api_key = '965315131439593',
+  api_secret = 'eqqHJgtPNSEhSjV_6IYfBchgP5A'
+)

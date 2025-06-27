@@ -125,11 +125,76 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
+});
 
-  // =============== CARGA DIFERIDA DE IMÁGENES (LAZY LOAD) ===============
+// =============== TOKEN CSRF PARA POST ===============
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let cookie of cookies) {
+      cookie = cookie.trim();
+      if (cookie.startsWith(name + "=")) {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const productCards = document.querySelectorAll(".product-card");
+
+  productCards.forEach((card) => {
+    const wrappers = card.querySelectorAll(".product-images .lazy-img-wrapper");
+    const indicators = card.querySelectorAll(".image-indicators .indicator");
+    let currentIndex = 0;
+    let interval;
+
+    // Rotación automática de imágenes al pasar el mouse
+    card.addEventListener("mouseenter", () => {
+      if (wrappers.length <= 1) return;
+      interval = setInterval(() => {
+        wrappers[currentIndex].classList.remove("active");
+        indicators[currentIndex].classList.remove("active");
+
+        currentIndex = (currentIndex + 1) % wrappers.length;
+        wrappers[currentIndex].classList.add("active");
+        indicators[currentIndex].classList.add("active");
+      }, 1000);
+    });
+
+    card.addEventListener("mouseleave", () => {
+      clearInterval(interval);
+      wrappers.forEach((wrap, index) =>
+        wrap.classList.toggle("active", index === 0)
+      );
+      indicators.forEach((ind, index) =>
+        ind.classList.toggle("active", index === 0)
+      );
+      currentIndex = 0;
+    });
+
+    // Rotación manual al hacer clic en los indicadores
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener("click", (e) => {
+        e.stopPropagation();
+        clearInterval(interval);
+        wrappers.forEach((wrap) => wrap.classList.remove("active"));
+        indicators.forEach((ind) => ind.classList.remove("active"));
+        wrappers[index].classList.add("active");
+        indicator.classList.add("active");
+        currentIndex = index;
+      });
+    });
+  });
+
+  // Cargar las imágenes reales (lazy loading)
   cargarImagenesLazy();
 });
 
+// Función que reemplaza las siluetas por la imagen real
 function cargarImagenesLazy() {
   const lazyWrappers = document.querySelectorAll(".lazy-img-wrapper");
 
@@ -148,20 +213,4 @@ function cargarImagenesLazy() {
       wrapper.classList.add("loaded");
     };
   });
-}
-
-// =============== TOKEN CSRF PARA POST ===============
-function getCookie(name) {
-  let cookieValue = null;
-  if (document.cookie && document.cookie !== "") {
-    const cookies = document.cookie.split(";");
-    for (let cookie of cookies) {
-      cookie = cookie.trim();
-      if (cookie.startsWith(name + "=")) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
 }

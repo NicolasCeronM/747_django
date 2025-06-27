@@ -9,6 +9,9 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'product/css/product_detail.css' %}">
+<!-- GLightbox CSS -->
+<link href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" rel="stylesheet" />
+
 {% endblock css %}
 
 
@@ -34,11 +37,15 @@
                 <div class="product-images">
                     <div class="image-grid">
                         {% for img in product.images.all %}
-                        <div class="image-container" onclick="openImageModal(0)">
-                            <div class="spinner"></div>
-                            <img data-src="{{ img.image_url }}" src="{% static 'img/placeholder.jpg' %}"
-                                alt="SIMA PULLOVER HOODY - Vista frontal" class="product-image lazy-img">
-                        </div>
+                        <a href="{{ img.image.url|add:'?f_auto,q_auto' }}" class="glightbox"
+                            data-gallery="product-gallery">
+                            <div class="image-container">
+                                <div class="spinner"></div>
+                                <img src="{% static 'product/img/silueta.jpg' %}"
+                                    data-src="{{ img.image.url|add:'?f_auto,q_auto' }}" alt="{{ product.name }}"
+                                    class="lazy-img product-image">
+                            </div>
+                        </a>
                         {% endfor %}
                     </div>
                 </div>
@@ -146,6 +153,7 @@
 </main>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        // Lazy Load Imágenes
         const lazyImages = document.querySelectorAll(".lazy-img");
 
         lazyImages.forEach(img => {
@@ -158,9 +166,20 @@
             loader.onload = function () {
                 img.src = realSrc;
                 img.classList.add("loaded");
-                wrapper.classList.add("loaded"); // oculta spinner
+                wrapper.classList.add("loaded");
             };
+        });
+
+        // Activar GLightbox
+        const lightbox = GLightbox({
+            selector: '.glightbox',
+            touchNavigation: true,
+            loop: true,
+            zoomable: true
         });
     });
 </script>
+<!-- GLightbox JS -->
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
 {% endblock content %}

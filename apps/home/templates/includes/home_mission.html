@@ -9,9 +9,13 @@
     <div class="container">
         <div class="row align-items-center">
             <!-- Imagen -->
-            <div class="col-md-6 mb-4 mb-md-0">
-                <img src="https://media.istockphoto.com/id/1318878330/es/foto/familia-rural-latinoamericana-frente-a-su-nueva-casa.jpg?s=612x612&w=0&k=20&c=8Ym8d3HiSrj8_voyl2TMdyKc6xl02zJpUMpT5uCMG6A="
-                    class="img-fluid rounded shadow" alt="Nuestra misión">
+            <!-- Imagen con lazy loading visual -->
+            <div class="col-md-6 mb-4 mb-md-0 d-flex justify-content-center">
+                <div class="lazy-img-wrapper mission-img-wrapper">
+                    <div class="spinner"></div>
+                    <img class="lazy-img mission-img rounded shadow" src="{% static 'home/img/silueta.jpg' %}"
+                        data-src="{% static 'home/img/MissionVission_com.jpg' %}" alt="Nuestra misión">
+                </div>
             </div>
 
             <!-- Contenido -->

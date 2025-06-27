@@ -1,7 +1,7 @@
 from django.db import models
 from apps.drop.models import Drop
 from django.utils import timezone
-
+from cloudinary.models import CloudinaryField
 
 
 class Product(models.Model):
@@ -20,8 +20,7 @@ class Product(models.Model):
         return self.name
 
 class ProductImage(models.Model):
-    image = models.ImageField(upload_to='products/',blank=True,null=True)
-    image_url = models.URLField("URL de la imagen", max_length=500, blank=True, null=True)
+    image = CloudinaryField('image')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
 
 class ProductSize(models.Model):

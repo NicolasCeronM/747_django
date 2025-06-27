@@ -197,7 +197,7 @@ input {
   overflow: hidden;
 }
 
-.product-images img {
+/* .product-images img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -210,7 +210,7 @@ input {
 
 .product-images img.active {
   opacity: 1;
-}
+} */
 /* Indicadores de puntos para las imágenes */
 .image-indicators {
   position: absolute;
@@ -375,7 +375,14 @@ input {
     grid-template-columns: 1fr;
   }
 }
-/* ========== Contenedor imagen + spinner ========== */
+/* Contenedor de las imágenes del producto */
+.product-images {
+  position: relative;
+  height: 300px;
+  overflow: hidden;
+}
+
+/* Cada imagen individual (wrapper) ocupa el espacio completo */
 .lazy-img-wrapper {
   position: absolute;
   top: 0;
@@ -383,33 +390,33 @@ input {
   width: 100%;
   height: 100%;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.5s ease;
   z-index: 0;
 }
 
-/* Se activa solo la imagen visible (rotación) */
+/* Solo se muestra el wrapper activo */
 .lazy-img-wrapper.active {
   opacity: 1;
   z-index: 1;
 }
 
-/* ========== Imagen con blur y fade ========== */
+/* Estilo base para la imagen (silueta) */
 .lazy-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
   filter: blur(20px);
+  transition: filter 0.3s ease;
   opacity: 1;
-  transition: filter 0.4s ease;
 }
 
-/* Al cargar la imagen, se muestra nítida */
+/* Cuando la imagen real ya ha cargado */
 .lazy-img.loaded {
   filter: blur(0);
 }
 
-/* ========== Spinner centrado ========== */
+/* Spinner centrado en el contenedor */
 .spinner {
   position: absolute;
   top: 50%;
@@ -424,12 +431,12 @@ input {
   z-index: 2;
 }
 
-/* Ocultar spinner al terminar de cargar */
+/* Oculta el spinner cuando se ha cargado la imagen */
 .lazy-img-wrapper.loaded .spinner {
   display: none;
 }
 
-/* Animación de rotación del spinner */
+/* Animación del spinner */
 @keyframes spin {
   0% {
     transform: rotate(0deg);
