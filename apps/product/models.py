@@ -8,8 +8,11 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
+    detail = models.TextField(blank=True, null=True)
+    material = models.TextField(blank=True, null=True)
     drop = models.ForeignKey(Drop, on_delete=models.CASCADE, related_name='products', blank=True, null=True)
     discount = models.IntegerField( blank=True, null=True)
+    
     stock = models.PositiveIntegerField(default=0)
     is_available = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)

@@ -55,7 +55,7 @@
             <div class="col-lg-6">
                 <div class="product-info">
                     <h1 class="product-title">{{product.name}}</h1>
-                    <span class="new-color-badge">Nuevo color</span>
+                    <span class="new-color-badge">{{product.drop.name}}</span>
 
                     <div class="rating-section">
                         <div class="stars">
@@ -98,34 +98,18 @@
                     <!-- Info Accordion -->
                     <div class="accordion info-accordion" id="productAccordion">
 
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#delivery">
-                                    Entrega
-                                </button>
-                            </h2>
-                            <div id="delivery" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
-                                <div class="accordion-body">
-                                    Envío gratuito en pedidos superiores a $100.<br>
-                                    Entrega estándar: 3-5 días laborables<br>
-                                    Entrega express: 1-2 días laborables
-                                </div>
-                            </div>
-                        </div>
+
 
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#tienda">
-                                    Retiro en tienda
+                                    Detalle
                                 </button>
                             </h2>
                             <div id="tienda" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
                                 <div class="accordion-body">
-                                    Envío gratuito en pedidos superiores a $100.<br>
-                                    Entrega estándar: 3-5 días laborables<br>
-                                    Entrega express: 1-2 días laborables
+                                    {{product.detail}}
                                 </div>
                             </div>
                         </div>
@@ -134,14 +118,12 @@
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#Prenda">
-                                    Descripcion de prenda
+                                    Material
                                 </button>
                             </h2>
                             <div id="Prenda" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
                                 <div class="accordion-body">
-                                    Envío gratuito en pedidos superiores a $100.<br>
-                                    Entrega estándar: 3-5 días laborables<br>
-                                    Entrega express: 1-2 días laborables
+                                    {{product.material}}
                                 </div>
                             </div>
                         </div>
